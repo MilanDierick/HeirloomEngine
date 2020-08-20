@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Heirloom
 {
 	class HL_API KeyEvent : public Event

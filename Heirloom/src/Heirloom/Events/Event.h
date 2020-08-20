@@ -2,9 +2,6 @@
 
 #include "Heirloom/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace Heirloom
 {
 	// Events in Heirloom are currently blocking, meaning when an event occurs it

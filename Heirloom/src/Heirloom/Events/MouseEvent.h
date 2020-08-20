@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Heirloom {
 
 	class HL_API MouseMovedEvent final : public Event

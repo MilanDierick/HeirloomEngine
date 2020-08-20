@@ -27,11 +27,23 @@
     <ClInclude Include="src\Heirloom\EntryPoint.h">
       <Filter>src\Heirloom</Filter>
     </ClInclude>
+    <ClInclude Include="src\Heirloom\Events\ApplicationEvent.h">
+      <Filter>src\Heirloom\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Heirloom\Events\Event.h">
+      <Filter>src\Heirloom\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Heirloom\Events\KeyEvent.h">
+      <Filter>src\Heirloom\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Heirloom\Events\MouseEvent.h">
       <Filter>src\Heirloom\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Heirloom\Log.h">
       <Filter>src\Heirloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hlpch.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="src\Heirloom\Log.cpp">
       <Filter>src\Heirloom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hlpch.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

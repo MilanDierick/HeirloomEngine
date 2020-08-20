@@ -18,6 +18,9 @@ project "Heirloom"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "hlpch.h"
+	pchsource "Heirloom/src/hlpch.cpp"
+
 	files
 	{
 		"%{prj.name}/include/**.h",
