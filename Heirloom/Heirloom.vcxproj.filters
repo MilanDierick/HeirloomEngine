@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Heirloom">
+      <UniqueIdentifier>{BBD7A47A-A73A-341F-50C0-6CD53C0200A2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Heirloom.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Heirloom\Application.h">
+      <Filter>src\Heirloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Heirloom\Core.h">
+      <Filter>src\Heirloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Heirloom\EntryPoint.h">
+      <Filter>src\Heirloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Heirloom\Log.h">
+      <Filter>src\Heirloom</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Heirloom\Application.cpp">
+      <Filter>src\Heirloom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Heirloom\Log.cpp">
+      <Filter>src\Heirloom</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
