@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "hlpch.h"
 #include "Heirloom/Core.h"
 
 namespace Heirloom

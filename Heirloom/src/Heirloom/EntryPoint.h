@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-#include "Application.h"
-#include "Log.h"
-
 #ifdef HL_PLATFORM_WINDOWS
 
 extern Heirloom::Application* Heirloom::CreateApplication();

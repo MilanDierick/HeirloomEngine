@@ -13,6 +13,12 @@
     <Filter Include="src\Heirloom\Events">
       <UniqueIdentifier>{3F237943-AB84-5651-34F2-9C03A0528D10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Heirloom.h">
@@ -42,6 +48,12 @@
     <ClInclude Include="src\Heirloom\Log.h">
       <Filter>src\Heirloom</Filter>
     </ClInclude>
+    <ClInclude Include="src\Heirloom\Window.h">
+      <Filter>src\Heirloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\hlpch.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -52,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="src\Heirloom\Log.cpp">
       <Filter>src\Heirloom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\hlpch.cpp">
       <Filter>src</Filter>
