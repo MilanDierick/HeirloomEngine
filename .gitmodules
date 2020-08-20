@@ -1,0 +1,3 @@
+[submodule "Heirloom/thirdparty/GLFW"]
+	path = Heirloom/thirdparty/GLFW
+	url = https://github.com/MilanDierick/glfw.git

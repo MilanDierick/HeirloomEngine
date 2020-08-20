@@ -1,30 +1,24 @@
 ﻿#include "hlpch.h"
 #include "Application.h"
-#include "Log.h"
-#include "Events/ApplicationEvent.h"
 
 namespace Heirloom
 {
 	Application::Application()
 	{
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application()
 	{
 	}
 
-	void Application::Run()
+	void Application::Run() const
 	{
-		const WindowResizeEvent e(1280, 720);
-		if (e.IsInCategory(EventCategoryApplication))
+		while (m_IsRunning)
 		{
-			HL_TRACE(e);
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->OnUpdate();
 		}
-		if (e.IsInCategory(EventCategoryInput))
-		{
-			HL_TRACE(e);
-		}
-
-		while (true);
 	}
 }

@@ -10,6 +10,12 @@ workspace "HeirloomEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder (solution directory)
+IncludeDir = {}
+IncludeDir["GLFW"] = "Heirloom/thirdparty/GLFW/include"
+
+include "Heirloom/thirdparty/GLFW"
+
 project "Heirloom"
 	location "Heirloom"
 	kind "SharedLib"
@@ -31,7 +37,14 @@ project "Heirloom"
 	includedirs
 	{
 		"Heirloom/src",
-		"%{prj.name}/thirdparty/spdlog/include"
+		"%{prj.name}/thirdparty/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -79,7 +92,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Heirloom/thirdparty/spdlog/include",
-		"Heirloom/include"
+		"Heirloom/include",
+		"Heirloom/src"
 	}
 
 	links
