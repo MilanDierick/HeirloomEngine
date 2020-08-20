@@ -10,6 +10,9 @@
     <Filter Include="src\Heirloom">
       <UniqueIdentifier>{BBD7A47A-A73A-341F-50C0-6CD53C0200A2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Heirloom\Events">
+      <UniqueIdentifier>{3F237943-AB84-5651-34F2-9C03A0528D10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Heirloom.h">
@@ -23,6 +26,9 @@
     </ClInclude>
     <ClInclude Include="src\Heirloom\EntryPoint.h">
       <Filter>src\Heirloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Heirloom\Events\Event.h">
+      <Filter>src\Heirloom\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Heirloom\Log.h">
       <Filter>src\Heirloom</Filter>

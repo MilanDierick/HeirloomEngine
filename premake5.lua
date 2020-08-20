@@ -27,6 +27,7 @@ project "Heirloom"
 
 	includedirs
 	{
+		"Heirloom/src",
 		"%{prj.name}/thirdparty/spdlog/include"
 	}
 
