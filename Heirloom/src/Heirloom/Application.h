@@ -13,6 +13,6 @@ namespace Heirloom
 		void Run();
 	};
 
-	// To be defined in a client
+	// To be defined in CLIENT
 	Application* CreateApplication();
 }

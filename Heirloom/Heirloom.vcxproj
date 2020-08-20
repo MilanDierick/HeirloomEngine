@@ -147,6 +147,10 @@
     <ClInclude Include="src\Heirloom\Application.h" />
     <ClInclude Include="src\Heirloom\Core.h" />
     <ClInclude Include="src\Heirloom\EntryPoint.h" />
+    <ClInclude Include="src\Heirloom\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\Heirloom\Events\Event.h" />
+    <ClInclude Include="src\Heirloom\Events\KeyEvent.h" />
+    <ClInclude Include="src\Heirloom\Events\MouseEvent.h" />
     <ClInclude Include="src\Heirloom\Log.h" />
   </ItemGroup>
   <ItemGroup>
