@@ -36,7 +36,7 @@ project "Heirloom"
 
 	includedirs
 	{
-		"Heirloom/src",
+		"%{prj.name}/src",
 		"%{prj.name}/thirdparty/spdlog/include",
 		"%{IncludeDir.GLFW}"
 	}
@@ -93,7 +93,8 @@ project "Sandbox"
 	{
 		"Heirloom/thirdparty/spdlog/include",
 		"Heirloom/include",
-		"Heirloom/src"
+		"Heirloom/src",
+		"%{IncludeDir.GLFW}"
 	}
 
 	links
