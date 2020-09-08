@@ -21,6 +21,12 @@ namespace Heirloom
 		{
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			for (auto it = m_LayerStack.cbegin(); it != m_LayerStack.cend(); ++it)
+			{
+				(*it)->OnUpdate();
+			}
+			
 			m_Window->OnUpdate();
 		}
 	}
@@ -31,6 +37,23 @@ namespace Heirloom
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
 		HL_CORE_TRACE("{0}", e.ToString());
+
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+		{
+			(*--it)->OnEvent(e);
+			if (e.Handled)
+				break;
+		}
+	}
+	
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* layer)
+	{
+		m_LayerStack.PushOverlay(layer);
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent e)

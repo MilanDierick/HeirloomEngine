@@ -2,8 +2,10 @@
 
 // For use by Flat applications
 
-#include "../src/Heirloom/Application.h"
+#include "Heirloom/Application.h"
+#include "Heirloom/Layer.h"
+#include "Heirloom/Log.h"
 
 // --- Entry Point ------------------------
-#include "../src/Heirloom/EntryPoint.h"
+#include "Heirloom/EntryPoint.h"
 // ----------------------------------------
