@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Window.h"
+#include "Events/ApplicationEvent.h"
 
 namespace Heirloom
 {
@@ -15,6 +16,7 @@ namespace Heirloom
 
 		void OnEvent(Event& e);
 	private:
+		bool OnWindowClose(WindowCloseEvent e);
 		std::unique_ptr<Window> m_Window;
 		bool m_IsRunning = true;
 	};

@@ -3,8 +3,8 @@
 
 namespace Heirloom
 {
-#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
-	
+	#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
 	Application::Application()
 	{
 		m_Window = std::unique_ptr<Window>(Window::Create());
@@ -27,6 +27,15 @@ namespace Heirloom
 
 	void Application::OnEvent(Event& e)
 	{
-		HL_CORE_INFO("{0}", e.ToString());
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+
+		HL_CORE_TRACE("{0}", e.ToString());
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent e)
+	{
+		m_IsRunning = false;
+		return true;
 	}
 }
