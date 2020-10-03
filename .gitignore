@@ -437,3 +437,5 @@ HeirloomEngine.sln
 Heirloom/Heirloom.vcxproj
 Heirloom/Heirloom.vcxproj.filters
 Sandbox/Sandbox.vcxproj
+/Heirloom/thirdparty/glad/Glad.vcxproj
+/Heirloom/thirdparty/glad/Glad.vcxproj.filters

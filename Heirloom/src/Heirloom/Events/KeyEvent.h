@@ -10,14 +10,12 @@ namespace Heirloom
 		int GetKeyCode() const { return m_KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
-		
+
 	protected:
 		~KeyEvent() = default;
 
 		explicit KeyEvent(const int keycode)
-			: m_KeyCode(keycode)
-		{
-		}
+			: m_KeyCode(keycode) { }
 
 		int m_KeyCode;
 	};
@@ -26,9 +24,7 @@ namespace Heirloom
 	{
 	public:
 		KeyPressedEvent(const int keycode, int repeatCount)
-			: KeyEvent(keycode), m_RepeatCount(repeatCount)
-		{
-		}
+			: KeyEvent(keycode), m_RepeatCount(repeatCount) { }
 
 		int GetRepeatCount() const { return m_RepeatCount; }
 
@@ -40,7 +36,7 @@ namespace Heirloom
 		}
 
 		EVENT_CLASS_TYPE(KeyPressed)
-		
+
 	private:
 		int m_RepeatCount;
 	};
@@ -49,9 +45,7 @@ namespace Heirloom
 	{
 	public:
 		explicit KeyReleasedEvent(int keycode)
-			: KeyEvent(keycode)
-		{
-		}
+			: KeyEvent(keycode) { }
 
 		std::string ToString() const override
 		{
@@ -61,5 +55,22 @@ namespace Heirloom
 		}
 
 		EVENT_CLASS_TYPE(KeyReleased)
+	};
+
+	class HL_API KeyTypedEvent final : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(const int keycode)
+			: KeyEvent(keycode) { }
+
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << m_KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
 	};
 }

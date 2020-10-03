@@ -1,9 +1,14 @@
 ﻿#include "hlpch.h"
 #include "WindowsWindow.h"
 
+
+#include "ImGuiGLFWBindings.h"
 #include "Heirloom/Events/ApplicationEvent.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Events/MouseEvent.h"
+
+#include "glad/glad.h"
+#include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
 
 namespace Heirloom
 {
@@ -65,7 +70,7 @@ namespace Heirloom
 		if (!s_GLFWInitialized)
 		{
 			// TODO: glfwTerminate on system shutdown
-			int success = glfwInit();
+			const int success = glfwInit();
 			HL_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
@@ -75,6 +80,8 @@ namespace Heirloom
 		                            m_Data.Title.c_str(), nullptr, nullptr);
 
 		glfwMakeContextCurrent(m_Window);
+		const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+		HL_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -127,6 +134,15 @@ namespace Heirloom
 			}
 		});
 
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+		{
+			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+
+			KeyTypedEvent event(keycode);
+
+			data->EventCallback(event);
+		});
+		
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));

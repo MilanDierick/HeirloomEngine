@@ -13,8 +13,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Heirloom/thirdparty/GLFW/include"
+IncludeDir["glad"] = "Heirloom/thirdparty/glad/include"
+IncludeDir["ImGui"] = "Heirloom/thirdparty/imgui"
 
 include "Heirloom/thirdparty/GLFW"
+include "Heirloom/thirdparty/glad"
+include "Heirloom/thirdparty/imgui"
 
 project "Heirloom"
 	location "Heirloom"
@@ -38,12 +42,16 @@ project "Heirloom"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/thirdparty/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.glad}",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links
 	{
 		"GLFW",
+		"Glad",
+		"ImGui",
 		"opengl32.lib"
 	}
 
@@ -55,7 +63,8 @@ project "Heirloom"
 		defines
 		{
 			"HL_PLATFORM_WINDOWS",
-			"HL_BUILD_DLL"
+			"HL_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
@@ -64,12 +73,20 @@ project "Heirloom"
 		}
 
 	filter "configurations:Debug"
-		defines "HL_DEBUG"
+		defines
+		{
+			"HL_DEBUG",
+			"HL_ENABLE_ASSERTS"
+		}
 		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "HL_RELEASE"
+		defines
+		{
+			"HL_RELEASE",
+			"HL_ENABLE_ASSERTS"
+		}
 		buildoptions "/MD"
 		optimize "On"
 
@@ -112,19 +129,28 @@ project "Sandbox"
 
 		defines
 		{
-			"HL_PLATFORM_WINDOWS"
+			"HL_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE"
 		}
-
+	
 	filter "configurations:Debug"
-		defines "HL_DEBUG"
+		defines
+		{
+			"HL_DEBUG",
+			"HL_ENABLE_ASSERTS"
+		}
 		buildoptions "/MDd"
 		symbols "On"
-
+	
 	filter "configurations:Release"
-		defines "HL_RELEASE"
+		defines
+		{
+			"HL_RELEASE",
+			"HL_ENABLE_ASSERTS"
+		}
 		buildoptions "/MD"
 		optimize "On"
-
+	
 	filter "configurations:Dist"
 		defines "HL_DIST"
 		buildoptions "/MD"

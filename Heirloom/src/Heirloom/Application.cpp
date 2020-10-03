@@ -1,12 +1,18 @@
 ﻿#include "hlpch.h"
 #include "Application.h"
+#include "glad/glad.h"
 
 namespace Heirloom
 {
 	#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
+	Application* Application::s_Instance = nullptr;
+	
 	Application::Application()
 	{
+		HL_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
+		
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 	}
@@ -22,7 +28,7 @@ namespace Heirloom
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			for (auto it = m_LayerStack.cbegin(); it != m_LayerStack.cend(); ++it)
+			for (auto it = m_LayerStack.CBegin(); it != m_LayerStack.CEnd(); ++it)
 			{
 				(*it)->OnUpdate();
 			}
@@ -36,9 +42,7 @@ namespace Heirloom
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
-		HL_CORE_TRACE("{0}", e.ToString());
-
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+		for (auto it = m_LayerStack.End(); it != m_LayerStack.Begin(); )
 		{
 			(*--it)->OnEvent(e);
 			if (e.Handled)
@@ -49,11 +53,13 @@ namespace Heirloom
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
 		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent e)

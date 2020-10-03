@@ -20,12 +20,16 @@ namespace Heirloom
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+
+		static Application& Get() { return *s_Instance; }
+		Window& GetWindow() const { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent e);
 		
 		std::unique_ptr<Window> m_Window;
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;
+		static Application* s_Instance;	
 	};
 
 	// To be defined in CLIENT

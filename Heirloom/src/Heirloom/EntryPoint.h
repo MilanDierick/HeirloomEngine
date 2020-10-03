@@ -4,7 +4,6 @@
 
 extern Heirloom::Application* Heirloom::CreateApplication();
 
-// ReSharper disable once CppNonInlineFunctionDefinitionInHeaderFile
 int main(int arc, char** argv)
 {
 	Heirloom::Log::Init();
@@ -14,6 +13,8 @@ int main(int arc, char** argv)
 	Heirloom::Application* app = Heirloom::CreateApplication();
 	app->Run();
 	delete app;
+
+	return EXIT_SUCCESS;
 }
 
 #endif
