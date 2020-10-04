@@ -17,11 +17,11 @@ workspace "HeirloomEngine"
 	IncludeDir["glad"] = "Heirloom/thirdparty/glad/include"
 	IncludeDir["ImGui"] = "Heirloom/thirdparty/imgui"
 	
-	include "Heirloom/thirdparty/GLFW"
-	include "Heirloom/thirdparty/glad"
-	include "Heirloom/thirdparty/imgui"
-
-	--startproject "Sandbox"
+	group "Dependencies"
+		include "Heirloom/thirdparty/GLFW"
+		include "Heirloom/thirdparty/glad"
+		include "Heirloom/thirdparty/imgui"
+	group ""
 
 project "Heirloom"
 	location "Heirloom"
