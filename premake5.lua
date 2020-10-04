@@ -77,8 +77,7 @@ project "Heirloom"
 	filter "configurations:Debug"
 		defines
 		{
-			"HL_DEBUG",
-			"HL_ENABLE_ASSERTS"
+			"HL_DEBUG"
 		}
 		buildoptions "/MDd"
 		symbols "On"
@@ -86,8 +85,7 @@ project "Heirloom"
 	filter "configurations:Release"
 		defines
 		{
-			"HL_RELEASE",
-			"HL_ENABLE_ASSERTS"
+			"HL_RELEASE"
 		}
 		buildoptions "/MD"
 		optimize "On"
@@ -138,8 +136,7 @@ project "Sandbox"
 	filter "configurations:Debug"
 		defines
 		{
-			"HL_DEBUG",
-			"HL_ENABLE_ASSERTS"
+			"HL_DEBUG"
 		}
 		buildoptions "/MDd"
 		symbols "On"
@@ -147,8 +144,7 @@ project "Sandbox"
 	filter "configurations:Release"
 		defines
 		{
-			"HL_RELEASE",
-			"HL_ENABLE_ASSERTS"
+			"HL_RELEASE"
 		}
 		buildoptions "/MD"
 		optimize "On"
