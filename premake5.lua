@@ -20,6 +20,8 @@ include "Heirloom/thirdparty/GLFW"
 include "Heirloom/thirdparty/glad"
 include "Heirloom/thirdparty/imgui"
 
+startproject "Sandbox"
+
 project "Heirloom"
 	location "Heirloom"
 	kind "SharedLib"
@@ -69,7 +71,7 @@ project "Heirloom"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
