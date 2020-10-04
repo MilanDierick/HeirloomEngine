@@ -8,19 +8,19 @@ workspace "HeirloomEngine"
 		"Dist"
 	}
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	
+	-- Include directories relative to root folder (solution directory)
+	IncludeDir = {}
+	IncludeDir["GLFW"] = "Heirloom/thirdparty/GLFW/include"
+	IncludeDir["glad"] = "Heirloom/thirdparty/glad/include"
+	IncludeDir["ImGui"] = "Heirloom/thirdparty/imgui"
+	
+	include "Heirloom/thirdparty/GLFW"
+	include "Heirloom/thirdparty/glad"
+	include "Heirloom/thirdparty/imgui"
 
--- Include directories relative to root folder (solution directory)
-IncludeDir = {}
-IncludeDir["GLFW"] = "Heirloom/thirdparty/GLFW/include"
-IncludeDir["glad"] = "Heirloom/thirdparty/glad/include"
-IncludeDir["ImGui"] = "Heirloom/thirdparty/imgui"
-
-include "Heirloom/thirdparty/GLFW"
-include "Heirloom/thirdparty/glad"
-include "Heirloom/thirdparty/imgui"
-
-startproject "Sandbox"
+	--startproject "Sandbox"
 
 project "Heirloom"
 	location "Heirloom"
