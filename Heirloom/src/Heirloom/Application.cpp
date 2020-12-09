@@ -1,5 +1,6 @@
 ﻿#include "hlpch.h"
 #include "Application.h"
+#include "Input.h"
 #include "glad/glad.h"
 
 namespace Heirloom
@@ -32,6 +33,9 @@ namespace Heirloom
 			{
 				(*it)->OnUpdate();
 			}
+
+			auto [x, y] = Input::GetMousePosition();
+			HL_CORE_TRACE("{0}, {1}", x, y);
 			
 			m_Window->OnUpdate();
 		}
@@ -42,7 +46,7 @@ namespace Heirloom
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
-		for (auto it = m_LayerStack.End(); it != m_LayerStack.Begin(); )
+		for (std::vector<Layer*>::iterator it = m_LayerStack.End(); it != m_LayerStack.Begin(); )
 		{
 			(*--it)->OnEvent(e);
 			if (e.Handled)

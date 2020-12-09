@@ -20,7 +20,7 @@ workspace "HeirloomEngine"
 	group "Dependencies"
 		include "Heirloom/thirdparty/GLFW"
 		include "Heirloom/thirdparty/glad"
-		include "Heirloom/thirdparty/imgui"
+		include "Heirloom/thirdparty/imgui"	
 	group ""
 
 project "Heirloom"

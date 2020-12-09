@@ -7,9 +7,9 @@
 		#define HL_API __declspec(dllimport)
 	#endif
 #elif HL_PLATFORM_LINUX
-	#error Heirloom currently only supports Windows!
+	#error Linux support is currently not implemented!
 #else
-    #error Linux support is not yet implemented!
+	#error Heirloom currently only supports Windows!
 #endif
 
 #ifdef HL_DEBUG

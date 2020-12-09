@@ -4,7 +4,7 @@
 
 extern Heirloom::Application* Heirloom::CreateApplication();
 
-int main(int arc, char** argv)
+inline int main(int arc, char** argv)
 {
 	Heirloom::Log::Init();
 	HL_CORE_WARN("Initialized Log!");
