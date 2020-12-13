@@ -16,6 +16,7 @@ workspace "HeirloomEngine"
 	IncludeDir["GLFW"] = "Heirloom/thirdparty/GLFW/include"
 	IncludeDir["glad"] = "Heirloom/thirdparty/glad/include"
 	IncludeDir["ImGui"] = "Heirloom/thirdparty/imgui"
+	IncludeDir["glm"] = "Heirloom/thirdparty/glm"
 	
 	group "Dependencies"
 		include "Heirloom/thirdparty/GLFW"
@@ -48,7 +49,8 @@ project "Heirloom"
 		"%{prj.name}/thirdparty/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -116,7 +118,8 @@ project "Sandbox"
 		"Heirloom/thirdparty/spdlog/include",
 		"Heirloom/include",
 		"Heirloom/src",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.glm}"
 	}
 
 	links
