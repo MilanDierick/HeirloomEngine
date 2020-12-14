@@ -5,6 +5,7 @@
 #include "LayerStack.h"
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Heirloom
 {
@@ -14,7 +15,7 @@ namespace Heirloom
 		Application();
 		virtual ~Application();
 
-		void Run() const;
+		void Run();
 
 		void OnEvent(Event& e);
 
@@ -27,6 +28,7 @@ namespace Heirloom
 		bool OnWindowClose(WindowCloseEvent e);
 		
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;	

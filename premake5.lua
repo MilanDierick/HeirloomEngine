@@ -118,6 +118,7 @@ project "Sandbox"
 		"Heirloom/thirdparty/spdlog/include",
 		"Heirloom/include",
 		"Heirloom/src",
+		"Heirloom/thirdparty",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glm}"
 	}

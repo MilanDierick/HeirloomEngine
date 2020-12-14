@@ -2,13 +2,10 @@
 #include "WindowsWindow.h"
 
 
-#include "ImGuiGLFWBindings.h"
 #include "Heirloom/Events/ApplicationEvent.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Events/MouseEvent.h"
-
 #include "glad/glad.h"
-#include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
 
 namespace Heirloom
 {

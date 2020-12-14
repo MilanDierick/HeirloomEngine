@@ -13,7 +13,7 @@
 
 #include "Heirloom/Core.h"
 #include "Heirloom/Log.h"
-#include "GLFW/glfw3.h"
+// #include "GLFW/glfw3.h"
 
 #ifdef HL_PLATFORM_WINDOWS
 	#include <Windows.h>
