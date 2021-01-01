@@ -1,4 +1,5 @@
 #include "Heirloom.h"
+#include "imgui/imgui.h"
 
 class ExampleLayer final : public Heirloom::Layer
 {
@@ -13,6 +14,13 @@ public:
 		{
 			HL_INFO("Tab key is pressed!");
 		}
+	}
+
+	void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 
 	void OnEvent(Heirloom::Event& event) override
@@ -33,6 +41,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer);
+		HL_INFO("Initialized Sandbox application");
 	}
 
 	~Sandbox()

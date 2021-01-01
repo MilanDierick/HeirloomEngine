@@ -1,10 +1,14 @@
 ﻿#pragma once
 
 #ifdef HL_PLATFORM_WINDOWS
-	#ifdef HL_BUILD_DLL
-		#define HL_API __declspec(dllexport)
+	#ifdef HL_DYNAMIC_LINK
+		#ifdef HL_BUILD_DLL
+			#define HL_API __declspec(dllexport)
+		#else
+			#define HL_API __declspec(dllimport)
+		#endif
 	#else
-		#define HL_API __declspec(dllimport)
+		#define HL_API
 	#endif
 #elif HL_PLATFORM_LINUX
 	#error Linux support is currently not implemented!
