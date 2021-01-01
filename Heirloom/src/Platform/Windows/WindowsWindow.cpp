@@ -1,11 +1,10 @@
 ﻿#include "hlpch.h"
 #include "WindowsWindow.h"
 
-
 #include "Heirloom/Events/ApplicationEvent.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Events/MouseEvent.h"
-#include "glad/glad.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Heirloom
 {
@@ -34,7 +33,7 @@ namespace Heirloom
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(const bool enabled)
@@ -63,7 +62,7 @@ namespace Heirloom
 		m_Data.Height = props.Height;
 
 		HL_CORE_INFO("Creating window {0} ({1} {2})", props.Title, props.Width, props.Height);
-
+		
 		if (!s_GLFWInitialized)
 		{
 			// TODO: glfwTerminate on system shutdown
@@ -76,9 +75,9 @@ namespace Heirloom
 		m_Window = glfwCreateWindow(static_cast<int>(props.Width), static_cast<int>(props.Height),
 		                            m_Data.Title.c_str(), nullptr, nullptr);
 
-		glfwMakeContextCurrent(m_Window);
-		const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-		HL_CORE_ASSERT(status, "Failed to initialize Glad!");
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
