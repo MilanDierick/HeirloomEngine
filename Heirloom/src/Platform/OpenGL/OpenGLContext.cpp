@@ -14,16 +14,14 @@ void Heirloom::OpenGLContext::Init()
 	glfwMakeContextCurrent(m_WindowHandle);
 	const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
 	HL_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+	HL_CORE_INFO("OpenGL Info:");
+	HL_CORE_INFO("    Vendor: {0}", glGetString(GL_VENDOR));
+	HL_CORE_INFO("    Renderer: {0}", glGetString(GL_RENDERER));
+	HL_CORE_INFO("    Version: {0}", glGetString(GL_VERSION));
 }
 
 void Heirloom::OpenGLContext::SwapBuffers()
 {
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glBegin(GL_TRIANGLES);
-	glVertex2f(-1.0f, -1.0f);
-	glVertex2f(0.0f, 1.0f);
-	glVertex2f(1.0f, -1.0f);
-	glEnd();
-	
-	glfwSwapBuffers(m_WindowHandle);
+	glfwSwapBuffers(m_WindowHandle); 
 }
