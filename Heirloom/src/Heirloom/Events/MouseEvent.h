@@ -2,8 +2,8 @@
 
 #include "Event.h"
 
-namespace Heirloom {
-
+namespace Heirloom
+{
 	class HL_API MouseMovedEvent final : public Event
 	{
 	public:
@@ -94,5 +94,4 @@ namespace Heirloom {
 
 		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};
-
 }

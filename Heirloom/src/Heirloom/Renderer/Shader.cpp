@@ -34,7 +34,7 @@ Heirloom::Shader::Shader(const std::string& vertexSource, const std::string& fra
 		// TODO: Test this!
 		HL_CORE_ERROR("{0}", infoLog.data());
 		HL_CORE_ASSERT(false, "Vertex shader compilation failure!");
-		
+
 		return;
 	}
 
@@ -63,11 +63,11 @@ Heirloom::Shader::Shader(const std::string& vertexSource, const std::string& fra
 		glDeleteShader(fragmentShader);
 		// Either of them. Don't leak shaders.
 		glDeleteShader(vertexShader);
-		
+
 		// TODO: Test this!
 		HL_CORE_ERROR("{0}", infoLog.data());
 		HL_CORE_ASSERT(false, "Fragment shader compilation failure!");
-		
+
 		return;
 	}
 
@@ -104,7 +104,7 @@ Heirloom::Shader::Shader(const std::string& vertexSource, const std::string& fra
 		// TODO: Test this!
 		HL_CORE_ERROR("{0}", infoLog.data());
 		HL_CORE_ASSERT(false, "Shader link failure!");
-		
+
 		return;
 	}
 

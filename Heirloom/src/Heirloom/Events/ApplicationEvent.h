@@ -7,9 +7,7 @@ namespace Heirloom
 	class HL_API WindowResizeEvent final : public Event
 	{
 	public:
-		WindowResizeEvent(const unsigned int width, const unsigned int height) : m_Width(width), m_Height(height)
-		{
-		}
+		WindowResizeEvent(const unsigned int width, const unsigned int height) : m_Width(width), m_Height(height) { }
 
 		unsigned int GetWidth() const { return m_Width; }
 		unsigned int GetHeight() const { return m_Height; }
@@ -32,9 +30,7 @@ namespace Heirloom
 	class HL_API WindowCloseEvent final : public Event
 	{
 	public:
-		WindowCloseEvent()
-		{
-		}
+		WindowCloseEvent() { }
 
 		EVENT_CLASS_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
@@ -43,9 +39,7 @@ namespace Heirloom
 	class HL_API AppTickEvent final : public Event
 	{
 	public:
-		AppTickEvent()
-		{
-		}
+		AppTickEvent() { }
 
 		EVENT_CLASS_TYPE(AppTick)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
@@ -54,9 +48,7 @@ namespace Heirloom
 	class HL_API AppUpdateEvent final : public Event
 	{
 	public:
-		AppUpdateEvent()
-		{
-		}
+		AppUpdateEvent() { }
 
 		EVENT_CLASS_TYPE(AppUpdate)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
@@ -65,9 +57,7 @@ namespace Heirloom
 	class HL_API AppRenderEvent final : public Event
 	{
 	public:
-		AppRenderEvent()
-		{
-		}
+		AppRenderEvent() { }
 
 		EVENT_CLASS_TYPE(AppRender)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)

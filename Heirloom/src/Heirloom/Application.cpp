@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "imgui.h"
+
 #include "glad/glad.h"
 
 namespace Heirloom
@@ -9,12 +10,12 @@ namespace Heirloom
 	#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
-	
+
 	Application::Application()
 	{
 		HL_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
-		
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
@@ -47,7 +48,8 @@ namespace Heirloom
 		unsigned int indices[3] = {0, 1, 2};
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
 
-		const std::string vertexSource = R"(
+		const std::string vertexSource =
+			R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
@@ -62,7 +64,8 @@ namespace Heirloom
 
 		)";
 
-		const std::string fragmentSource = R"(
+		const std::string fragmentSource =
+			R"(
 			#version 330 core
 
 			layout(location = 0) out vec4 color;
@@ -75,13 +78,11 @@ namespace Heirloom
 			}
 
 		)";
-		
+
 		m_Shader.reset(new Shader(vertexSource, fragmentSource));
 	}
 
-	Application::~Application()
-	{
-	}
+	Application::~Application() { }
 
 	void Application::Run()
 	{
@@ -93,15 +94,15 @@ namespace Heirloom
 			m_Shader->Bind();
 			glBindVertexArray(m_VertexArray);
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
-			
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
-			
+
 			m_ImGuiLayer->Begin();
-			
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();
-			
+
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
@@ -113,14 +114,14 @@ namespace Heirloom
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
-		for (std::vector<Layer*>::iterator it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+		for (std::vector<Layer*>::iterator it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
 			(*--it)->OnEvent(e);
 			if (e.Handled)
 				break;
 		}
 	}
-	
+
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);

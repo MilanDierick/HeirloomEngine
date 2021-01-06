@@ -1,20 +1,18 @@
 ﻿#pragma once
 
-#include <iostream>
-#include <memory>
-#include <utility>
 #include <algorithm>
 #include <functional>
-
-#include <string>
+#include <iostream>
+#include <memory>
 #include <sstream>
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
 
 #include "Heirloom/Core.h"
 #include "Heirloom/Log.h"
-// #include "GLFW/glfw3.h"
 
 #ifdef HL_PLATFORM_WINDOWS
-	#include <Windows.h>
+#include <Windows.h>
 #endif

@@ -10,11 +10,9 @@ namespace Heirloom
 		unsigned int Height;
 
 		explicit WindowProps(const std::string& title  = "Heirloom Engine", const unsigned int width = 1280,
-		                      const unsigned int height = 720) : Title(title), Width(width), Height(height)
-		{
-		}
+		                     const unsigned int height = 720) : Title(title), Width(width), Height(height) { }
 	};
-	
+
 	// Interface representing a desktop system based window
 	class HL_API Window
 	{
@@ -33,7 +31,7 @@ namespace Heirloom
 		virtual bool IsVSync() const = 0;
 
 		virtual void* GetNativeWindow() const = 0;
-		
+
 		static Window* Create(const WindowProps& props = WindowProps());
 	};
 }

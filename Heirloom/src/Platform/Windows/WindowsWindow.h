@@ -1,6 +1,7 @@
 ﻿#pragma once
-#include "Heirloom/Window.h"
 #include "GLFW/glfw3.h"
+
+#include "Heirloom/Window.h"
 #include "Heirloom/Renderer/GraphicsContext.h"
 
 namespace Heirloom
@@ -27,7 +28,7 @@ namespace Heirloom
 		void Shutdown() const;
 
 		GLFWwindow* m_Window;
-		GraphicsContext *m_Context;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
@@ -39,6 +40,6 @@ namespace Heirloom
 			EventCallbackFn EventCallback;
 		};
 
-		WindowData m_Data;		
+		WindowData m_Data;
 	};
 }

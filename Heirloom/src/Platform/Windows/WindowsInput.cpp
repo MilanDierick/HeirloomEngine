@@ -8,7 +8,7 @@
 namespace Heirloom
 {
 	Input* Input::s_Instance = new WindowsInput();
-	
+
 	bool WindowsInput::IsKeyPressedImpl(const int keycode)
 	{
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
@@ -36,14 +36,14 @@ namespace Heirloom
 
 	bool WindowsInput::GetMouseXImpl()
 	{
-		auto[x, y] = GetMousePositionImpl();
+		auto [x, y] = GetMousePositionImpl();
 
 		return static_cast<float>(x);
 	}
 
 	bool WindowsInput::GetMouseYImpl()
 	{
-		auto[x, y] = GetMousePositionImpl();
+		auto [x, y] = GetMousePositionImpl();
 
 		return static_cast<float>(y);
 	}

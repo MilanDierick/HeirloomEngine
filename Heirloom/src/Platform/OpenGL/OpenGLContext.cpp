@@ -2,6 +2,7 @@
 #include "OpenGLContext.h"
 
 #include "glad/glad.h"
+
 #include "GLFW/glfw3.h"
 
 Heirloom::OpenGLContext::OpenGLContext(GLFWwindow* const windowHandle): m_WindowHandle(windowHandle)
@@ -23,5 +24,5 @@ void Heirloom::OpenGLContext::Init()
 
 void Heirloom::OpenGLContext::SwapBuffers()
 {
-	glfwSwapBuffers(m_WindowHandle); 
+	glfwSwapBuffers(m_WindowHandle);
 }

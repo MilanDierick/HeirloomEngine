@@ -4,6 +4,7 @@
 #include "Heirloom/Events/ApplicationEvent.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Events/MouseEvent.h"
+
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Heirloom
@@ -62,7 +63,7 @@ namespace Heirloom
 		m_Data.Height = props.Height;
 
 		HL_CORE_INFO("Creating window {0} ({1} {2})", props.Title, props.Width, props.Height);
-		
+
 		if (!s_GLFWInitialized)
 		{
 			// TODO: glfwTerminate on system shutdown
@@ -106,27 +107,27 @@ namespace Heirloom
 
 			switch (action)
 			{
-			case GLFW_PRESS:
+				case GLFW_PRESS:
 				{
 					KeyPressedEvent event(key, 0);
 					data->EventCallback(event);
 					break;
 				}
-			case GLFW_RELEASE:
+				case GLFW_RELEASE:
 				{
 					KeyReleasedEvent event(key);
 					data->EventCallback(event);
 					break;
 				}
-			case GLFW_REPEAT:
+				case GLFW_REPEAT:
 				{
 					KeyPressedEvent event(key, 1);
 					data->EventCallback(event);
 					break;
 				}
-			default:
-				//HL_CORE_ERROR("Tried to process missing GLFW key action");
-				break;
+				default:
+					//HL_CORE_ERROR("Tried to process missing GLFW key action");
+					break;
 			}
 		});
 
@@ -138,28 +139,28 @@ namespace Heirloom
 
 			data->EventCallback(event);
 		});
-		
+
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
 			switch (action)
 			{
-			case GLFW_PRESS:
+				case GLFW_PRESS:
 				{
 					MouseButtonPressedEvent event(button);
 					data->EventCallback(event);
 					break;
 				}
-			case GLFW_RELEASE:
+				case GLFW_RELEASE:
 				{
 					MouseButtonReleasedEvent event(button);
 					data->EventCallback(event);
 					break;
 				}
-			default:
-				//HL_CORE_ERROR("Tried to process missing GLFW key action");
-				break;
+				default:
+					//HL_CORE_ERROR("Tried to process missing GLFW key action");
+					break;
 			}
 		});
 

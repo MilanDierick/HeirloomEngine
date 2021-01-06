@@ -10,5 +10,5 @@ namespace Heirloom
 
 	protected:
 		~GraphicsContext() = default;
-	};	
+	};
 }

@@ -18,7 +18,7 @@ namespace Heirloom
 		std::vector<Layer*>::iterator end() { return m_Layers.end(); }
 		std::vector<Layer*>::const_iterator cbegin() const { return m_Layers.cbegin(); }
 		std::vector<Layer*>::const_iterator cend() const { return m_Layers.cend(); }
-		private:
+	private:
 		std::vector<Layer*> m_Layers;
 		unsigned int m_LayerInsertIndex;
 	};
