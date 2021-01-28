@@ -11,9 +11,13 @@ namespace Heirloom
 
 		void Bind() const override;
 		void Unbind() const override;
-	
+
+		const BufferLayout& GetLayout() const override { return m_Layout; }
+		void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
+
 	private:
 		uint32_t m_RendererID;
+		BufferLayout m_Layout;
 	};
 
 	class OpenGLIndexBuffer final : public IndexBuffer
@@ -26,9 +30,22 @@ namespace Heirloom
 		void Unbind() const override;
 
 		uint32_t GetCount() const override { return m_Count; }
-	
+
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_Count;
+	};
+
+	class OpenGLVertexArray final : public VertexArray
+	{
+	public:
+		OpenGLVertexArray();
+		virtual ~OpenGLVertexArray();
+
+		void Bind() const override;
+		void Unbind() const override;
+
+	private:
+		uint32_t m_RendererID;
 	};
 }

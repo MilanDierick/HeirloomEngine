@@ -34,3 +34,18 @@ Heirloom::IndexBuffer* Heirloom::IndexBuffer::Create(uint32_t* indices, const ui
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");
 	return nullptr;
 }
+
+Heirloom::VertexArray* Heirloom::VertexArray::Create()
+{
+	switch (Renderer::GetAPI())
+	{
+		case RendererAPI::None:
+			HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+		return nullptr;
+		case RendererAPI::OpenGL:
+			return new OpenGLVertexArray();
+	}
+
+	HL_CORE_ASSERT(false, "Unknown RendererAPI!");
+	return nullptr;
+}
