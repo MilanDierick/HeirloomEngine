@@ -13,6 +13,6 @@ void Heirloom::Renderer::EndScene()
 
 void Heirloom::Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray)
 {
-	// vertexArray->Bind();
+	vertexArray->Bind();
 	RenderCommand::DrawIndexed(vertexArray);
 }
