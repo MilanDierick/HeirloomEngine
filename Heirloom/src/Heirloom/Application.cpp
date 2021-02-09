@@ -57,7 +57,7 @@ namespace Heirloom
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof vertices));
 
 		// TODO: This is all temporary code, this needs to be moved to VertexArray
-		BufferLayout layout = {
+		const BufferLayout layout = {
 			{ShaderDataType::Float3, "a_Position"},
 			{ShaderDataType::Float4, "a_Color"},
 		};
