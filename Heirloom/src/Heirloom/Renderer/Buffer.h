@@ -51,6 +51,7 @@ namespace Heirloom
 		bool Normalized;
 
 		BufferElement(): Type(ShaderDataType::None), Offset(0), Size(0), Normalized(false) {}
+
 		BufferElement(const ShaderDataType type, const std::string& name, const bool normalized = false) :
 			Type(type), Name(name), Offset(0),
 			Size(ShaderDataTypeSize(type)),
@@ -84,6 +85,7 @@ namespace Heirloom
 	{
 	public:
 		BufferLayout() {}
+
 		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
 		{
 			CalculateOffsetsAndStride();
@@ -91,7 +93,7 @@ namespace Heirloom
 
 		const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 		uint32_t GetStride() const { return m_Stride; }
-		
+
 		// ReSharper disable CppInconsistentNaming
 		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
 		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
@@ -142,16 +144,5 @@ namespace Heirloom
 		virtual uint32_t GetCount() const = 0;
 
 		static IndexBuffer* Create(uint32_t* indices, uint32_t size);
-	};
-
-	class VertexArray
-	{
-	public:
-		virtual ~VertexArray() {}
-
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
-
-		static VertexArray* Create();
 	};
 }

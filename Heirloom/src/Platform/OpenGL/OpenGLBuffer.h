@@ -35,17 +35,4 @@ namespace Heirloom
 		uint32_t m_RendererID;
 		uint32_t m_Count;
 	};
-
-	class OpenGLVertexArray final : public VertexArray
-	{
-	public:
-		OpenGLVertexArray();
-		virtual ~OpenGLVertexArray();
-
-		void Bind() const override;
-		void Unbind() const override;
-
-	private:
-		uint32_t m_RendererID;
-	};
 }

@@ -54,28 +54,3 @@ void Heirloom::OpenGLIndexBuffer::Unbind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
-
-// =================================================================================================================
-// ==== VertexBuffer ===============================================================================================
-// =================================================================================================================
-
-Heirloom::OpenGLVertexArray::OpenGLVertexArray()
-{
-	glGenVertexArrays(1, &m_RendererID);
-	glBindVertexArray(m_RendererID);
-}
-
-Heirloom::OpenGLVertexArray::~OpenGLVertexArray()
-{
-	glDeleteBuffers(1, &m_RendererID);
-}
-
-void Heirloom::OpenGLVertexArray::Bind() const
-{
-	
-}
-
-void Heirloom::OpenGLVertexArray::Unbind() const
-{
-	
-}
