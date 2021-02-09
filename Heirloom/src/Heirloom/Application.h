@@ -7,9 +7,8 @@
 
 #include "Events/ApplicationEvent.h"
 
-#include "ImGui/ImGuiLayer.h"
+#include "ImGui/ImGuiLayer.h""
 
-#include "Renderer/Buffer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/VertexArray.h"
 
@@ -43,7 +42,6 @@ namespace Heirloom
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_VertexArray;
 		std::shared_ptr<VertexArray> m_SquareVA;
-
 	};
 
 	// To be defined in CLIENT

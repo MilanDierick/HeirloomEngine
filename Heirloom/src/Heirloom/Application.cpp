@@ -1,9 +1,7 @@
 ﻿#include "hlpch.h"
 #include "Application.h"
 
-#include "imgui.h"
-
-#include "glad/glad.h"
+#include "Renderer/Renderer.h"
 
 namespace Heirloom
 {
@@ -59,7 +57,7 @@ namespace Heirloom
 		};
 
 		std::shared_ptr<VertexBuffer> squareVB;
-		squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB.reset(VertexBuffer::Create(squareVertices, sizeof squareVertices));
 		squareVB->SetLayout({
             { ShaderDataType::Float3, "a_Position" }
         });
@@ -67,7 +65,7 @@ namespace Heirloom
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		std::shared_ptr<IndexBuffer> squareIB;
-		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof squareIndices / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		const std::string vertexSource =
@@ -147,16 +145,18 @@ namespace Heirloom
 	{
 		while (m_IsRunning)
 		{
-			glClearColor(0.1f, 0.1f, 0.1f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
+			RenderCommand::Clear();
+			
+			Renderer::BeginScene();
 
 			m_BlueShader->Bind();
-			m_SquareVA->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_SquareVA);
 
 			m_Shader->Bind();
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_VertexArray);
+			
+			Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
