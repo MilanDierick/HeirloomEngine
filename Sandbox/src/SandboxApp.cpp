@@ -1,17 +1,13 @@
 #include "Heirloom.h"
-
-
 #include "Heirloom/Application.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Renderer/OrthographicCamera.h"
-
-
 #include "imgui/imgui.h"
 
 class ExampleLayer final : public Heirloom::Layer
 {
 public:
-	ExampleLayer() : Layer("Example")
+	ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
 	{
 		#pragma region Initializing vertex arrays
 		// Vertex Array
@@ -26,7 +22,6 @@ public:
 		std::shared_ptr<Heirloom::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Heirloom::VertexBuffer::Create(vertices, sizeof vertices));
 
-		// TODO: This is all temporary code, this needs to be moved to VertexArray
 		const Heirloom::BufferLayout layout = {
 			{Heirloom::ShaderDataType::Float3, "a_Position"},
 			{Heirloom::ShaderDataType::Float4, "a_Color"},
@@ -142,66 +137,50 @@ public:
 	void OnDetach() override { }
 	
 	void OnUpdate() override
-	{		
+	{
+
+		if (Heirloom::Input::IsKeyPressed(HL_KEY_RIGHT))
+			m_CameraPosition.x += m_CameraMoveSpeed;
+		
+		else if (Heirloom::Input::IsKeyPressed(HL_KEY_LEFT))
+			m_CameraPosition.x -= m_CameraMoveSpeed;
+
+		if (Heirloom::Input::IsKeyPressed(HL_KEY_UP))
+			m_CameraPosition.y += m_CameraMoveSpeed;
+		
+		else if (Heirloom::Input::IsKeyPressed(HL_KEY_DOWN))
+			m_CameraPosition.y -= m_CameraMoveSpeed;
+
+		if (Heirloom::Input::IsKeyPressed(HL_KEY_Q))
+			m_CameraRotation += m_CameraRotationSpeed;
+			
+		else if (Heirloom::Input::IsKeyPressed(HL_KEY_E))
+			m_CameraRotation -= m_CameraRotationSpeed;
+		
+		Heirloom::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
+		Heirloom::RenderCommand::Clear();
+
+		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera.SetRotation(m_CameraRotation);
+		
+		Heirloom::Renderer::BeginScene(m_Camera);
+		
 		Heirloom::Renderer::Submit(m_BlueShader, m_SquareVA);
 		Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
+
+		Heirloom::Renderer::EndScene();
 	}
 
-	void OnImGuiRender() override
-	{
-		ImGui::Begin("Test");
-		ImGui::Text("Hello World");
-		ImGui::End();
-	}
-
-	void OnEvent(Heirloom::Event& event) override
-	{
-		// HL_TRACE("{0}", event.ToString());
-
-		// if (event.GetEventType() == Heirloom::EventType::KeyPressed)
-		// {
-		// 	Heirloom::KeyPressedEvent& e = static_cast<Heirloom::KeyPressedEvent&>(event);
-		// 	HL_TRACE("{0}", static_cast<char>(e.GetKeyCode()));
-		// }
-
-		if (event.GetEventType() == Heirloom::EventType::KeyPressed)
-		{
-			Heirloom::KeyPressedEvent& e = static_cast<Heirloom::KeyPressedEvent&>(event);
-			
-			glm::vec3 cameraPosition = Heirloom::Application::Get().GetCamera()->GetPosition();
-			float cameraRotation = Heirloom::Application::Get().GetCamera()->GetRotation();
-
-			if (e.GetKeyCode() == HL_KEY_W)
-			{
-				cameraPosition.y += 0.25;
-			}
-			else if (e.GetKeyCode() == HL_KEY_S)
-			{
-				cameraPosition.y -= 0.25;
-			}
-			else if (e.GetKeyCode() == HL_KEY_D)
-			{
-				cameraPosition.x += 0.25;
-			}
-			else if (e.GetKeyCode() == HL_KEY_A)
-			{
-				cameraPosition.x -= 0.25;
-			}
-			else if (e.GetKeyCode() == HL_KEY_Q)
-			{
-				cameraRotation -= 45.0f;
-			}
-			else if (e.GetKeyCode() == HL_KEY_E)
-			{
-				cameraRotation += 45.0f;
-			}
-
-			Heirloom::Application::Get().GetCamera()->SetPosition(cameraPosition);
-			Heirloom::Application::Get().GetCamera()->SetRotation(cameraRotation);
-		}
-	}
+	void OnImGuiRender() override { }
+	void OnEvent(Heirloom::Event& event) override { }
 
 private:
+	Heirloom::OrthographicCamera m_Camera;
+	glm::vec3 m_CameraPosition;
+	float m_CameraMoveSpeed = 0.1f;
+	float m_CameraRotation = 0.0f;
+	float m_CameraRotationSpeed = 1.0f;
+	
 	std::shared_ptr<Heirloom::Shader> m_Shader;
 	std::shared_ptr<Heirloom::Shader> m_BlueShader;
 	std::shared_ptr<Heirloom::VertexArray> m_VertexArray;
