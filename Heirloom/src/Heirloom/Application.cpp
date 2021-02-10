@@ -1,5 +1,8 @@
 ﻿#include "hlpch.h"
 #include "Application.h"
+
+#include "GLFW/glfw3.h"
+
 #include "Renderer/Renderer.h"
 
 namespace Heirloom
@@ -26,8 +29,13 @@ namespace Heirloom
 	{
 		while (m_IsRunning)
 		{
+			// TODO: Move this to a platform-dependant file
+			const float time = static_cast<float>(glfwGetTime());
+			const Timestep timestep(time - m_LastFrameTime);
+			m_LastFrameTime = time;
+			
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 

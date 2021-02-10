@@ -4,6 +4,7 @@
 #include "Layer.h"
 #include "LayerStack.h"
 #include "Window.h"
+#include "Core/Timestep.h"
 #include "Events/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/Shader.h"
@@ -48,6 +49,7 @@ namespace Heirloom
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
+		float m_LastFrameTime = 0.0f;
 	};
 
 	/**

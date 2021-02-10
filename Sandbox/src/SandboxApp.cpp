@@ -136,26 +136,27 @@ public:
 	void OnAttach() override { }
 	void OnDetach() override { }
 	
-	void OnUpdate() override
+	void OnUpdate(const Heirloom::Timestep ts) override
 	{
-
+		HL_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());		
+		
 		if (Heirloom::Input::IsKeyPressed(HL_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMoveSpeed;
+			m_CameraPosition.x += m_CameraMoveSpeed * ts;
 		
 		else if (Heirloom::Input::IsKeyPressed(HL_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMoveSpeed;
+			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
 
 		if (Heirloom::Input::IsKeyPressed(HL_KEY_UP))
-			m_CameraPosition.y += m_CameraMoveSpeed;
+			m_CameraPosition.y += m_CameraMoveSpeed * ts;
 		
 		else if (Heirloom::Input::IsKeyPressed(HL_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMoveSpeed;
+			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
 		if (Heirloom::Input::IsKeyPressed(HL_KEY_Q))
-			m_CameraRotation += m_CameraRotationSpeed;
+			m_CameraRotation += m_CameraRotationSpeed * ts;
 			
 		else if (Heirloom::Input::IsKeyPressed(HL_KEY_E))
-			m_CameraRotation -= m_CameraRotationSpeed;
+			m_CameraRotation -= m_CameraRotationSpeed * ts;
 		
 		Heirloom::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
 		Heirloom::RenderCommand::Clear();
@@ -177,9 +178,9 @@ public:
 private:
 	Heirloom::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
-	float m_CameraMoveSpeed = 0.1f;
+	float m_CameraMoveSpeed = 5.0f;
 	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 1.0f;
+	float m_CameraRotationSpeed = 50.0f;
 	
 	std::shared_ptr<Heirloom::Shader> m_Shader;
 	std::shared_ptr<Heirloom::Shader> m_BlueShader;
