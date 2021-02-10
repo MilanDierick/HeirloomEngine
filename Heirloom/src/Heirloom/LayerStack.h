@@ -3,6 +3,9 @@
 
 namespace Heirloom
 {
+	/**
+	 * \brief Manages the different layers
+	 */
 	class HL_API LayerStack
 	{
 	public:

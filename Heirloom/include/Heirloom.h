@@ -9,6 +9,7 @@
 #include "Heirloom/Log.h"
 #include "Heirloom/MouseButtonCodes.h"
 #include "Heirloom/ImGui/ImGuiLayer.h"
+#include "Heirloom/Renderer/Renderer.h"
 
 // --- Entry Point ------------------------
 #include "Heirloom/EntryPoint.h"
