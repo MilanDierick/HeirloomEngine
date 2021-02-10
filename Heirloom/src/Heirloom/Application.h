@@ -9,6 +9,8 @@
 
 #include "ImGui/ImGuiLayer.h"
 
+
+#include "Renderer/OrthographicCamera.h"
 #include "Renderer/Shader.h"
 #include "Renderer/VertexArray.h"
 
@@ -40,6 +42,7 @@ namespace Heirloom
 
 		static Application& Get() { return *s_Instance; }
 		Window& GetWindow() const { return *m_Window; }
+		OrthographicCamera* GetCamera() const { return m_Camera; }
 	private:
 		// Private application methods
 		bool OnWindowClose(WindowCloseEvent e);
@@ -50,6 +53,7 @@ namespace Heirloom
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
+		OrthographicCamera* m_Camera;
 
 		std::shared_ptr<Shader> m_Shader;
 		std::shared_ptr<Shader> m_BlueShader;

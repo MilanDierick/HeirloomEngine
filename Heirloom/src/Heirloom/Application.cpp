@@ -9,7 +9,7 @@ namespace Heirloom
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application() : m_Camera(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f))
 	{
 		HL_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
@@ -29,7 +29,8 @@ namespace Heirloom
 		{
 			RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
 			RenderCommand::Clear();
-		
+			
+			Renderer::BeginScene(*m_Camera);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
@@ -42,6 +43,8 @@ namespace Heirloom
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
+
+			Renderer::EndScene();
 		}
 	}
 

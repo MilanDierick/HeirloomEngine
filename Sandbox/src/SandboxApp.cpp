@@ -1,5 +1,11 @@
 #include "Heirloom.h"
 
+
+#include "Heirloom/Application.h"
+#include "Heirloom/Events/KeyEvent.h"
+#include "Heirloom/Renderer/OrthographicCamera.h"
+
+
 #include "imgui/imgui.h"
 
 class ExampleLayer final : public Heirloom::Layer
@@ -63,6 +69,8 @@ public:
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
+			uniform mat4 u_ViewProjection;
+		
 			out vec3 v_Position;
 			out vec4 v_Color;
 		
@@ -70,7 +78,7 @@ public:
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 
 		)";
@@ -100,12 +108,14 @@ public:
 
 			layout(location = 0) in vec3 a_Position;
 
+			uniform mat4 u_ViewProjection;
+		
 			out vec3 v_Position;
 		
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 
 		)";
@@ -125,30 +135,16 @@ public:
 		)";
 
 		m_BlueShader.reset(new Heirloom::Shader(blueShaderVertexSource, blueFragmentShaderSource));
-		#pragma endregion 
+		#pragma endregion
 	}
 
 	void OnAttach() override { }
 	void OnDetach() override { }
 	
 	void OnUpdate() override
-	{
-		// HL_INFO("ExampleLayer::Update");
-
-		if (Heirloom::Input::IsKeyPressed(HL_KEY_TAB))
-		{
-			HL_INFO("Tab key is pressed!");
-		}
-
-		Heirloom::Renderer::BeginScene();
-
-		m_BlueShader->Bind();
-		Heirloom::Renderer::Submit(m_SquareVA);
-
-		m_Shader->Bind();
-		Heirloom::Renderer::Submit(m_VertexArray);
-
-		Heirloom::Renderer::EndScene();
+	{		
+		Heirloom::Renderer::Submit(m_BlueShader, m_SquareVA);
+		Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
 	}
 
 	void OnImGuiRender() override
@@ -167,6 +163,42 @@ public:
 		// 	Heirloom::KeyPressedEvent& e = static_cast<Heirloom::KeyPressedEvent&>(event);
 		// 	HL_TRACE("{0}", static_cast<char>(e.GetKeyCode()));
 		// }
+
+		if (event.GetEventType() == Heirloom::EventType::KeyPressed)
+		{
+			Heirloom::KeyPressedEvent& e = static_cast<Heirloom::KeyPressedEvent&>(event);
+			
+			glm::vec3 cameraPosition = Heirloom::Application::Get().GetCamera()->GetPosition();
+			float cameraRotation = Heirloom::Application::Get().GetCamera()->GetRotation();
+
+			if (e.GetKeyCode() == HL_KEY_W)
+			{
+				cameraPosition.y += 0.25;
+			}
+			else if (e.GetKeyCode() == HL_KEY_S)
+			{
+				cameraPosition.y -= 0.25;
+			}
+			else if (e.GetKeyCode() == HL_KEY_D)
+			{
+				cameraPosition.x += 0.25;
+			}
+			else if (e.GetKeyCode() == HL_KEY_A)
+			{
+				cameraPosition.x -= 0.25;
+			}
+			else if (e.GetKeyCode() == HL_KEY_Q)
+			{
+				cameraRotation -= 45.0f;
+			}
+			else if (e.GetKeyCode() == HL_KEY_E)
+			{
+				cameraRotation += 45.0f;
+			}
+
+			Heirloom::Application::Get().GetCamera()->SetPosition(cameraPosition);
+			Heirloom::Application::Get().GetCamera()->SetRotation(cameraRotation);
+		}
 	}
 
 private:

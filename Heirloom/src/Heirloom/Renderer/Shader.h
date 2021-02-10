@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/glm.hpp>
 
 namespace Heirloom
 {
@@ -11,6 +12,8 @@ namespace Heirloom
 		void Bind() const;
 		void Unbind() const;
 
+		void UploadUniformMat4(const ::std::string& name, glm::mat4 matrix) const;
+	
 	private:
 		uint32_t m_RendererID;
 	};

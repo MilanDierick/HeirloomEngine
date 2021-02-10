@@ -2,6 +2,8 @@
 #include "Shader.h"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
+#include "Heirloom/Application.h"
 
 // https://www.khronos.org/opengl/wiki/Shader_Compilation
 Heirloom::Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource): m_RendererID(0)
@@ -126,4 +128,10 @@ void Heirloom::Shader::Bind() const
 void Heirloom::Shader::Unbind() const
 {
 	glUseProgram(0);
+}
+
+void Heirloom::Shader::UploadUniformMat4(const std::string& name, const glm::mat4 matrix) const
+{
+	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
