@@ -1,8 +1,11 @@
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.inl>
 #include "Heirloom.h"
 #include "Heirloom/Application.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Renderer/OrthographicCamera.h"
 #include "imgui/imgui.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 class ExampleLayer final : public Heirloom::Layer
 {
@@ -39,10 +42,10 @@ public:
 		m_SquareVA.reset(Heirloom::VertexArray::Create());
 
 		float squareVertices[3 * 4] = {
-			-0.75f, -0.75f, 0.0f,
-			0.75f, -0.75f, 0.0f,
-			0.75f, 0.75f, 0.0f,
-			-0.75f, 0.75f, 0.0f
+			-0.5f, -0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			 0.5f,  0.5f, 0.0f,
+			-0.5f,  0.5f, 0.0f
 		};
 
 		std::shared_ptr<Heirloom::VertexBuffer> squareVB;
@@ -65,7 +68,8 @@ public:
 			layout(location = 1) in vec4 a_Color;
 
 			uniform mat4 u_ViewProjection;
-		
+			uniform mat4 u_Transform;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 		
@@ -73,7 +77,7 @@ public:
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 			}
 
 		)";
@@ -95,27 +99,28 @@ public:
 
 		)";
 
-		m_Shader.reset(new Heirloom::Shader(vertexSource, fragmentSource));
+		m_Shader.reset(Heirloom::Shader::Create(vertexSource, fragmentSource));
 
-		const std::string blueShaderVertexSource =
+		const std::string flatColorShaderVertexSource =
 			R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
 
 			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
 		
 			out vec3 v_Position;
 		
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 			}
 
 		)";
 
-		const std::string blueFragmentShaderSource =
+		const std::string flatColorFragmentShaderSource =
 			R"(
 			#version 330 core
 
@@ -123,13 +128,15 @@ public:
 
 			in vec3 v_Position;
 
+			uniform vec3 u_Color;
+		
 			void main()
 			{
-				color = vec4(0.2, 0.3, 0.8, 1.0);
+				color = vec4(u_Color, 1.0);
 			}
 		)";
 
-		m_BlueShader.reset(new Heirloom::Shader(blueShaderVertexSource, blueFragmentShaderSource));
+		m_FlatColorShader.reset(Heirloom::Shader::Create(flatColorShaderVertexSource, flatColorFragmentShaderSource));
 		#pragma endregion
 	}
 
@@ -138,23 +145,22 @@ public:
 	
 	void OnUpdate(const Heirloom::Timestep ts) override
 	{
-		HL_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());		
-		
+		// HL_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());		
+
+		// Viewport movement
 		if (Heirloom::Input::IsKeyPressed(HL_KEY_RIGHT))
 			m_CameraPosition.x += m_CameraMoveSpeed * ts;
-		
 		else if (Heirloom::Input::IsKeyPressed(HL_KEY_LEFT))
 			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
 
 		if (Heirloom::Input::IsKeyPressed(HL_KEY_UP))
 			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-		
 		else if (Heirloom::Input::IsKeyPressed(HL_KEY_DOWN))
 			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
+		// Viewport rotation
 		if (Heirloom::Input::IsKeyPressed(HL_KEY_Q))
 			m_CameraRotation += m_CameraRotationSpeed * ts;
-			
 		else if (Heirloom::Input::IsKeyPressed(HL_KEY_E))
 			m_CameraRotation -= m_CameraRotationSpeed * ts;
 		
@@ -165,27 +171,49 @@ public:
 		m_Camera.SetRotation(m_CameraRotation);
 		
 		Heirloom::Renderer::BeginScene(m_Camera);
+
+		const glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_FlatColorShader)->Bind();
+		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+
+		for (int y = 0; y < 20; ++y)
+		{
+			for (int x = 0; x < 20; ++x)
+			{
+				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+				const glm::mat4 transform = translate(glm::mat4(1.0f), pos) * scale;
+				Heirloom::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
+			}
+		}
 		
-		Heirloom::Renderer::Submit(m_BlueShader, m_SquareVA);
 		Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Heirloom::Renderer::EndScene();
 	}
 
-	void OnImGuiRender() override { }
+	void OnImGuiRender() override
+	{
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+		ImGui::End();
+	}
+	
 	void OnEvent(Heirloom::Event& event) override { }
 
 private:
 	Heirloom::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
-	float m_CameraMoveSpeed = 5.0f;
+	float m_CameraMoveSpeed = 2.5f;
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 50.0f;
 	
 	std::shared_ptr<Heirloom::Shader> m_Shader;
-	std::shared_ptr<Heirloom::Shader> m_BlueShader;
+	std::shared_ptr<Heirloom::Shader> m_FlatColorShader;
 	std::shared_ptr<Heirloom::VertexArray> m_VertexArray;
 	std::shared_ptr<Heirloom::VertexArray> m_SquareVA;
+
+	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 };
 
 class Sandbox final : public Heirloom::Application
