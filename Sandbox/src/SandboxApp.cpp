@@ -23,7 +23,7 @@ public:
 		};
 
 		Heirloom::Ref<Heirloom::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Heirloom::VertexBuffer::Create(vertices, sizeof vertices));
+		vertexBuffer = Heirloom::VertexBuffer::Create(vertices, sizeof vertices);
 
 		const Heirloom::BufferLayout layout = {
 			{Heirloom::ShaderDataType::Float3, "a_Position"},
@@ -36,28 +36,29 @@ public:
 
 		uint32_t indices[3] = {0, 1, 2};
 		Heirloom::Ref<Heirloom::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Heirloom::IndexBuffer::Create(indices, sizeof indices / sizeof(uint32_t)));
+		indexBuffer = Heirloom::IndexBuffer::Create(indices, sizeof indices / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		m_SquareVA.reset(Heirloom::VertexArray::Create());
 
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		Heirloom::Ref<Heirloom::VertexBuffer> squareVB;
-		squareVB.reset(Heirloom::VertexBuffer::Create(squareVertices, sizeof squareVertices));
+		squareVB = Heirloom::VertexBuffer::Create(squareVertices, sizeof squareVertices);
 		squareVB->SetLayout({
-			                    {Heirloom::ShaderDataType::Float3, "a_Position"}
+			                    {Heirloom::ShaderDataType::Float3, "a_Position"},
+			                    {Heirloom::ShaderDataType::Float2, "a_TexCoord"}
 		                    });
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
 		Heirloom::Ref<Heirloom::IndexBuffer> squareIB;
-		squareIB.reset(Heirloom::IndexBuffer::Create(squareIndices, sizeof squareIndices / sizeof(uint32_t)));
+		squareIB = Heirloom::IndexBuffer::Create(squareIndices, sizeof squareIndices / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		const std::string vertexSource =
@@ -137,12 +138,55 @@ public:
 		)";
 
 		m_FlatColorShader.reset(Heirloom::Shader::Create(flatColorShaderVertexSource, flatColorFragmentShaderSource));
+
+		const std::string textureShaderVertexSource =
+    R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+		
+			out vec2 v_TexCoord;
+		
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+			}
+
+		)";
+
+		const std::string textureFragmentShaderSource =
+            R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TexCoord;
+
+			uniform sampler2D u_Texture;
+		
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		m_TextureShader.reset(Heirloom::Shader::Create(textureShaderVertexSource, textureFragmentShaderSource));
+
+		m_Texture2D = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 		#pragma endregion
 	}
 
 	void OnAttach() override { }
 	void OnDetach() override { }
-	
+
 	void OnUpdate(const Heirloom::Timestep ts) override
 	{
 		// HL_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());		
@@ -163,19 +207,20 @@ public:
 			m_CameraRotation += m_CameraRotationSpeed * ts;
 		else if (Heirloom::Input::IsKeyPressed(HL_KEY_E))
 			m_CameraRotation -= m_CameraRotationSpeed * ts;
-		
+
 		Heirloom::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
 		Heirloom::RenderCommand::Clear();
 
 		m_Camera.SetPosition(m_CameraPosition);
 		m_Camera.SetRotation(m_CameraRotation);
-		
+
 		Heirloom::Renderer::BeginScene(m_Camera);
 
 		const glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
 		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_FlatColorShader)->
+			UploadUniformFloat3("u_Color", m_SquareColor);
 
 		for (int y = 0; y < 20; ++y)
 		{
@@ -186,8 +231,12 @@ public:
 				Heirloom::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
 		}
-		
-		Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
+
+		m_Texture2D->Bind();
+		Heirloom::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+
+		// Triangle
+		// Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Heirloom::Renderer::EndScene();
 	}
@@ -198,22 +247,24 @@ public:
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
 		ImGui::End();
 	}
-	
+
 	void OnEvent(Heirloom::Event& event) override { }
 
 private:
 	Heirloom::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
-	float m_CameraMoveSpeed = 2.5f;
-	float m_CameraRotation = 0.0f;
+	float m_CameraMoveSpeed     = 2.5f;
+	float m_CameraRotation      = 0.0f;
 	float m_CameraRotationSpeed = 50.0f;
-	
+
 	Heirloom::Ref<Heirloom::Shader> m_Shader;
-	Heirloom::Ref<Heirloom::Shader> m_FlatColorShader;
+	Heirloom::Ref<Heirloom::Shader> m_FlatColorShader, m_TextureShader;
 	Heirloom::Ref<Heirloom::VertexArray> m_VertexArray;
 	Heirloom::Ref<Heirloom::VertexArray> m_SquareVA;
 
-	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
+	Heirloom::Ref<Heirloom::Texture2D> m_Texture2D;
+
+	glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
 };
 
 class Sandbox final : public Heirloom::Application

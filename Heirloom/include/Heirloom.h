@@ -12,6 +12,7 @@
 #include "Heirloom/ImGui/ImGuiLayer.h"
 #include "Heirloom/Renderer/OrthographicCamera.h"
 #include "Heirloom/Renderer/Renderer.h"
+#include "Heirloom/Renderer/Texture.h"
 
 // --- Entry Point ------------------------
 #include "Heirloom/EntryPoint.h"

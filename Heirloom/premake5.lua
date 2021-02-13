@@ -4,6 +4,7 @@ IncludeDir["GLFW"] = "thirdparty/GLFW/include"
 IncludeDir["glad"] = "thirdparty/glad/include"
 IncludeDir["ImGui"] = "thirdparty/imgui"
 IncludeDir["glm"] = "thirdparty/glm"
+IncludeDir["stb_image"] = "thirdparty/stb_image"
 
 group "Dependencies"
 	include "thirdparty/GLFW"
@@ -32,7 +33,11 @@ project "Heirloom"
 	{
 		"include/**.h",
 		"src/**.h",
-		"src/**.cpp"
+		"src/**.cpp",
+		"thirdparty/stb_image/**.h",
+		"thirdparty/stb_image/**.cpp",
+		"thirdparty/glm/glm/**.hpp",
+		"thirdparty/glm/glm/**.inl"
 	}
 	
 	includedirs
@@ -42,7 +47,8 @@ project "Heirloom"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 	
 	links
