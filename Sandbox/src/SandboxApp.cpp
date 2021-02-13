@@ -22,7 +22,7 @@ public:
 			0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
 		};
 
-		std::shared_ptr<Heirloom::VertexBuffer> vertexBuffer;
+		Heirloom::Ref<Heirloom::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Heirloom::VertexBuffer::Create(vertices, sizeof vertices));
 
 		const Heirloom::BufferLayout layout = {
@@ -35,7 +35,7 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = {0, 1, 2};
-		std::shared_ptr<Heirloom::IndexBuffer> indexBuffer;
+		Heirloom::Ref<Heirloom::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Heirloom::IndexBuffer::Create(indices, sizeof indices / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -48,7 +48,7 @@ public:
 			-0.5f,  0.5f, 0.0f
 		};
 
-		std::shared_ptr<Heirloom::VertexBuffer> squareVB;
+		Heirloom::Ref<Heirloom::VertexBuffer> squareVB;
 		squareVB.reset(Heirloom::VertexBuffer::Create(squareVertices, sizeof squareVertices));
 		squareVB->SetLayout({
 			                    {Heirloom::ShaderDataType::Float3, "a_Position"}
@@ -56,7 +56,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
-		std::shared_ptr<Heirloom::IndexBuffer> squareIB;
+		Heirloom::Ref<Heirloom::IndexBuffer> squareIB;
 		squareIB.reset(Heirloom::IndexBuffer::Create(squareIndices, sizeof squareIndices / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -208,10 +208,10 @@ private:
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 50.0f;
 	
-	std::shared_ptr<Heirloom::Shader> m_Shader;
-	std::shared_ptr<Heirloom::Shader> m_FlatColorShader;
-	std::shared_ptr<Heirloom::VertexArray> m_VertexArray;
-	std::shared_ptr<Heirloom::VertexArray> m_SquareVA;
+	Heirloom::Ref<Heirloom::Shader> m_Shader;
+	Heirloom::Ref<Heirloom::Shader> m_FlatColorShader;
+	Heirloom::Ref<Heirloom::VertexArray> m_VertexArray;
+	Heirloom::Ref<Heirloom::VertexArray> m_SquareVA;
 
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 };

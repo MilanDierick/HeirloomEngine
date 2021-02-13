@@ -4,10 +4,8 @@
 #include "Layer.h"
 #include "LayerStack.h"
 #include "Window.h"
-#include "Core/Timestep.h"
 #include "Events/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Renderer/Shader.h"
 #include "Renderer/VertexArray.h"
 
 namespace Heirloom
@@ -44,7 +42,7 @@ namespace Heirloom
 		bool OnWindowClose(WindowCloseEvent e);
 
 		// Application variables
-		std::unique_ptr<Window> m_Window;
+		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;

@@ -48,7 +48,7 @@ void Heirloom::OpenGLVertexArray::Unbind() const
 	glBindVertexArray(0);
 }
 
-void Heirloom::OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
+void Heirloom::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 {
 	HL_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "VertexBuffer has no layout!");
 
@@ -72,7 +72,7 @@ void Heirloom::OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBu
 	m_VertexBuffers.push_back(vertexBuffer);
 }
 
-void Heirloom::OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<Heirloom::IndexBuffer>& indexBuffer)
+void Heirloom::OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 {
 	glBindVertexArray(m_RendererID);
 	indexBuffer->Bind();
