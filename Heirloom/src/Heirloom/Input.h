@@ -14,7 +14,25 @@ namespace Heirloom
 		static float GetMouseY() { return s_Instance->GetMouseYImpl(); }
 
 	protected:
+		Input() = default;
 		~Input() = default;
+
+		Input(const Input& other) = default;
+		Input(Input&& other) noexcept = default;
+
+		Input& operator=(const Input& other)
+		{
+			if (this == &other)
+				return *this;
+			return *this;
+		}
+
+		Input& operator=(Input&& other) noexcept
+		{
+			if (this == &other)
+				return *this;
+			return *this;
+		}
 
 		virtual bool IsKeyPressedImpl(int keycode) = 0;
 		virtual bool IsMouseButtonPressedImpl(int button) = 0;

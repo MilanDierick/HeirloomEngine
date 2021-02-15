@@ -15,8 +15,6 @@ namespace Heirloom
 {
 	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") { }
 
-	ImGuiLayer::~ImGuiLayer() { }
-
 	void ImGuiLayer::OnAttach()
 	{
 		// Setup Dear ImGui context
@@ -26,7 +24,7 @@ namespace Heirloom
 		(void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
 		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
@@ -45,7 +43,7 @@ namespace Heirloom
 
 		io.Fonts->AddFontFromFileTTF("assets/fonts/Lingua.otf", 12);
 		io.Fonts->Build();
-		
+
 		Application& app   = Application::Get();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
@@ -61,9 +59,7 @@ namespace Heirloom
 		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnImGuiRender()
-	{
-	}
+	void ImGuiLayer::OnImGuiRender() { }
 
 	void ImGuiLayer::Begin()
 	{

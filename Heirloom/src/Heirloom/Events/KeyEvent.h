@@ -14,6 +14,11 @@ namespace Heirloom
 	protected:
 		~KeyEvent() = default;
 
+		KeyEvent(const KeyEvent& other)                = delete;
+		KeyEvent(KeyEvent&& other) noexcept            = delete;
+		KeyEvent& operator=(const KeyEvent& other)     = delete;
+		KeyEvent& operator=(KeyEvent&& other) noexcept = delete;
+
 		explicit KeyEvent(const int keycode)
 			: m_KeyCode(keycode) { }
 
@@ -23,7 +28,7 @@ namespace Heirloom
 	class HL_API KeyPressedEvent final : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(const int keycode, int repeatCount)
+		KeyPressedEvent(const int keycode, const int repeatCount)
 			: KeyEvent(keycode), m_RepeatCount(repeatCount) { }
 
 		int GetRepeatCount() const { return m_RepeatCount; }
@@ -44,7 +49,7 @@ namespace Heirloom
 	class HL_API KeyReleasedEvent final : public KeyEvent
 	{
 	public:
-		explicit KeyReleasedEvent(int keycode)
+		explicit KeyReleasedEvent(const int keycode)
 			: KeyEvent(keycode) { }
 
 		std::string ToString() const override
@@ -60,7 +65,7 @@ namespace Heirloom
 	class HL_API KeyTypedEvent final : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(const int keycode)
+		explicit KeyTypedEvent(const int keycode)
 			: KeyEvent(keycode) { }
 
 

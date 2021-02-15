@@ -184,7 +184,9 @@ public:
 		#pragma endregion
 	}
 
-	void OnAttach() override {}
+	// ~ExampleLayer() override { }
+
+	void OnAttach() override { }
 	void OnDetach() override { }
 
 	void OnUpdate(const Heirloom::Timestep ts) override
@@ -249,7 +251,7 @@ public:
 
 		ImGui::SetNextWindowPos(ImVec2(10, 10));
 		ImGui::Begin("main", nullptr,
-                     ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_AlwaysAutoResize);
+		             ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_AlwaysAutoResize);
 		ImGui::SetWindowFontScale(2.0);
 		ImGui::Text("%.0f FPS", ImGui::GetIO().Framerate);
 		ImGui::End();

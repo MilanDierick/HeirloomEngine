@@ -13,13 +13,13 @@ namespace Heirloom
 		glm::mat4& GetViewMatrix() { return m_ViewMatrix; }
 		glm::mat4& GetViewProjectionMatrix() { return m_ViewProjectionMatrix; }
 		glm::vec3& GetPosition() { return m_Position; }
-		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
+		void SetPosition(const glm::vec3& position);
 		float& GetRotation() { return m_Rotation; }
-		void SetRotation(const float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
-	
+		void SetRotation(float rotation);
+
 	private:
 		void RecalculateViewMatrix();
-		
+
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ViewProjectionMatrix;

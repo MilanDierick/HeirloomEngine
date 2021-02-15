@@ -13,7 +13,9 @@ namespace Heirloom
 		                     const unsigned int height = 720) : Title(title), Width(width), Height(height) { }
 	};
 
-	// Interface representing a desktop system based window
+	/**
+	 * \brief Interface representing a desktop system based window
+	 */
 	class HL_API Window
 	{
 	public:

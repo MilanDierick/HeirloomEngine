@@ -11,6 +11,11 @@ namespace Heirloom
 		OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource);
 		virtual ~OpenGLShader();
 
+		OpenGLShader(const OpenGLShader& other)                = delete;
+		OpenGLShader(OpenGLShader&& other) noexcept            = delete;
+		OpenGLShader& operator=(const OpenGLShader& other)     = delete;
+		OpenGLShader& operator=(OpenGLShader&& other) noexcept = delete;
+
 		void Bind() const override;
 		void Unbind() const override;
 

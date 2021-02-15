@@ -1,14 +1,11 @@
 #include "hlpch.h"
 #include "OpenGLShader.h"
-
-#include "glad/glad.h"
 #include <glm/gtc/type_ptr.hpp>
-
-
-#include "Heirloom/Application.h"
+#include "glad/glad.h"
 #include "Heirloom/Application.h"
 
-Heirloom::OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource): m_RendererID(0)
+Heirloom::OpenGLShader::OpenGLShader(const std::string& vertexSource,
+                                     const std::string& fragmentSource): m_RendererID(0)
 {
 	// Create an empty vertex shader handle
 	const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -161,7 +158,7 @@ void Heirloom::OpenGLShader::UploadUniformFloat4(const std::string& name, const 
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 	glUniform4f(location, values.x, values.y, values.z, values.a);
 }
- 
+
 void Heirloom::OpenGLShader::UploadUniformMat3(const std::string& name, glm::mat3 matrix) const
 {
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
@@ -173,4 +170,3 @@ void Heirloom::OpenGLShader::UploadUniformMat4(const std::string& name, const gl
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
-

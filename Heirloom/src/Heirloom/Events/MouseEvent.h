@@ -22,6 +22,7 @@ namespace Heirloom
 
 		EVENT_CLASS_TYPE(MouseMoved)
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
 	private:
 		float m_MouseX, m_MouseY;
 	};
@@ -44,6 +45,7 @@ namespace Heirloom
 
 		EVENT_CLASS_TYPE(MouseScrolled)
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
 	private:
 		float m_XOffset, m_YOffset;
 	};
@@ -54,8 +56,14 @@ namespace Heirloom
 		int GetMouseButton() const { return m_Button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
 	protected:
 		~MouseButtonEvent() = default;
+
+		MouseButtonEvent(const MouseButtonEvent& other)                = delete;
+		MouseButtonEvent(MouseButtonEvent&& other) noexcept            = delete;
+		MouseButtonEvent& operator=(const MouseButtonEvent& other)     = delete;
+		MouseButtonEvent& operator=(MouseButtonEvent&& other) noexcept = delete;
 
 		explicit MouseButtonEvent(const int button)
 			: m_Button(button) {}

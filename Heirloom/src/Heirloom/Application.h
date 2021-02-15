@@ -36,7 +36,7 @@ namespace Heirloom
 
 		static Application& Get() { return *s_Instance; }
 		Window& GetWindow() const { return *m_Window; }
-		
+
 	private:
 		// Private application methods
 		bool OnWindowClose(WindowCloseEvent e);

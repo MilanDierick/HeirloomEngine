@@ -1,8 +1,6 @@
 #include "hlpch.h"
 #include "Buffer.h"
-
 #include "Renderer.h"
-
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(float* vertices, const uint32_t size)
@@ -10,7 +8,7 @@ Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(float* vert
 	switch (Renderer::GetAPI())
 	{
 		case RendererAPI::API::None:
-			HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
 			return std::make_shared<OpenGLVertexBuffer>(vertices, size);
@@ -25,7 +23,7 @@ Heirloom::Ref<Heirloom::IndexBuffer> Heirloom::IndexBuffer::Create(uint32_t* ind
 	switch (Renderer::GetAPI())
 	{
 		case RendererAPI::API::None:
-			HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
 			return std::make_shared<OpenGLIndexBuffer>(indices, size);

@@ -9,6 +9,11 @@ namespace Heirloom
 		OpenGLVertexArray();
 		virtual ~OpenGLVertexArray();
 
+		OpenGLVertexArray(const OpenGLVertexArray& other)                = delete;
+		OpenGLVertexArray(OpenGLVertexArray&& other) noexcept            = delete;
+		OpenGLVertexArray& operator=(const OpenGLVertexArray& other)     = delete;
+		OpenGLVertexArray& operator=(OpenGLVertexArray&& other) noexcept = delete;
+		
 		void Bind() const override;
 		void Unbind() const override;
 
@@ -16,7 +21,8 @@ namespace Heirloom
 		void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
 
 		const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; }
-		const Ref<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
+		// ReSharper disable once CppConstValueFunctionReturnType
+		const Ref<IndexBuffer> GetIndexBuffer() const override { return m_IndexBuffer; }
 	
 	private:
 		uint32_t m_RendererID;

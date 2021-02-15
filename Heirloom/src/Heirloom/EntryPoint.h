@@ -20,7 +20,7 @@ int main()
 	{
 		HL_CORE_FATAL(exception.what());
 	}
-	
+
 	delete app;
 
 	return EXIT_SUCCESS;

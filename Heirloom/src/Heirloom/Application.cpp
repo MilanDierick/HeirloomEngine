@@ -33,7 +33,7 @@ namespace Heirloom
 			const float time = static_cast<float>(glfwGetTime());
 			const Timestep timestep(time - m_LastFrameTime);
 			m_LastFrameTime = time;
-			
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate(timestep);
 

@@ -9,6 +9,8 @@ namespace Heirloom
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~OpenGLVertexBuffer();
 
+		
+
 		void Bind() const override;
 		void Unbind() const override;
 

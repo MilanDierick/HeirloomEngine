@@ -8,7 +8,13 @@ namespace Heirloom
 	class VertexArray
 	{
 	public:
-		virtual ~VertexArray() {}
+		VertexArray()          = default;
+		virtual ~VertexArray() = default;
+
+		VertexArray(const VertexArray& other)                = delete;
+		VertexArray(VertexArray&& other) noexcept            = delete;
+		VertexArray& operator=(const VertexArray& other)     = delete;
+		VertexArray& operator=(VertexArray&& other) noexcept = delete;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
@@ -17,7 +23,7 @@ namespace Heirloom
 		virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) = 0;
 
 		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const = 0;
-		virtual const Ref<IndexBuffer>& GetIndexBuffer() const = 0;
+		virtual const Ref<IndexBuffer> GetIndexBuffer() const = 0;
 
 		static VertexArray* Create();
 	};

@@ -122,7 +122,13 @@ namespace Heirloom
 	class VertexBuffer
 	{
 	public:
+		VertexBuffer() = default;
 		virtual ~VertexBuffer() = default;
+
+		VertexBuffer(const VertexBuffer& other)                = delete;
+		VertexBuffer(VertexBuffer&& other) noexcept            = delete;
+		VertexBuffer& operator=(const VertexBuffer& other)     = delete;
+		VertexBuffer& operator=(VertexBuffer&& other) noexcept = delete;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
@@ -130,19 +136,25 @@ namespace Heirloom
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		static Heirloom::Ref<Heirloom::VertexBuffer> Create(float* vertices, uint32_t size);
+		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
 	class IndexBuffer
 	{
 	public:
+		IndexBuffer() = default;
 		virtual ~IndexBuffer() = default;
+
+		IndexBuffer(const IndexBuffer& other)                = delete;
+		IndexBuffer(IndexBuffer&& other) noexcept            = delete;
+		IndexBuffer& operator=(const IndexBuffer& other)     = delete;
+		IndexBuffer& operator=(IndexBuffer&& other) noexcept = delete;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
 		virtual uint32_t GetCount() const = 0;
 
-		static Heirloom::Ref<Heirloom::IndexBuffer> Create(uint32_t* indices, uint32_t size);
+		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t size);
 	};
 }

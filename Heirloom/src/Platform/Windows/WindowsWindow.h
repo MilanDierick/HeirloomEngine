@@ -12,6 +12,11 @@ namespace Heirloom
 		explicit WindowsWindow(const WindowProps& props);
 		virtual ~WindowsWindow();
 
+		WindowsWindow(const WindowsWindow& other)                = delete;
+		WindowsWindow(WindowsWindow&& other) noexcept            = delete;
+		WindowsWindow& operator=(const WindowsWindow& other)     = delete;
+		WindowsWindow& operator=(WindowsWindow&& other) noexcept = delete;
+
 		void OnUpdate() override;
 
 		unsigned int GetWidth() const override { return m_Data.Width; }
@@ -23,6 +28,7 @@ namespace Heirloom
 		bool IsVSync() const override;
 
 		void* GetNativeWindow() const override { return m_Window; }
+
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown() const;
