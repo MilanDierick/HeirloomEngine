@@ -12,9 +12,9 @@ namespace Heirloom
 		
 		void OnAttach() override;
 		void OnDetach() override;
-		void OnUpdate(Timestep ts) override { }
+		void OnUpdate(Timestep) override { }
 		void OnImGuiRender() override;
-		void OnEvent(Event& event) override { }
+		void OnEvent(Event&) override { }
 		
 		void Begin();
 		void End();
