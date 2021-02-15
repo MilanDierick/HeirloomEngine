@@ -11,22 +11,23 @@ namespace Heirloom
 	class GameObject final : SceneObject
 	{
 	public:
-		GameObject() = default;
-		virtual ~GameObject();
+		GameObject()          = default;
+		virtual ~GameObject() = default;
 
 		GameObject(const GameObject& other)                = delete;
 		GameObject(GameObject&& other) noexcept            = delete;
 		GameObject& operator=(const GameObject& other)     = delete;
 		GameObject& operator=(GameObject&& other) noexcept = delete;
 
-		// This probably shouldn't be const, but lets keep it this way until we come across a situation where we want to change 
-		Ref<Transform> GetTransform() const;
+		// This probably shouldn't be const
+		Ref<Transform> GetTransform() const { return m_Transform; }
+		uint32_t GetID() const { return m_ID; }
 
 		void Update(Timestep ts) override;
 		void Render() const override;
 
 		template <typename T = Component>
-		Ref<T> AddComponent(T component);
+		Ref<T> AddComponent(T* component);
 
 		template <typename T = Component>
 		Ref<T> GetComponent(T component);
@@ -35,17 +36,22 @@ namespace Heirloom
 		bool RemoveComponent(T component);
 
 	private:
+		uint32_t m_ID;
 		Ref<Transform> m_Transform;
-		std::map<std::type_index, Ref<Component>> m_Components;
+		std::map<uint32_t, Component*> m_Components;
 	};
 
 	template <typename T>
-	Ref<T> GameObject::AddComponent(T component)
+	Ref<T> GameObject::AddComponent(T* component)
 	{
-		const std::pair<std::map<std::type_index, Ref<Component>>::iterator, bool> value = m_Components.
-			insert(std::make_shared<T>(component));
+		// const std::pair<std::map<uint32_t, Ref<Component>>::iterator, bool> value = m_Components.
+		// 	emplace(component->GetID(), std::make_shared<T>(component));
 
-		return value.second ? value.first->second : nullptr;
+		const std::pair<std::map<uint32_t, Component*>::iterator, bool> value = m_Components.
+			emplace(component->GetID(), component);
+
+		// return value.second ? value.first->second : nullptr;
+		return nullptr;
 	}
 
 	template <typename T>
@@ -53,7 +59,7 @@ namespace Heirloom
 	{
 		try
 		{
-			return m_Components.at(typeid(component));
+			return m_Components.at(component.GetID());
 		}
 		catch (std::out_of_range& exception)
 		{
