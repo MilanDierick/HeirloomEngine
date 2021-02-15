@@ -5,13 +5,22 @@
 extern Heirloom::Application* Heirloom::CreateApplication();
 
 // ReSharper disable once CppNonInlineFunctionDefinitionInHeaderFile
-int main(int arc, char** argv)
+int main()
 {
 	Heirloom::Log::Init();
 	HL_CORE_INFO("Initialized Log!");
 
 	Heirloom::Application* app = Heirloom::CreateApplication();
-	app->Run();
+
+	try
+	{
+		app->Run();
+	}
+	catch (std::exception& exception)
+	{
+		HL_CORE_FATAL(exception.what());
+	}
+	
 	delete app;
 
 	return EXIT_SUCCESS;
