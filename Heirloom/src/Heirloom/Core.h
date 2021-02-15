@@ -2,6 +2,9 @@
 
 #include <memory>
 
+#include "glm/vec2.hpp"
+#include "glm/vec3.hpp"
+
 #ifdef HL_PLATFORM_WINDOWS
 #ifdef HL_DYNAMIC_LINK
 #ifdef HL_BUILD_DLL
@@ -41,4 +44,8 @@ namespace Heirloom
 
 	template <typename T>
 	using Ref = std::shared_ptr<T>;
+
+	using Position = glm::vec3;
+	using Position2D = glm::vec2;
+	using Scale = glm::vec3;
 }

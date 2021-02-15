@@ -10,7 +10,9 @@
 class ExampleLayer final : public Heirloom::Layer
 {
 public:
-	ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+	ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f) { }
+
+	void OnAttach() override
 	{
 		#pragma region Initializing vertex arrays
 		// Vertex Array
@@ -184,15 +186,10 @@ public:
 		#pragma endregion
 	}
 
-	// ~ExampleLayer() override { }
-
-	void OnAttach() override { }
 	void OnDetach() override { }
 
 	void OnUpdate(const Heirloom::Timestep ts) override
 	{
-		// HL_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());		
-
 		// Viewport movement
 		if (Heirloom::Input::IsKeyPressed(HL_KEY_RIGHT))
 			m_CameraPosition.x += m_CameraMoveSpeed * ts;

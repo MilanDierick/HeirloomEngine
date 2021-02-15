@@ -4,6 +4,7 @@
 
 #include "glm/gtx/transform.hpp"
 #include "Heirloom/Application.h"
+#include "Heirloom/Core.h"
 #include "Heirloom/Input.h"
 #include "Heirloom/KeyCodes.h"
 #include "Heirloom/Layer.h"
