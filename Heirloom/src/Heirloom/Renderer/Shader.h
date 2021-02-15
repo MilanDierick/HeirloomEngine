@@ -1,5 +1,4 @@
 #pragma once
-#include <glm/glm.hpp>
 
 namespace Heirloom
 {
@@ -11,6 +10,6 @@ namespace Heirloom
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		static Shader* Create(const std::string& vertexSource, const std::string& fragmentSource);
+		static Ref<Shader> Create(const std::string& vertexSource, const std::string& fragmentSource);
 	};
 }

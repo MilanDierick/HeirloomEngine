@@ -13,7 +13,7 @@ namespace Heirloom
 
 	static void GLFWErrorCallback(const int error, const char* description)
 	{
-		//HL_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
+		HL_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
 	Window* Window::Create(const WindowProps& props)
@@ -101,7 +101,7 @@ namespace Heirloom
 			data->EventCallback(event);
 		});
 
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, const int key, int scancode, const int action, int mods)
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, const int key, int, const int action, int)
 		{
 			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
@@ -126,7 +126,7 @@ namespace Heirloom
 					break;
 				}
 				default:
-					//HL_CORE_ERROR("Tried to process missing GLFW key action");
+					HL_CORE_ERROR("Tried to process missing GLFW key action");
 					break;
 			}
 		});
@@ -140,7 +140,7 @@ namespace Heirloom
 			data->EventCallback(event);
 		});
 
-		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, const int button, const int action, int)
 		{
 			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
@@ -159,7 +159,7 @@ namespace Heirloom
 					break;
 				}
 				default:
-					//HL_CORE_ERROR("Tried to process missing GLFW key action");
+					HL_CORE_ERROR("Tried to process missing GLFW key action");
 					break;
 			}
 		});
