@@ -100,7 +100,7 @@ public:
 
 		)";
 
-		m_Shader.reset(Heirloom::Shader::Create(vertexSource, fragmentSource));
+		m_Shader = Heirloom::Shader::Create(vertexSource, fragmentSource);
 
 		const std::string flatColorShaderVertexSource =
 			R"(
@@ -137,10 +137,10 @@ public:
 			}
 		)";
 
-		m_FlatColorShader.reset(Heirloom::Shader::Create(flatColorShaderVertexSource, flatColorFragmentShaderSource));
+		m_FlatColorShader = Heirloom::Shader::Create(flatColorShaderVertexSource, flatColorFragmentShaderSource);
 
 		const std::string textureShaderVertexSource =
-    R"(
+			R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
@@ -160,7 +160,7 @@ public:
 		)";
 
 		const std::string textureFragmentShaderSource =
-            R"(
+			R"(
 			#version 330 core
 
 			layout(location = 0) out vec4 color;
@@ -175,7 +175,7 @@ public:
 			}
 		)";
 
-		m_TextureShader.reset(Heirloom::Shader::Create(textureShaderVertexSource, textureFragmentShaderSource));
+		m_TextureShader = Heirloom::Shader::Create(textureShaderVertexSource, textureFragmentShaderSource);
 
 		m_Texture2D = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 
@@ -184,7 +184,7 @@ public:
 		#pragma endregion
 	}
 
-	void OnAttach() override { }
+	void OnAttach() override {}
 	void OnDetach() override { }
 
 	void OnUpdate(const Heirloom::Timestep ts) override
@@ -244,7 +244,14 @@ public:
 	void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
-		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+		ImGui::ColorEdit3("Square Color", value_ptr(m_SquareColor));
+		ImGui::End();
+
+		ImGui::SetNextWindowPos(ImVec2(10, 10));
+		ImGui::Begin("main", nullptr,
+                     ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::SetWindowFontScale(2.0);
+		ImGui::Text("%.0f FPS", ImGui::GetIO().Framerate);
 		ImGui::End();
 	}
 

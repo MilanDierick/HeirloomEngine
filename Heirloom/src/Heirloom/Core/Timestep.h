@@ -10,7 +10,8 @@ namespace Heirloom
 		/**
 		 * \brief Returns the time in seconds
 		 */
-		explicit operator float() const { return m_Time; }
+		// ReSharper disable once CppNonExplicitConversionOperator
+		operator float() const { return m_Time; }
 		
 		float GetSeconds() const { return m_Time; }
 		float GetMilliseconds() const { return m_Time * 1000.0f; }

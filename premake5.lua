@@ -19,6 +19,12 @@ project "Sandbox"
 	language "C++"
 	cppdialect "C++17"
 	staticruntime "On"
+	warnings "Extra"
+	
+	flags
+	{
+		"FatalWarnings"
+	}
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
