@@ -255,7 +255,7 @@ public:
 		ImGui::End();
 	}
 
-	void OnEvent(Heirloom::Event& event) override { }
+	void OnEvent(Heirloom::Event&) override { }
 
 private:
 	Heirloom::OrthographicCamera m_Camera;
