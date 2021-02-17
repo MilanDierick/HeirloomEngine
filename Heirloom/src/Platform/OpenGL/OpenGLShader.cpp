@@ -95,7 +95,7 @@ void Heirloom::OpenGLShader::UploadUniformMat4(const std::string& name, const gl
 std::string Heirloom::OpenGLShader::ReadFile(const std::string& filePath)
 {
 	std::string result;
-	std::ifstream in(filePath, std::ios::in, std::ios::binary);
+	std::ifstream in(filePath, std::ios::in | std::ios::binary);
 
 	if (in)
 	{
@@ -142,7 +142,9 @@ std::unordered_map<GLenum, std::string> Heirloom::OpenGLShader::PreProcess(const
 void Heirloom::OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 {
 	const GLuint program = glCreateProgram();
-	std::vector<GLenum> glShaderIDs(shaderSources.size());
+	HL_CORE_ASSERT(shaderSources.size() <= 2, "Only up to two shaders are supported!")
+	std::array<GLenum, 2> glShaderIDs;
+	int glShaderIDIndex = 0;
 
 	for (const auto& [type, source] : shaderSources)
 	{
@@ -171,7 +173,7 @@ void Heirloom::OpenGLShader::Compile(const std::unordered_map<GLenum, std::strin
 		}
 
 		glAttachShader(program, shader);
-		glShaderIDs.push_back(shader);
+		glShaderIDs[glShaderIDIndex++] = shader;
 	}
 
 	m_RendererID = program;
