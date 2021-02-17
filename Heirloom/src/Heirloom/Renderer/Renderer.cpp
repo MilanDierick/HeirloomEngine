@@ -5,6 +5,11 @@
 
 Heirloom::Renderer::SceneData* Heirloom::Renderer::m_SceneData = new SceneData;
 
+void Heirloom::Renderer::Init()
+{
+	RenderCommand::Init();
+}
+
 void Heirloom::Renderer::BeginScene(OrthographicCamera& camera)
 {
 	m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();

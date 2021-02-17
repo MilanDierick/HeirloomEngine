@@ -4,6 +4,21 @@
 #include "Heirloom/Application.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
+Heirloom::Ref<Heirloom::Shader> Heirloom::Shader::Create(const std::string& filePath)
+{
+	switch (Renderer::GetAPI())
+	{
+		case RendererAPI::API::None:
+			HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+		return nullptr;
+		case RendererAPI::API::OpenGL:
+			return std::make_shared<OpenGLShader>(filePath);
+	}
+
+	HL_CORE_ASSERT(false, "Unknown RendererAPI!");
+	return nullptr;
+}
+
 Heirloom::Ref<Heirloom::Shader> Heirloom::Shader::Create(const std::string& vertexSource,
                                                          const std::string& fragmentSource)
 {

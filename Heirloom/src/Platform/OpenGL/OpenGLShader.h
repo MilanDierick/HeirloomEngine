@@ -1,13 +1,16 @@
 #pragma once
-#include <glm/fwd.hpp>
-
+#include <glm/glm.hpp>
 #include "Heirloom/Renderer/Shader.h"
+
+// TODO: Remove this mess!
+typedef unsigned int GLenum;
 
 namespace Heirloom
 {
 	class OpenGLShader final : public Shader
 	{
 	public:
+		explicit OpenGLShader(const std::string& filePath);
 		OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource);
 		virtual ~OpenGLShader();
 
@@ -30,6 +33,10 @@ namespace Heirloom
 		void UploadUniformMat4(const std::string& name, glm::mat4 matrix) const;
 	
 	private:
+		std::string ReadFile(const std::string& filePath);
+		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
+		void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
+		
 		uint32_t m_RendererID;
 	};
 }

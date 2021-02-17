@@ -141,45 +141,10 @@ public:
 
 		m_FlatColorShader = Heirloom::Shader::Create(flatColorShaderVertexSource, flatColorFragmentShaderSource);
 
-		const std::string textureShaderVertexSource =
-			R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
+		m_TextureShader = Heirloom::Shader::Create("assets/shaders/Texture.glsl");
 		
-			out vec2 v_TexCoord;
-		
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-			}
-
-		)";
-
-		const std::string textureFragmentShaderSource =
-			R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec2 v_TexCoord;
-
-			uniform sampler2D u_Texture;
-		
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		m_TextureShader = Heirloom::Shader::Create(textureShaderVertexSource, textureFragmentShaderSource);
-
-		m_Texture2D = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_Texture2D   = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_LogoTexture = Heirloom::Texture2D::Create("assets/textures/Logo.png");
 
 		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -234,6 +199,9 @@ public:
 		m_Texture2D->Bind();
 		Heirloom::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
+		m_LogoTexture->Bind();
+		Heirloom::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+
 		// Triangle
 		// Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
 
@@ -268,7 +236,7 @@ private:
 	Heirloom::Ref<Heirloom::VertexArray> m_VertexArray;
 	Heirloom::Ref<Heirloom::VertexArray> m_SquareVA;
 
-	Heirloom::Ref<Heirloom::Texture2D> m_Texture2D;
+	Heirloom::Ref<Heirloom::Texture2D> m_Texture2D, m_LogoTexture;
 
 	glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
 };

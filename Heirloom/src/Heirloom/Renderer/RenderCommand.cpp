@@ -4,6 +4,11 @@
 
 Heirloom::RendererAPI* Heirloom::RenderCommand::s_RendererAPI = new OpenGLRendererAPI();
 
+void Heirloom::RenderCommand::Init()
+{
+	s_RendererAPI->Init();
+}
+
 void Heirloom::RenderCommand::SetClearColor(const glm::vec4& color)
 {
 	s_RendererAPI->SetClearColor(color);
