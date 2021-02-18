@@ -11,7 +11,7 @@ namespace Heirloom
 	{
 	public:
 		explicit OpenGLShader(const std::string& filePath);
-		OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource);
+		OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
 		virtual ~OpenGLShader();
 
 		OpenGLShader(const OpenGLShader& other)                = delete;
@@ -22,6 +22,8 @@ namespace Heirloom
 		void Bind() const override;
 		void Unbind() const override;
 
+		const std::string& GetName() override { return m_Name; }
+		
 		void UploadUniformInt(const std::string& name, int value) const;
 
 		void UploadUniformFloat(const std::string& name, float value) const;
@@ -36,7 +38,8 @@ namespace Heirloom
 		std::string ReadFile(const std::string& filePath);
 		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
 		void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
-		
+
 		uint32_t m_RendererID;
+		std::string m_Name;
 	};
 }

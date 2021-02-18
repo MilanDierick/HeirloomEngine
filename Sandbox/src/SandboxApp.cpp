@@ -24,8 +24,7 @@ public:
 			0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
 		};
 
-		Heirloom::Ref<Heirloom::VertexBuffer> vertexBuffer;
-		vertexBuffer = Heirloom::VertexBuffer::Create(vertices, sizeof vertices);
+		Heirloom::Ref<Heirloom::VertexBuffer> vertexBuffer = Heirloom::VertexBuffer::Create(vertices, sizeof vertices);
 
 		const Heirloom::BufferLayout layout = {
 			{Heirloom::ShaderDataType::Float3, "a_Position"},
@@ -102,7 +101,7 @@ public:
 
 		)";
 
-		m_Shader = Heirloom::Shader::Create(vertexSource, fragmentSource);
+		m_Shader = Heirloom::Shader::Create("VertexPosColor", vertexSource, fragmentSource);
 
 		const std::string flatColorShaderVertexSource =
 			R"(
@@ -139,15 +138,15 @@ public:
 			}
 		)";
 
-		m_FlatColorShader = Heirloom::Shader::Create(flatColorShaderVertexSource, flatColorFragmentShaderSource);
+		m_FlatColorShader = Heirloom::Shader::Create("FlatColor", flatColorShaderVertexSource, flatColorFragmentShaderSource);
 
-		m_TextureShader = Heirloom::Shader::Create("assets/shaders/Texture.glsl");
+		const Heirloom::Ref<Heirloom::Shader> textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 		
 		m_Texture2D   = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_LogoTexture = Heirloom::Texture2D::Create("assets/textures/Logo.png");
 
-		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 		#pragma endregion
 	}
 
@@ -196,11 +195,13 @@ public:
 			}
 		}
 
+		const Heirloom::Ref<Heirloom::Shader> textureShader = m_ShaderLibrary.Get("Texture");
+		
 		m_Texture2D->Bind();
-		Heirloom::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+		Heirloom::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
 		m_LogoTexture->Bind();
-		Heirloom::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+		Heirloom::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
 		// Triangle
 		// Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
@@ -231,8 +232,9 @@ private:
 	float m_CameraRotation      = 0.0f;
 	float m_CameraRotationSpeed = 50.0f;
 
+	Heirloom::ShaderLibrary m_ShaderLibrary;
 	Heirloom::Ref<Heirloom::Shader> m_Shader;
-	Heirloom::Ref<Heirloom::Shader> m_FlatColorShader, m_TextureShader;
+	Heirloom::Ref<Heirloom::Shader> m_FlatColorShader;
 	Heirloom::Ref<Heirloom::VertexArray> m_VertexArray;
 	Heirloom::Ref<Heirloom::VertexArray> m_SquareVA;
 

@@ -24,10 +24,18 @@ Heirloom::OpenGLShader::OpenGLShader(const std::string& filePath)
 	const std::string source                                    = ReadFile(filePath);
 	const std::unordered_map<GLenum, std::string> shaderSources = PreProcess(source);
 	Compile(shaderSources);
+
+	// Extract name from filePath
+	std::string::size_type lastSlash = filePath.find_last_of("/\\");
+	lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+	const std::string::size_type lastDot = filePath.rfind(".");
+	const size_t count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+
+	m_Name = filePath.substr(lastSlash, count);
 }
 
-Heirloom::OpenGLShader::OpenGLShader(const std::string& vertexSource,
-                                     const std::string& fragmentSource): m_RendererID(0)
+Heirloom::OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSource,
+                                     const std::string& fragmentSource): m_RendererID(0), m_Name(name)
 {
 	std::unordered_map<GLenum, std::string> sources;
 	sources[GL_VERTEX_SHADER]   = vertexSource;
