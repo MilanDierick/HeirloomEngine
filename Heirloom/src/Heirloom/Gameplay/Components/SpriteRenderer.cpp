@@ -3,7 +3,7 @@
 
 // #include "Heirloom/Renderer/Renderer.h"
 
-Heirloom::SpriteRenderer::SpriteRenderer(const uint32_t id) : m_ID(id)
+Heirloom::SpriteRenderer::SpriteRenderer()
 {
 	// TODO: This ID should be unique and gotten from some static class that distributes ID's
 }

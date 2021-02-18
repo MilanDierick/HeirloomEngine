@@ -35,9 +35,9 @@ public:
 
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		uint32_t indices[3] = {0, 1, 2};
-		Heirloom::Ref<Heirloom::IndexBuffer> indexBuffer;
-		indexBuffer = Heirloom::IndexBuffer::Create(indices, sizeof indices / sizeof(uint32_t));
+		uint32_t indices[3]                                    = {0, 1, 2};
+		const Heirloom::Ref<Heirloom::IndexBuffer> indexBuffer =
+			Heirloom::IndexBuffer::Create(indices, sizeof indices / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		m_SquareVA.reset(Heirloom::VertexArray::Create());
@@ -49,17 +49,17 @@ public:
 			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		Heirloom::Ref<Heirloom::VertexBuffer> squareVB;
-		squareVB = Heirloom::VertexBuffer::Create(squareVertices, sizeof squareVertices);
+		Heirloom::Ref<Heirloom::VertexBuffer> squareVB = Heirloom::VertexBuffer::Create(squareVertices,
+			sizeof squareVertices);
 		squareVB->SetLayout({
 			                    {Heirloom::ShaderDataType::Float3, "a_Position"},
 			                    {Heirloom::ShaderDataType::Float2, "a_TexCoord"}
 		                    });
 		m_SquareVA->AddVertexBuffer(squareVB);
 
-		uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
-		Heirloom::Ref<Heirloom::IndexBuffer> squareIB;
-		squareIB = Heirloom::IndexBuffer::Create(squareIndices, sizeof squareIndices / sizeof(uint32_t));
+		uint32_t squareIndices[6]                           = {0, 1, 2, 2, 3, 0};
+		const Heirloom::Ref<Heirloom::IndexBuffer> squareIB = Heirloom::IndexBuffer::Create(squareIndices,
+			sizeof squareIndices / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		const std::string vertexSource =
@@ -138,10 +138,11 @@ public:
 			}
 		)";
 
-		m_FlatColorShader = Heirloom::Shader::Create("FlatColor", flatColorShaderVertexSource, flatColorFragmentShaderSource);
+		m_FlatColorShader = Heirloom::Shader::Create("FlatColor", flatColorShaderVertexSource,
+		                                             flatColorFragmentShaderSource);
 
 		const Heirloom::Ref<Heirloom::Shader> textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
-		
+
 		m_Texture2D   = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_LogoTexture = Heirloom::Texture2D::Create("assets/textures/Logo.png");
 
@@ -196,7 +197,7 @@ public:
 		}
 
 		const Heirloom::Ref<Heirloom::Shader> textureShader = m_ShaderLibrary.Get("Texture");
-		
+
 		m_Texture2D->Bind();
 		Heirloom::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 

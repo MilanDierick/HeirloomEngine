@@ -14,52 +14,48 @@ namespace Heirloom
 		GameObject()          = default;
 		virtual ~GameObject() = default;
 
+		// Copy & move operations
 		GameObject(const GameObject& other)                = delete;
 		GameObject(GameObject&& other) noexcept            = delete;
 		GameObject& operator=(const GameObject& other)     = delete;
 		GameObject& operator=(GameObject&& other) noexcept = delete;
 
-		// This probably shouldn't be const
-		Ref<Transform> GetTransform() const { return m_Transform; }
-		uint32_t GetID() const { return m_ID; }
+		// ReSharper disable once CppMemberFunctionMayBeConst
+		[[nodiscard]] Ref<Transform> GetTransform() { return m_Transform; }
 
 		void Update(Timestep ts) override;
 		void Render() const override;
 
-		template <typename T = Component>
-		Ref<T> AddComponent(T* component);
+		template <typename ComponentType = Component>
+		Ref<ComponentType> AddComponent(ComponentType* component);
 
-		template <typename T = Component>
-		Ref<T> GetComponent(T component);
+		template <typename ComponentType = Component>
+		[[nodiscard]] Ref<ComponentType> GetComponent();
 
-		template <typename T = Component>
-		bool RemoveComponent(T component);
+		template <typename ComponentType = Component>
+		bool RemoveComponent(ComponentType component);
 
 	private:
-		uint32_t m_ID;
 		Ref<Transform> m_Transform;
-		std::map<uint32_t, Component*> m_Components;
+		std::map<std::type_index, Component*> m_Components;
 	};
 
-	template <typename T>
-	Ref<T> GameObject::AddComponent(T* component)
+	template <typename ComponentType>
+	Ref<ComponentType> GameObject::AddComponent(ComponentType* component)
 	{
-		// const std::pair<std::map<uint32_t, Ref<Component>>::iterator, bool> value = m_Components.
-		// 	emplace(component->GetID(), std::make_shared<T>(component));
-
 		const std::pair<std::map<uint32_t, Component*>::iterator, bool> value = m_Components.
-			emplace(component->GetID(), component);
+			emplace(typeid(ComponentType), component);
 
-		// return value.second ? value.first->second : nullptr;
-		return nullptr;
+		HL_CORE_TRACE("Added component of type {0} to game object", typeid(ComponentType));
+		return value.second ? value.first->second : nullptr;
 	}
 
-	template <typename T>
-	Ref<T> GameObject::GetComponent(T component)
+	template <typename ComponentType>
+	Ref<ComponentType> GameObject::GetComponent()
 	{
 		try
 		{
-			return m_Components.at(component.GetID());
+			return m_Components.at(typeid(ComponentType));
 		}
 		catch (std::out_of_range& exception)
 		{
@@ -68,9 +64,10 @@ namespace Heirloom
 		}
 	}
 
-	template <typename T>
-	bool GameObject::RemoveComponent(T component)
+	template <typename ComponentType>
+	bool GameObject::RemoveComponent(ComponentType component)
 	{
+		HL_CORE_TRACE("Removed component of type {0} from game object", typeid(ComponentType));
 		return static_cast<bool>(m_Components.erase(typeid(component)));
 	}
 }

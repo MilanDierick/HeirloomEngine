@@ -25,3 +25,13 @@ void Heirloom::Transform::SetScale(const Scale scale)
 {
 	m_Scale = scale;
 }
+
+void Heirloom::Transform::Update(Timestep)
+{
+	
+}
+
+void Heirloom::Transform::Render() const
+{
+	
+}

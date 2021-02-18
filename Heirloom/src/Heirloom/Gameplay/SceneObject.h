@@ -9,6 +9,7 @@ namespace Heirloom
 		SceneObject()          = default;
 		virtual ~SceneObject() = default;
 
+		// Copy & move operations
 		SceneObject(const SceneObject& other)                = delete;
 		SceneObject(SceneObject&& other) noexcept            = delete;
 		SceneObject& operator=(const SceneObject& other)     = delete;
