@@ -2,6 +2,7 @@
 #include <glm/gtc/type_ptr.inl>
 #include "Heirloom.h"
 #include "Heirloom/Application.h"
+#include "Heirloom/OrthographicCameraController.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Renderer/OrthographicCamera.h"
 #include "imgui/imgui.h"
@@ -10,7 +11,7 @@
 class ExampleLayer final : public Heirloom::Layer
 {
 public:
-	ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f) { }
+	ExampleLayer() : Layer("Example"), m_CameraController(1280.0f / 720.0f) { }
 
 	void OnAttach() override
 	{
@@ -155,30 +156,18 @@ public:
 
 	void OnUpdate(const Heirloom::Timestep ts) override
 	{
-		// Viewport movement
-		if (Heirloom::Input::IsKeyPressed(HL_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMoveSpeed * ts;
-		else if (Heirloom::Input::IsKeyPressed(HL_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
+		m_CameraController.OnUpdate(ts);
 
-		if (Heirloom::Input::IsKeyPressed(HL_KEY_UP))
-			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-		else if (Heirloom::Input::IsKeyPressed(HL_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-
-		// Viewport rotation
-		if (Heirloom::Input::IsKeyPressed(HL_KEY_Q))
-			m_CameraRotation += m_CameraRotationSpeed * ts;
-		else if (Heirloom::Input::IsKeyPressed(HL_KEY_E))
-			m_CameraRotation -= m_CameraRotationSpeed * ts;
-
+		// Render
 		Heirloom::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
 		Heirloom::RenderCommand::Clear();
 
-		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation(m_CameraRotation);
-
-		Heirloom::Renderer::BeginScene(m_Camera);
+		for (std::vector<Heirloom::GameObject>::value_type gameObject : m_GameObjects)
+		{
+			gameObject.Update(ts);	
+		}
+		
+		Heirloom::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		const glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -207,6 +196,11 @@ public:
 		// Triangle
 		// Heirloom::Renderer::Submit(m_Shader, m_VertexArray);
 
+		for (std::vector<Heirloom::GameObject>::value_type gameObject : m_GameObjects)
+		{
+			gameObject.Render();	
+		}
+		
 		Heirloom::Renderer::EndScene();
 	}
 
@@ -224,14 +218,13 @@ public:
 		ImGui::End();
 	}
 
-	void OnEvent(Heirloom::Event&) override { }
+	void OnEvent(Heirloom::Event& event) override
+	{
+		m_CameraController.OnEvent(event);
+	}
 
 private:
-	Heirloom::OrthographicCamera m_Camera;
-	glm::vec3 m_CameraPosition;
-	float m_CameraMoveSpeed     = 2.5f;
-	float m_CameraRotation      = 0.0f;
-	float m_CameraRotationSpeed = 50.0f;
+	Heirloom::OrthographicCameraController m_CameraController;
 
 	Heirloom::ShaderLibrary m_ShaderLibrary;
 	Heirloom::Ref<Heirloom::Shader> m_Shader;

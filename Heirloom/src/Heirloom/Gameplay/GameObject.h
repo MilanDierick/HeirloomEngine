@@ -1,30 +1,50 @@
 #pragma once
 #include <map>
 #include <typeindex>
-#include "SceneObject.h"
 #include "Transform.h"
 #include "Components/Component.h"
 
 namespace Heirloom
 {
 	// TODO: We can only add a single component of each type to a game object, we need to be able to add multiple components per type, fix this
-	class GameObject final : SceneObject
+	class GameObject final
 	{
 	public:
 		GameObject()          = default;
-		virtual ~GameObject() = default;
+		~GameObject() = default;
 
 		// Copy & move operations
-		GameObject(const GameObject& other)                = delete;
-		GameObject(GameObject&& other) noexcept            = delete;
-		GameObject& operator=(const GameObject& other)     = delete;
-		GameObject& operator=(GameObject&& other) noexcept = delete;
+		GameObject(const GameObject& other)
+			: m_Transform(other.m_Transform),
+			  m_Components(other.m_Components) {}
+
+		GameObject(GameObject&& other) noexcept
+			: m_Transform(std::move(other.m_Transform)),
+			  m_Components(std::move(other.m_Components)) {}
+
+		GameObject& operator=(const GameObject& other)
+		{
+			if (this == &other)
+				return *this;
+			m_Transform  = other.m_Transform;
+			m_Components = other.m_Components;
+			return *this;
+		}
+
+		GameObject& operator=(GameObject&& other) noexcept
+		{
+			if (this == &other)
+				return *this;
+			m_Transform  = std::move(other.m_Transform);
+			m_Components = std::move(other.m_Components);
+			return *this;
+		}
 
 		// ReSharper disable once CppMemberFunctionMayBeConst
 		[[nodiscard]] Ref<Transform> GetTransform() { return m_Transform; }
 
-		void Update(Timestep ts) override;
-		void Render() const override;
+		void Update(Timestep ts);
+		void Render() const;
 
 		template <typename ComponentType = Component>
 		Ref<ComponentType> AddComponent(ComponentType* component);
@@ -57,7 +77,7 @@ namespace Heirloom
 		{
 			return m_Components.at(typeid(ComponentType));
 		}
-		catch (std::out_of_range& exception)
+		catch (std::out_of_range&)
 		{
 			HL_CORE_WARN("Tried accessing non-existing component in gameobject!");
 			return nullptr;

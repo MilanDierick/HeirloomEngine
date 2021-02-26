@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Core/Timestep.h"
-
 #include "Events/Event.h"
+#include "Gameplay/GameObject.h"
 
 namespace Heirloom
 {
@@ -26,5 +26,6 @@ namespace Heirloom
 
 	protected:
 		std::string m_DebugName;
+		std::vector<GameObject> m_GameObjects;
 	};
 }
