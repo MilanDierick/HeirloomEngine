@@ -39,12 +39,14 @@ namespace Heirloom
 
 	private:
 		// Private application methods
-		bool OnWindowClose(WindowCloseEvent e);
+		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 
 		// Application variables
 		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_IsRunning = true;
+		bool m_Minimized = false;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
 		float m_LastFrameTime = 0.0f;
