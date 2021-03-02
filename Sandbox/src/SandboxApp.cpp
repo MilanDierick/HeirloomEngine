@@ -153,6 +153,8 @@ public:
 		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(textureShader)->Bind();
 		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 		#pragma endregion
+
+		Heirloom::Input::KeyPressedEvent += &ExampleLayer::OnKeyPressedEvent;
 	}
 
 	void OnDetach() override { }
@@ -227,6 +229,8 @@ public:
 	}
 
 private:
+	static void OnKeyPressedEvent(Heirloom::KeyPressedEventArgs eventArgs);
+	
 	Heirloom::OrthographicCameraController m_CameraController;
 
 	Heirloom::ShaderLibrary m_ShaderLibrary;
@@ -239,6 +243,11 @@ private:
 
 	glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
 };
+
+void ExampleLayer::OnKeyPressedEvent(Heirloom::KeyPressedEventArgs eventArgs)
+{
+	HL_TRACE("Key pressed: {0}", eventArgs.KeyCode);
+}
 
 class Sandbox final : public Heirloom::Application
 {

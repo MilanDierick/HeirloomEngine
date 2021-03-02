@@ -1,6 +1,6 @@
 ﻿#include "hlpch.h"
 #include "WindowsWindow.h"
-
+#include "Heirloom/Input.h"
 #include "Heirloom/Events/ApplicationEvent.h"
 #include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Events/MouseEvent.h"
@@ -111,6 +111,10 @@ namespace Heirloom
 				{
 					KeyPressedEvent event(key, 0);
 					data->EventCallback(event);
+
+					const KeyPressedEventArgs eventArgs(key, 0);
+					Input::KeyPressedEvent.Invoke(eventArgs);
+					
 					break;
 				}
 				case GLFW_RELEASE:
