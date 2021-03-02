@@ -1,9 +1,12 @@
+// Author: Milan Dierick
+// Created: 02/03/2021 7:24 PM
+// Solution: HeirloomEngine
+
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.inl>
 #include "Heirloom.h"
 #include "Heirloom/Application.h"
 #include "Heirloom/OrthographicCameraController.h"
-#include "Heirloom/Events/KeyEvent.h"
 #include "Heirloom/Renderer/OrthographicCamera.h"
 #include "imgui/imgui.h"
 #include "Platform/OpenGL/OpenGLShader.h"
@@ -164,9 +167,9 @@ public:
 
 		for (std::vector<Heirloom::GameObject>::value_type gameObject : m_GameObjects)
 		{
-			gameObject.Update(ts);	
+			gameObject.Update(ts);
 		}
-		
+
 		Heirloom::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		const glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
@@ -198,9 +201,9 @@ public:
 
 		for (std::vector<Heirloom::GameObject>::value_type gameObject : m_GameObjects)
 		{
-			gameObject.Render();	
+			gameObject.Render();
 		}
-		
+
 		Heirloom::Renderer::EndScene();
 	}
 

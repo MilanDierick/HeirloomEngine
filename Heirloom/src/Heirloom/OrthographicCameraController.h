@@ -1,3 +1,7 @@
+// Author: Milan Dierick
+// Created: 02/03/2021 7:24 PM
+// Solution: HeirloomEngine
+
 #pragma once
 #include "Core/Timestep.h"
 #include "Heirloom/Events/ApplicationEvent.h"

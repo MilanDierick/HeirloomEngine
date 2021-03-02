@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿// Author: Milan Dierick
+// Created: 02/03/2021 7:24 PM
+// Solution: HeirloomEngine
+
+#pragma once
 #include "Events/Event.h"
 
 namespace Heirloom
