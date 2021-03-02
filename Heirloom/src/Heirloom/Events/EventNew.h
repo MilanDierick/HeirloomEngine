@@ -8,7 +8,7 @@
 
 struct HL_API EventArgs {};
 
-template <typename EventArgsType = EventArgs, typename EventCallbackFunc = void(*)(EventArgsType)>
+template <typename EventArgsType = EventArgs, typename EventCallbackFunc = std::function<void(EventArgsType)>>
 class HL_API EventNew
 {
 public:
