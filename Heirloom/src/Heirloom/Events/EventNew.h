@@ -3,6 +3,8 @@
 // Solution: HeirloomEngine
 
 #pragma once
+#include <functional>
+#include <array>
 
 #define HL_MAX_EVENT_LISTENERS 32
 

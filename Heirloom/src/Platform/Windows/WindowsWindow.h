@@ -27,7 +27,6 @@ namespace Heirloom
 		unsigned int GetHeight() const override { return m_Data.Height; }
 
 		// Window attributes
-		void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
@@ -47,7 +46,8 @@ namespace Heirloom
 			unsigned int Height;
 			bool VSync;
 
-			EventCallbackFn EventCallback;
+			EventNew<WindowResizedEventArgs>* WindowResizedEvent;
+			EventNew<WindowClosedEventArgs>* WindowClosedEvent;
 		};
 
 		WindowData m_Data;

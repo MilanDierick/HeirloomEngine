@@ -3,8 +3,9 @@
 // Solution: HeirloomEngine
 
 #pragma once
+#include <string>
+#include <vector>
 #include "Core/Timestep.h"
-#include "Events/Event.h"
 #include "Gameplay/GameObject.h"
 
 namespace Heirloom
@@ -24,7 +25,6 @@ namespace Heirloom
 		virtual void OnDetach() = 0;
 		virtual void OnUpdate(Timestep ts) = 0;
 		virtual void OnImGuiRender() = 0;
-		virtual void OnEvent(Event& event) = 0;
 
 		const std::string& GetName() const { return m_DebugName; }
 

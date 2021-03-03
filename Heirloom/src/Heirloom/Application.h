@@ -8,7 +8,6 @@
 #include "Layer.h"
 #include "LayerStack.h"
 #include "Window.h"
-#include "Events/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/VertexArray.h"
 
@@ -29,12 +28,6 @@ namespace Heirloom
 		 */
 		void Run();
 
-		/**
-		* \brief Is executed whenever an event is fired by the window management library or the application itself
-		* \param e The event that has been fired
-		*/
-		void OnEvent(Event& e);
-
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
@@ -43,8 +36,8 @@ namespace Heirloom
 
 	private:
 		// Private application methods
-		bool OnWindowClose(WindowCloseEvent& e);
-		bool OnWindowResize(WindowResizeEvent& e);
+		bool OnWindowClosedEvent(WindowClosedEventArgs eventArgs);
+		bool OnWindowResizedEvent(WindowResizedEventArgs eventArgs);
 
 		// Application variables
 		Scope<Window> m_Window;

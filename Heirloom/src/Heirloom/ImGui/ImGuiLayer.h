@@ -4,7 +4,6 @@
 
 #pragma once
 #include "Heirloom/Layer.h"
-#include "Heirloom/Events/ApplicationEvent.h"
 
 namespace Heirloom
 {
@@ -23,7 +22,6 @@ namespace Heirloom
 		void OnDetach() override;
 		void OnUpdate(Timestep) override { }
 		void OnImGuiRender() override;
-		void OnEvent(Event&) override { }
 		
 		void Begin();
 		void End();

@@ -3,26 +3,23 @@
 // Solution: HeirloomEngine
 
 #pragma once
-
 #include "Events/EventNew.h"
+#include "Events/KeyEventArgs.h"
+#include "Events/MouseEventArgs.h"
 #include "Heirloom/Core.h"
 
 namespace Heirloom
 {
-	struct HL_API KeyPressedEventArgs : EventArgs
-	{
-		[[nodiscard]] KeyPressedEventArgs(const int keyCode, const int repeatCode)
-			: KeyCode(keyCode),
-			  RepeatCode(repeatCode) {}
-
-		int KeyCode;
-		int RepeatCode;
-	};
-
 	class HL_API Input
 	{
 	public:
 		inline static EventNew<KeyPressedEventArgs> KeyPressedEvent = EventNew<KeyPressedEventArgs>();
+		inline static EventNew<KeyReleasedEventArgs> KeyReleasedEvent = EventNew<KeyReleasedEventArgs>();
+		inline static EventNew<KeyTypedEventArgs> KeyTypedEvent = EventNew<KeyTypedEventArgs>();
+		inline static EventNew<MouseButtonPressedEventArgs> MouseButtonPressedEvent = EventNew<MouseButtonPressedEventArgs>();
+		inline static EventNew<MouseButtonReleasedEventArgs> MouseButtonReleasedEvent = EventNew<MouseButtonReleasedEventArgs>();
+		inline static EventNew<MouseMovedEventArgs> MouseMovedEvent = EventNew<MouseMovedEventArgs>();
+		inline static EventNew<MouseScrolledEventArgs> MouseScrolledEvent = EventNew<MouseScrolledEventArgs>();
 
 		static bool IsKeyPressed(const int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }
 		static bool IsMouseButtonPressed(const int button) { return s_Instance->IsMouseButtonPressedImpl(button); }

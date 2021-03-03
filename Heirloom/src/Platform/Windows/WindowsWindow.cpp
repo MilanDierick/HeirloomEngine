@@ -1,10 +1,7 @@
 ﻿#include "hlpch.h"
 #include "WindowsWindow.h"
 #include "Heirloom/Input.h"
-#include "Heirloom/Events/ApplicationEvent.h"
-#include "Heirloom/Events/KeyEvent.h"
-#include "Heirloom/Events/MouseEvent.h"
-
+#include "Heirloom/Events/MouseEventArgs.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Heirloom
@@ -58,9 +55,11 @@ namespace Heirloom
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
-		m_Data.Title  = props.Title;
-		m_Data.Width  = props.Width;
-		m_Data.Height = props.Height;
+		m_Data.Title              = props.Title;
+		m_Data.Width              = props.Width;
+		m_Data.Height             = props.Height;
+		m_Data.WindowResizedEvent = &WindowResizedEvent;
+		m_Data.WindowClosedEvent  = &WindowClosedEvent;
 
 		HL_CORE_INFO("Creating window {0} ({1} {2})", props.Title, props.Width, props.Height);
 
@@ -89,44 +88,38 @@ namespace Heirloom
 			data->Width      = width;
 			data->Height     = height;
 
-			WindowResizeEvent event(width, height);
-			data->EventCallback(event);
+			const WindowResizedEventArgs eventArgs(width, height);
+			data->WindowResizedEvent->Invoke(eventArgs);
 		});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 		{
 			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
-			WindowCloseEvent event;
-			data->EventCallback(event);
+			const WindowClosedEventArgs eventArgs;
+			data->WindowClosedEvent->Invoke(eventArgs);
 		});
 
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, const int key, int, const int action, int)
+		glfwSetKeyCallback(m_Window, [](GLFWwindow*, const int key, int, const int action, int)
 		{
-			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
-
 			switch (action)
 			{
 				case GLFW_PRESS:
 				{
-					KeyPressedEvent event(key, 0);
-					data->EventCallback(event);
-
 					const KeyPressedEventArgs eventArgs(key, 0);
 					Input::KeyPressedEvent.Invoke(eventArgs);
-					
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					KeyReleasedEvent event(key);
-					data->EventCallback(event);
+					const KeyReleasedEventArgs eventArgs(key);
+					Input::KeyReleasedEvent.Invoke(eventArgs);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					KeyPressedEvent event(key, 1);
-					data->EventCallback(event);
+					const KeyTypedEventArgs eventArgs(key);
+					Input::KeyTypedEvent.Invoke(eventArgs);
 					break;
 				}
 				default:
@@ -135,31 +128,27 @@ namespace Heirloom
 			}
 		});
 
-		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+		glfwSetCharCallback(m_Window, [](GLFWwindow*, const unsigned int keycode)
 		{
-			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			const KeyTypedEventArgs eventArgs(keycode);
 
-			KeyTypedEvent event(keycode);
-
-			data->EventCallback(event);
+			Input::KeyTypedEvent.Invoke(eventArgs);
 		});
 
-		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, const int button, const int action, int)
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow*, const int button, const int action, int)
 		{
-			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
-
 			switch (action)
 			{
 				case GLFW_PRESS:
 				{
-					MouseButtonPressedEvent event(button);
-					data->EventCallback(event);
+					const MouseButtonPressedEventArgs event(button);
+					Input::MouseButtonPressedEvent.Invoke(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					MouseButtonReleasedEvent event(button);
-					data->EventCallback(event);
+					const MouseButtonReleasedEventArgs event(button);
+					Input::MouseButtonReleasedEvent.Invoke(event);
 					break;
 				}
 				default:
@@ -168,20 +157,17 @@ namespace Heirloom
 			}
 		});
 
-		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, const double xOffset, const double yOffset)
+		glfwSetScrollCallback(m_Window, [](GLFWwindow*, const double xOffset, const double yOffset)
 		{
-			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
-
-			MouseScrolledEvent event(static_cast<float>(xOffset), static_cast<float>(yOffset));
-			data->EventCallback(event);
+			const MouseScrolledEventArgs mouseScrolledEventArgs(static_cast<float>(xOffset),
+			                                                    static_cast<float>(yOffset));
+			Input::MouseScrolledEvent.Invoke(mouseScrolledEventArgs);
 		});
 
-		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, const double xPos, const double yPos)
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow*, const double xPos, const double yPos)
 		{
-			WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
-
-			MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
-			data->EventCallback(event);
+			const MouseMovedEventArgs event(static_cast<float>(xPos), static_cast<float>(yPos));
+			Input::MouseMovedEvent.Invoke(event);
 		});
 	}
 

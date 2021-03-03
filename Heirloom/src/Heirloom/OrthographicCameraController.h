@@ -4,9 +4,8 @@
 
 #pragma once
 #include "Core/Timestep.h"
-#include "Heirloom/Events/ApplicationEvent.h"
-#include "Heirloom/Events/Event.h"
-#include "Heirloom/Events/MouseEvent.h"
+#include "Events/ApplicationEventArgs.h"
+#include "Events/MouseEventArgs.h"
 #include "Heirloom/Renderer/OrthographicCamera.h"
 
 namespace Heirloom
@@ -17,7 +16,6 @@ namespace Heirloom
 		explicit OrthographicCameraController(float aspectRatio, bool rotation = false);
 
 		void OnUpdate(Timestep ts);
-		void OnEvent(Event& e);
 
 		OrthographicCamera& GetCamera() { return m_Camera; }
 		const OrthographicCamera& GetCamera() const { return m_Camera; }
@@ -25,8 +23,8 @@ namespace Heirloom
 		void SetZoomLevel(const float zoomLevel) { m_ZoomLevel = zoomLevel; }
 
 	private:
-		bool OnMouseScrolled(MouseScrolledEvent& e);
-		bool OnWindowResized(WindowResizeEvent& e);
+		void OnMouseScrolledEvent(MouseScrolledEventArgs eventArgs);
+		void OnWindowResizedEvent(WindowResizedEventArgs eventArgs);
 		float m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
 		OrthographicCamera m_Camera;

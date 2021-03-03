@@ -223,11 +223,6 @@ public:
 		ImGui::End();
 	}
 
-	void OnEvent(Heirloom::Event& event) override
-	{
-		m_CameraController.OnEvent(event);
-	}
-
 private:
 	void OnKeyPressedEvent(Heirloom::KeyPressedEventArgs eventArgs);
 	
