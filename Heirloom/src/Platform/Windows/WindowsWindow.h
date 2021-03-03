@@ -5,7 +5,7 @@
 #pragma once
 #include "GLFW/glfw3.h"
 
-#include "Heirloom/Window.h"
+#include "Heirloom/Core/Window.h"
 #include "Heirloom/Renderer/GraphicsContext.h"
 
 namespace Heirloom

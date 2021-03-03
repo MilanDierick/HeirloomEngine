@@ -1,7 +1,7 @@
 #include "hlpch.h"
 #include "Shader.h"
 #include "Renderer.h"
-#include "Heirloom/Application.h"
+#include "Heirloom/Core/Application.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 Heirloom::Ref<Heirloom::Shader> Heirloom::Shader::Create(const std::string& filePath)

@@ -1,7 +1,7 @@
 #include "hlpch.h"
 #include "WindowsInput.h"
 #include <GLFW/glfw3.h>
-#include "Heirloom/Application.h"
+#include "Heirloom/Core/Application.h"
 
 namespace Heirloom
 {

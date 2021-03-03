@@ -1,6 +1,6 @@
 ﻿#include "hlpch.h"
 #include "WindowsWindow.h"
-#include "Heirloom/Input.h"
+#include "Heirloom/Core/Input.h"
 #include "Heirloom/Events/MouseEventArgs.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 

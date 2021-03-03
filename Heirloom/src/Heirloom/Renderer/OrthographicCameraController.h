@@ -3,9 +3,9 @@
 // Solution: HeirloomEngine
 
 #pragma once
-#include "Core/Timestep.h"
-#include "Events/ApplicationEventArgs.h"
-#include "Events/MouseEventArgs.h"
+#include "Heirloom/Core/Timestep.h"
+#include "Heirloom/Events/ApplicationEventArgs.h"
+#include "Heirloom/Events/MouseEventArgs.h"
 #include "Heirloom/Renderer/OrthographicCamera.h"
 
 namespace Heirloom

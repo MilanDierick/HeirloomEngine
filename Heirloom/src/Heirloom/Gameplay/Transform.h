@@ -6,7 +6,7 @@
 
 #include "Components/Component.h"
 
-#include "Heirloom/Core.h"
+#include "Heirloom/Core/Core.h"
 
 namespace Heirloom
 {

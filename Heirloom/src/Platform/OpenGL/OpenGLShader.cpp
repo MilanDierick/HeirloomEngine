@@ -3,7 +3,7 @@
 #include <fstream>
 #include <glm/gtc/type_ptr.hpp>
 #include "glad/glad.h"
-#include "Heirloom/Application.h"
+#include "Heirloom/Core/Application.h"
 
 namespace Heirloom
 {

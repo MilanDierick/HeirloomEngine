@@ -2,14 +2,7 @@
 // Created: 02/03/2021 7:24 PM
 // Solution: HeirloomEngine
 
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.inl>
 #include "Heirloom.h"
-#include "Heirloom/Application.h"
-#include "Heirloom/OrthographicCameraController.h"
-#include "Heirloom/Renderer/OrthographicCamera.h"
-#include "imgui/imgui.h"
-#include "Platform/OpenGL/OpenGLShader.h"
 
 class ExampleLayer final : public Heirloom::Layer
 {
@@ -107,45 +100,9 @@ public:
 
 		m_Shader = Heirloom::Shader::Create("VertexPosColor", vertexSource, fragmentSource);
 
-		const std::string flatColorShaderVertexSource =
-			R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-		
-			out vec3 v_Position;
-		
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-			}
-
-		)";
-
-		const std::string flatColorFragmentShaderSource =
-			R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-
-			uniform vec3 u_Color;
-		
-			void main()
-			{
-				color = vec4(u_Color, 1.0);
-			}
-		)";
-
-		m_FlatColorShader = Heirloom::Shader::Create("FlatColor", flatColorShaderVertexSource,
-		                                             flatColorFragmentShaderSource);
-
 		const Heirloom::Ref<Heirloom::Shader> textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
+		m_FlatColorShader = m_ShaderLibrary.Load("assets/shaders/FlatColor.glsl");
+		
 
 		m_Texture2D   = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_LogoTexture = Heirloom::Texture2D::Create("assets/textures/Logo.png");
@@ -153,8 +110,6 @@ public:
 		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(textureShader)->Bind();
 		std::dynamic_pointer_cast<Heirloom::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 		#pragma endregion
-
-		Heirloom::Input::KeyPressedEvent += HL_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent);		
 	}
 
 	void OnDetach() override { }
@@ -224,8 +179,6 @@ public:
 	}
 
 private:
-	void OnKeyPressedEvent(Heirloom::KeyPressedEventArgs eventArgs);
-	
 	Heirloom::OrthographicCameraController m_CameraController;
 
 	Heirloom::ShaderLibrary m_ShaderLibrary;
@@ -238,11 +191,6 @@ private:
 
 	glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
 };
-
-void ExampleLayer::OnKeyPressedEvent(const Heirloom::KeyPressedEventArgs eventArgs)
-{
-	HL_TRACE("Key pressed: {0}", eventArgs.KeyCode);
-}
 
 class Sandbox final : public Heirloom::Application
 {

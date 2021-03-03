@@ -1,10 +1,8 @@
 #include "hlpch.h"
 #include "OrthographicCameraController.h"
-
-#include "Application.h"
-
-#include "Heirloom/Input.h"
-#include "Heirloom/KeyCodes.h"
+#include "Heirloom/Core/Application.h"
+#include "Heirloom/Core/Input.h"
+#include "Heirloom/Core/KeyCodes.h"
 
 Heirloom::OrthographicCameraController::OrthographicCameraController(const float aspectRatio, const bool rotation)
 	: m_AspectRatio(aspectRatio),

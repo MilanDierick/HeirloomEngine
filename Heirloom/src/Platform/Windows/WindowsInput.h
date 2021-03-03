@@ -3,7 +3,7 @@
 // Solution: HeirloomEngine
 
 #pragma once
-#include "Heirloom/Input.h"
+#include "Heirloom/Core/Input.h"
 
 namespace Heirloom
 {

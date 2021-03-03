@@ -5,8 +5,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Core/Timestep.h"
-#include "Gameplay/GameObject.h"
+#include "Heirloom/Core/Timestep.h"
+#include "Heirloom/Gameplay/GameObject.h"
 
 namespace Heirloom
 {

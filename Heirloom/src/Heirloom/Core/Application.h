@@ -8,8 +8,8 @@
 #include "Layer.h"
 #include "LayerStack.h"
 #include "Window.h"
-#include "ImGui/ImGuiLayer.h"
-#include "Renderer/VertexArray.h"
+#include "Heirloom/ImGui/ImGuiLayer.h"
+#include "Heirloom/Renderer/VertexArray.h"
 
 namespace Heirloom
 {
