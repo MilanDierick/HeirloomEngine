@@ -70,7 +70,6 @@ project "Heirloom"
 		
 		defines
 		{
-			"HL_PLATFORM_WINDOWS",
 			"HL_BUILD_DLL",
 			"GLFW_INCLUDE_NONE"
 		}

@@ -8,26 +8,28 @@
 
 #include "Heirloom/Core/Core.h"
 
+#include "glm/vec3.hpp"
+
 namespace Heirloom
 {
 	class Transform final : Component
 	{
 	public:
 		Transform();
-		Transform(Position position, Scale scale);
-		
-		[[nodiscard]] const Position& GetPosition() const { return m_Position; }
+		Transform(glm::vec3 position, glm::vec3 scale);
+
+		[[nodiscard]] const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(float x, float y, float z);
-		void SetPosition(Position position);
-		[[nodiscard]] const Scale& GetScale() const { return m_Scale; }
+		void SetPosition(glm::vec3 position);
+		[[nodiscard]] const glm::vec3& GetScale() const { return m_Scale; }
 		void SetScale(float x, float y, float z);
-		void SetScale(Scale scale);
+		void SetScale(glm::vec3 scale);
 
 		void Update(Timestep ts) override;
 		void Render() const override;
 	
 	private:
-		Position m_Position;
-		Scale m_Scale;
+		glm::vec3 m_Position;
+		glm::vec3 m_Scale;
 	};
 }

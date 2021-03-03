@@ -3,21 +3,21 @@
 #include "Shader.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
-Heirloom::Renderer::SceneData* Heirloom::Renderer::m_SceneData = new SceneData;
+Heirloom::Scope<Heirloom::Renderer::SceneData> Heirloom::Renderer::s_SceneData = Heirloom::CreateScope<SceneData>();
 
 void Heirloom::Renderer::Init()
 {
 	RenderCommand::Init();
 }
 
-void Heirloom::Renderer::OnWindowResize(uint32_t width, uint32_t height)
+void Heirloom::Renderer::OnWindowResize(const uint32_t width, const uint32_t height)
 {
 	RenderCommand::SetViewport(0, 0, width, height);
 }
 
 void Heirloom::Renderer::BeginScene(OrthographicCamera& camera)
 {
-	m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+	s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 }
 
 void Heirloom::Renderer::EndScene() { }
@@ -27,7 +27,7 @@ void Heirloom::Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray
 {
 	shader->Bind();
 	std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection",
-	                                                                   m_SceneData->ViewProjectionMatrix);
+	                                                                   s_SceneData->ViewProjectionMatrix);
 	std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
 
 	vertexArray->Bind();

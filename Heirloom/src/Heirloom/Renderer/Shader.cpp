@@ -12,7 +12,7 @@ Heirloom::Ref<Heirloom::Shader> Heirloom::Shader::Create(const std::string& file
 		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLShader>(filePath);
+			return CreateRef<OpenGLShader>(filePath);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -28,7 +28,7 @@ Heirloom::Ref<Heirloom::Shader> Heirloom::Shader::Create(const std::string& name
 		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLShader>(name, vertexSource, fragmentSource);
+			return CreateRef<OpenGLShader>(name, vertexSource, fragmentSource);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");

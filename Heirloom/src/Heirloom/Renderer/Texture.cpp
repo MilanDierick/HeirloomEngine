@@ -11,7 +11,7 @@ Heirloom::Ref<Heirloom::Texture2D> Heirloom::Texture2D::Create(const std::string
 			HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 		return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLTexture2D>(path);
+			return CreateRef<OpenGLTexture2D>(path);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");

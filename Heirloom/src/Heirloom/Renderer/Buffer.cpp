@@ -11,7 +11,7 @@ Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(float* vert
 		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+			return CreateRef<OpenGLVertexBuffer>(vertices, size);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -26,7 +26,7 @@ Heirloom::Ref<Heirloom::IndexBuffer> Heirloom::IndexBuffer::Create(uint32_t* ind
 		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLIndexBuffer>(indices, size);
+			return CreateRef<OpenGLIndexBuffer>(indices, size);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");

@@ -7,7 +7,7 @@
 class ExampleLayer final : public Heirloom::Layer
 {
 public:
-	ExampleLayer() : Layer("Example"), m_CameraController(1280.0f / 720.0f) { }
+	ExampleLayer() : Layer("Example"), m_CameraController(1280.0f / 720.0f, true) { }
 
 	void OnAttach() override
 	{

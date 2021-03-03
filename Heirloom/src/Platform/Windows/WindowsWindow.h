@@ -37,7 +37,7 @@ namespace Heirloom
 		void Shutdown() const;
 
 		GLFWwindow* m_Window;
-		GraphicsContext* m_Context;
+		Scope<GraphicsContext> m_Context;
 
 		struct WindowData
 		{

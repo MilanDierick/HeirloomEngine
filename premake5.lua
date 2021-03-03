@@ -49,15 +49,6 @@ project "Sandbox"
 	{
 		"Heirloom"
 	}
-
-	filter "system:windows"
-		systemversion "latest"
-
-		defines
-		{
-			"HL_PLATFORM_WINDOWS",
-			"GLFW_INCLUDE_NONE"
-		}
 	
 	filter "configurations:Debug"
 		defines

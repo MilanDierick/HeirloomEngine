@@ -213,5 +213,8 @@ void Heirloom::OpenGLShader::Compile(const std::unordered_map<GLenum, std::strin
 	}
 
 	for (auto id : glShaderIDs)
+	{
 		glDetachShader(program, id);
+		glDeleteShader(id);
+	}
 }
