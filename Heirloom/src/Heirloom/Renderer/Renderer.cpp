@@ -1,5 +1,6 @@
 #include "hlpch.h"
 #include "Renderer.h"
+#include "Renderer2D.h"
 #include "Shader.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
@@ -8,6 +9,7 @@ Heirloom::Scope<Heirloom::Renderer::SceneData> Heirloom::Renderer::s_SceneData =
 void Heirloom::Renderer::Init()
 {
 	RenderCommand::Init();
+	Renderer2D::Init();
 }
 
 void Heirloom::Renderer::OnWindowResize(const uint32_t width, const uint32_t height)

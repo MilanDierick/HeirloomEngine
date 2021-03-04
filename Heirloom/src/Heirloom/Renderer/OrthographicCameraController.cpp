@@ -13,7 +13,7 @@ Heirloom::OrthographicCameraController::OrthographicCameraController(const float
 	Application::Get().GetWindow().WindowResizedEvent += HL_BIND_EVENT_FN(OrthographicCameraController::OnWindowResizedEvent);
 }
 
-void Heirloom::OrthographicCameraController::OnUpdate(const Timestep ts)
+void Heirloom::OrthographicCameraController::Update(const Timestep ts)
 {
 	if (Input::IsKeyPressed(HL_KEY_A))
 	{

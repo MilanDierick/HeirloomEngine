@@ -3,6 +3,8 @@
 // Solution: HeirloomEngine
 
 #pragma once
+#include "glm/glm.hpp"
+#include "glm/gtx/compatibility.hpp"
 
 namespace Heirloom
 {
@@ -20,6 +22,10 @@ namespace Heirloom
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
+
+		virtual void SetFloat3(std::string name, glm::float3 value) = 0;
+		virtual void SetFloat4(std::string name, glm::float4 value) = 0;
+		virtual void SetMat4(std::string name, glm::mat4 value) = 0;
 
 		virtual const std::string& GetName() = 0;
 

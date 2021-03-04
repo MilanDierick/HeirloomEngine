@@ -26,6 +26,10 @@ namespace Heirloom
 		void Bind() const override;
 		void Unbind() const override;
 
+		void SetFloat3(std::string name, glm::float3 value) override;
+		void SetFloat4(std::string name, glm::float4 value) override;
+		void SetMat4(std::string name, glm::mat4 value) override;
+
 		const std::string& GetName() override { return m_Name; }
 		
 		void UploadUniformInt(const std::string& name, int value) const;

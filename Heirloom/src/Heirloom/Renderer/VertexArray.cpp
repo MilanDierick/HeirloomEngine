@@ -5,7 +5,7 @@
 
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
-Heirloom::VertexArray* Heirloom::VertexArray::Create()
+Heirloom::Ref<Heirloom::VertexArray> Heirloom::VertexArray::Create()
 {
 	switch (Renderer::GetAPI())
 	{
@@ -13,7 +13,7 @@ Heirloom::VertexArray* Heirloom::VertexArray::Create()
 			HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 		return nullptr;
 		case RendererAPI::API::OpenGL:
-			return new OpenGLVertexArray();
+			return Heirloom::CreateRef<OpenGLVertexArray>();
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");

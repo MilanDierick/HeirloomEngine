@@ -58,6 +58,21 @@ void Heirloom::OpenGLShader::Unbind() const
 	glUseProgram(0);
 }
 
+void Heirloom::OpenGLShader::SetFloat3(const std::string name, const glm::float3 value)
+{
+	UploadUniformFloat3(name, value);
+}
+
+void Heirloom::OpenGLShader::SetFloat4(const std::string name, const glm::float4 value)
+{
+	UploadUniformFloat4(name, value);
+}
+
+void Heirloom::OpenGLShader::SetMat4(const std::string name, const glm::mat4 value)
+{
+	UploadUniformMat4(name, value);
+}
+
 void Heirloom::OpenGLShader::UploadUniformInt(const std::string& name, int value) const
 {
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());

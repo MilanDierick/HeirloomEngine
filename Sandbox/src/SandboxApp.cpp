@@ -3,6 +3,12 @@
 // Solution: HeirloomEngine
 
 #include "Heirloom.h"
+#include "Sandbox2D.h"
+
+// ReSharper disable once CppUnusedIncludeDirective
+#include "Heirloom/Core/EntryPoint.h"
+
+#include "Platform/OpenGL/OpenGLShader.h"
 
 class ExampleLayer final : public Heirloom::Layer
 {
@@ -13,7 +19,7 @@ public:
 	{
 		#pragma region Initializing vertex arrays
 		// Vertex Array
-		m_VertexArray.reset(Heirloom::VertexArray::Create());
+		m_VertexArray = Heirloom::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
@@ -37,7 +43,7 @@ public:
 			Heirloom::IndexBuffer::Create(indices, sizeof indices / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_SquareVA.reset(Heirloom::VertexArray::Create());
+		m_SquareVA = Heirloom::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -59,50 +65,8 @@ public:
 			sizeof squareIndices / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		const std::string vertexSource =
-			R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-		
-			void main()
-			{
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-			}
-
-		)";
-
-		const std::string fragmentSource =
-			R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main()
-			{
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);
-				color = v_Color;
-			}
-
-		)";
-
-		m_Shader = Heirloom::Shader::Create("VertexPosColor", vertexSource, fragmentSource);
-
 		const Heirloom::Ref<Heirloom::Shader> textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
-		m_FlatColorShader = m_ShaderLibrary.Load("assets/shaders/FlatColor.glsl");
-		
+		m_FlatColorShader                                   = m_ShaderLibrary.Load("assets/shaders/FlatColor.glsl");
 
 		m_Texture2D   = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_LogoTexture = Heirloom::Texture2D::Create("assets/textures/Logo.png");
@@ -116,7 +80,7 @@ public:
 
 	void OnUpdate(const Heirloom::Timestep ts) override
 	{
-		m_CameraController.OnUpdate(ts);
+		m_CameraController.Update(ts);
 
 		// Render
 		Heirloom::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
@@ -182,7 +146,6 @@ private:
 	Heirloom::OrthographicCameraController m_CameraController;
 
 	Heirloom::ShaderLibrary m_ShaderLibrary;
-	Heirloom::Ref<Heirloom::Shader> m_Shader;
 	Heirloom::Ref<Heirloom::Shader> m_FlatColorShader;
 	Heirloom::Ref<Heirloom::VertexArray> m_VertexArray;
 	Heirloom::Ref<Heirloom::VertexArray> m_SquareVA;
@@ -197,7 +160,8 @@ class Sandbox final : public Heirloom::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer);
+		// PushLayer(new ExampleLayer);
+		PushLayer(new Sandbox2D);
 		HL_INFO("Initialized Sandbox application");
 	}
 

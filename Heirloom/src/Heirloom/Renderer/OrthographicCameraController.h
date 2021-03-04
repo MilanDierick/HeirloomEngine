@@ -15,7 +15,7 @@ namespace Heirloom
 	public:
 		explicit OrthographicCameraController(float aspectRatio, bool rotation = false);
 
-		void OnUpdate(Timestep ts);
+		void Update(Timestep ts);
 
 		OrthographicCamera& GetCamera() { return m_Camera; }
 		const OrthographicCamera& GetCamera() const { return m_Camera; }
