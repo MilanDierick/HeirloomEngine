@@ -58,6 +58,11 @@ void Heirloom::OpenGLShader::Unbind() const
 	glUseProgram(0);
 }
 
+void Heirloom::OpenGLShader::SetInt(const std::string name, const int value)
+{
+	UploadUniformInt(name, value);
+}
+
 void Heirloom::OpenGLShader::SetFloat3(const std::string name, const glm::float3 value)
 {
 	UploadUniformFloat3(name, value);

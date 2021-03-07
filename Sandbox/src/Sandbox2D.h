@@ -18,5 +18,8 @@ public:
 private:
 	Heirloom::OrthographicCameraController m_CameraController;
 
+	Heirloom::Ref<Heirloom::Texture2D> m_CheckerboardTexture;
+	Heirloom::Ref<Heirloom::Texture2D> m_Logo;
+
 	glm::vec4 m_SquareColor = {0.2f, 0.3f, 0.8f, 1.0f};
 };
