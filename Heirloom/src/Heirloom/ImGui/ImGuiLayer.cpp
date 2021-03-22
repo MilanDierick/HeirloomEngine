@@ -17,6 +17,8 @@ namespace Heirloom
 
 	void ImGuiLayer::OnAttach()
 	{
+		HL_PROFILE_FUNCTION()
+
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -24,7 +26,7 @@ namespace Heirloom
 		(void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
@@ -41,8 +43,8 @@ namespace Heirloom
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
-		io.Fonts->AddFontFromFileTTF("assets/fonts/Lingua.otf", 12);
-		io.Fonts->Build();
+		// io.Fonts->AddFontFromFileTTF("assets/fonts/Lingua.otf", 12);
+		// io.Fonts->Build();
 
 		Application& app   = Application::Get();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
@@ -54,6 +56,8 @@ namespace Heirloom
 
 	void ImGuiLayer::OnDetach()
 	{
+		HL_PROFILE_FUNCTION()
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -63,21 +67,40 @@ namespace Heirloom
 
 	void ImGuiLayer::Begin()
 	{
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
+		HL_PROFILE_FUNCTION()
+
+		{
+			HL_PROFILE_SCOPE("ImGui_ImplOpenGL3_NewFrame")
+			ImGui_ImplOpenGL3_NewFrame();
+		}
+
+		{
+			HL_PROFILE_SCOPE("ImGui_ImplGlfw_NewFrame")
+			ImGui_ImplGlfw_NewFrame();
+		}
+
+		{
+			HL_PROFILE_SCOPE("ImGui::NewFrame")
+			ImGui::NewFrame();
+		}
 	}
 
 	void ImGuiLayer::End()
 	{
+		HL_PROFILE_FUNCTION()
+
 		ImGuiIO& io      = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize   = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
 		                          static_cast<float>(app.GetWindow().GetHeight()));
 
-		// Rendering
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		{
+			HL_PROFILE_SCOPE("ImGui Rendering")
+
+			// Rendering
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
 
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{

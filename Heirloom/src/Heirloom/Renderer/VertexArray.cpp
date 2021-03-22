@@ -7,6 +7,8 @@
 
 Heirloom::Ref<Heirloom::VertexArray> Heirloom::VertexArray::Create()
 {
+	HL_PROFILE_FUNCTION()
+	
 	switch (Renderer::GetAPI())
 	{
 		case RendererAPI::API::None:

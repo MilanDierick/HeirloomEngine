@@ -9,7 +9,6 @@
 #include "LayerStack.h"
 #include "Window.h"
 #include "Heirloom/ImGui/ImGuiLayer.h"
-#include "Heirloom/Renderer/VertexArray.h"
 
 namespace Heirloom
 {

@@ -10,32 +10,44 @@ namespace Heirloom
 
 	static void GLFWErrorCallback(const int error, const char* description)
 	{
+		HL_PROFILE_FUNCTION()
+	
 		HL_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
 	Window* Window::Create(const WindowProps& props)
 	{
+		HL_PROFILE_FUNCTION()
+	
 		return new WindowsWindow(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		HL_PROFILE_FUNCTION()
+	
 		Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
+		HL_PROFILE_FUNCTION()
+	
 		Shutdown();
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
+		HL_PROFILE_FUNCTION()
+	
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(const bool enabled)
 	{
+		HL_PROFILE_FUNCTION()
+	
 		if (enabled)
 		{
 			glfwSwapInterval(1);
@@ -55,6 +67,8 @@ namespace Heirloom
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		HL_PROFILE_FUNCTION()
+	
 		m_Data.Title              = props.Title;
 		m_Data.Width              = props.Width;
 		m_Data.Height             = props.Height;
@@ -173,6 +187,8 @@ namespace Heirloom
 
 	void WindowsWindow::Shutdown() const
 	{
+		HL_PROFILE_FUNCTION()
+	
 		glfwDestroyWindow(m_Window);
 	}
 }

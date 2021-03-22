@@ -4,6 +4,8 @@
 
 void Heirloom::Renderer2D::Init()
 {
+	HL_PROFILE_FUNCTION()
+	
 	s_Data = new Renderer2DStorage();
 
 	s_Data->QuadVertexArray = VertexArray::Create();
@@ -39,11 +41,15 @@ void Heirloom::Renderer2D::Init()
 
 void Heirloom::Renderer2D::Shutdown()
 {
+	HL_PROFILE_FUNCTION()
+	
 	delete s_Data;
 }
 
 void Heirloom::Renderer2D::BeginScene(OrthographicCamera& camera)
 {
+	HL_PROFILE_FUNCTION()
+	
 	s_Data->TextureShader->Bind();
 	s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 }
@@ -52,11 +58,15 @@ void Heirloom::Renderer2D::EndScene() { }
 
 void Heirloom::Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 {
+	HL_PROFILE_FUNCTION()
+	
 	DrawQuad({position.x, position.y, 0.0f}, size, color);
 }
 
 void Heirloom::Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 {
+	HL_PROFILE_FUNCTION()
+	
 	s_Data->TextureShader->SetFloat4("u_Color", color);
 
 	s_Data->WhiteTexture->Bind();
@@ -72,11 +82,15 @@ void Heirloom::Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& 
 
 void Heirloom::Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 {
+	HL_PROFILE_FUNCTION()
+	
 	DrawQuad({position.x, position.y, 0.0f}, size, texture);
 }
 
 void Heirloom::Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 {
+	HL_PROFILE_FUNCTION()
+	
 	s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 	
 	texture->Bind();

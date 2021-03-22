@@ -7,11 +7,15 @@
 
 Heirloom::OpenGLContext::OpenGLContext(GLFWwindow* const windowHandle): m_WindowHandle(windowHandle)
 {
+	HL_PROFILE_FUNCTION()
+
 	HL_CORE_ASSERT(windowHandle, "Window handle is null!");
 }
 
 void Heirloom::OpenGLContext::Init()
 {
+	HL_PROFILE_FUNCTION()
+
 	glfwMakeContextCurrent(m_WindowHandle);
 	const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
 	HL_CORE_ASSERT(status, "Failed to initialize Glad!");
@@ -24,5 +28,7 @@ void Heirloom::OpenGLContext::Init()
 
 void Heirloom::OpenGLContext::SwapBuffers()
 {
+	HL_PROFILE_FUNCTION()
+
 	glfwSwapBuffers(m_WindowHandle);
 }

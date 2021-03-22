@@ -24,6 +24,8 @@ namespace Heirloom
 
 	static uint32_t ShaderDataTypeSize(const ShaderDataType type)
 	{
+		// HL_PROFILE_FUNCTION();
+		
 		switch (type)
 		{
 			case ShaderDataType::None: return 0;
@@ -61,6 +63,8 @@ namespace Heirloom
 
 		uint32_t GetComponentCount() const
 		{
+			// HL_PROFILE_FUNCTION();
+		
 			switch (Type)
 			{
 				case ShaderDataType::None: return 0;
@@ -90,6 +94,8 @@ namespace Heirloom
 
 		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
 		{
+			// HL_PROFILE_FUNCTION();
+		
 			CalculateOffsetsAndStride();
 		}
 
@@ -104,18 +110,7 @@ namespace Heirloom
 		// ReSharper restore CppInconsistentNaming
 
 	private:
-		void CalculateOffsetsAndStride()
-		{
-			uint32_t offset = 0;
-			m_Stride        = 0;
-
-			for (auto& element : m_Elements)
-			{
-				element.Offset = offset;
-				offset += element.Size;
-				m_Stride += element.Size;
-			}
-		}
+		void CalculateOffsetsAndStride();
 
 		std::vector<BufferElement> m_Elements;
 		uint32_t m_Stride = 0;

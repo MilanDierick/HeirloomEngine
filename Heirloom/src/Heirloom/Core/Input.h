@@ -3,7 +3,7 @@
 // Solution: HeirloomEngine
 
 #pragma once
-#include "Heirloom/Events/EventNew.h"
+#include "Heirloom/Events/Event.h"
 #include "Heirloom/Events/KeyEventArgs.h"
 #include "Heirloom/Events/MouseEventArgs.h"
 #include "Heirloom/Core/Core.h"

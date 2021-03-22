@@ -56,6 +56,8 @@
 
 #include "Log.h"
 
+#include "Heirloom/Profiler/Instrumentation.h"
+
 #ifdef HL_ENABLE_ASSERTS
 #define HL_ASSERT(x, ...) { if(!(x)) { HL_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #define HL_CORE_ASSERT(x, ...) { if(!(x)) { HL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
@@ -76,6 +78,8 @@ namespace Heirloom
 	template <typename T, typename ... Args>
 	constexpr Scope<T> CreateScope(Args&& ... args)
 	{
+		HL_PROFILE_FUNCTION()
+		
 		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
 
@@ -85,6 +89,8 @@ namespace Heirloom
 	template <typename T, typename ... Args>
 	constexpr Ref<T> CreateRef(Args&& ... args)
 	{
+		HL_PROFILE_FUNCTION()
+		
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 }

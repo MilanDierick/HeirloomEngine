@@ -5,6 +5,8 @@
 
 Heirloom::Ref<Heirloom::Texture2D> Heirloom::Texture2D::Create(uint32_t width, uint32_t height)
 {
+	HL_PROFILE_FUNCTION()
+	
 	switch (Renderer::GetAPI())
 	{
 		case RendererAPI::API::None:
@@ -20,6 +22,8 @@ Heirloom::Ref<Heirloom::Texture2D> Heirloom::Texture2D::Create(uint32_t width, u
 
 Heirloom::Ref<Heirloom::Texture2D> Heirloom::Texture2D::Create(const std::string& path)
 {
+	HL_PROFILE_FUNCTION()
+	
 	switch (Renderer::GetAPI())
 	{
 		case RendererAPI::API::None:

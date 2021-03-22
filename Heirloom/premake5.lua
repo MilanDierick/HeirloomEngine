@@ -77,7 +77,8 @@ project "Heirloom"
 	filter "configurations:Debug"
 		defines
 		{
-			"HL_DEBUG"
+			"HL_DEBUG",
+			"HL_PROFILE"
 		}
 		runtime "Debug"
 		symbols "On"
@@ -85,7 +86,8 @@ project "Heirloom"
 	filter "configurations:Release"
 		defines
 		{
-			"HL_RELEASE"
+			"HL_RELEASE",
+			"HL_PROFILE"
 		}
 		runtime "Release"
 		optimize "On"

@@ -9,6 +9,8 @@ namespace Heirloom
 
 	bool WindowsInput::IsKeyPressedImpl(const int keycode)
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		const int state    = glfwGetKey(window, keycode);
 
@@ -17,6 +19,8 @@ namespace Heirloom
 
 	bool WindowsInput::IsMouseButtonPressedImpl(const int button)
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		const int state    = glfwGetMouseButton(window, button);
 
@@ -25,6 +29,8 @@ namespace Heirloom
 
 	std::pair<float, float> WindowsInput::GetMousePositionImpl()
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		double xPos, yPos;
 		glfwGetCursorPos(window, &xPos, &yPos);
@@ -34,15 +40,19 @@ namespace Heirloom
 
 	bool WindowsInput::GetMouseXImpl()
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		auto [x, y] = GetMousePositionImpl();
 
-		return static_cast<float>(x);
+		return x;
 	}
 
 	bool WindowsInput::GetMouseYImpl()
 	{
+		HL_PROFILE_FUNCTION()
+	
 		auto [x, y] = GetMousePositionImpl();
 
-		return static_cast<float>(y);
+		return y;
 	}
 }

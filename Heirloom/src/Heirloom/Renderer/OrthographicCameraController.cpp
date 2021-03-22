@@ -15,6 +15,8 @@ Heirloom::OrthographicCameraController::OrthographicCameraController(const float
 
 void Heirloom::OrthographicCameraController::Update(const Timestep ts)
 {
+	HL_PROFILE_FUNCTION()
+	
 	if (Input::IsKeyPressed(HL_KEY_A))
 	{
 		m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
@@ -63,6 +65,8 @@ void Heirloom::OrthographicCameraController::Update(const Timestep ts)
 
 void Heirloom::OrthographicCameraController::OnMouseScrolledEvent(const MouseScrolledEventArgs eventArgs)
 {
+	HL_PROFILE_FUNCTION()
+	
 	m_ZoomLevel -= eventArgs.YOffset * 0.25f;
 	m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 	m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -70,6 +74,8 @@ void Heirloom::OrthographicCameraController::OnMouseScrolledEvent(const MouseScr
 
 void Heirloom::OrthographicCameraController::OnWindowResizedEvent(const WindowResizedEventArgs eventArgs)
 {
+	HL_PROFILE_FUNCTION()
+	
 	m_AspectRatio = static_cast<float>(eventArgs.Width) / static_cast<float>(eventArgs.Height);
 	m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 }

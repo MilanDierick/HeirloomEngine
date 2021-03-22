@@ -3,7 +3,7 @@
 // Solution: HeirloomEngine
 
 #pragma once
-#include "EventNew.h"
+#include "Event.h"
 
 namespace Heirloom
 {

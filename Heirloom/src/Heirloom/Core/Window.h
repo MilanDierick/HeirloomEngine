@@ -13,8 +13,8 @@ namespace Heirloom
 		unsigned int Width;
 		unsigned int Height;
 
-		explicit WindowProps(const std::string& title  = "Heirloom Engine", const unsigned int width = 1280,
-		                     const unsigned int height = 720) : Title(title), Width(width), Height(height) { }
+		explicit WindowProps(const std::string& title  = "Heirloom Engine", const unsigned int width = 640,
+		                     const unsigned int height = 480) : Title(title), Width(width), Height(height) { }
 	};
 
 	/**

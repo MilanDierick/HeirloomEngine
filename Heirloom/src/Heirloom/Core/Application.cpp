@@ -11,6 +11,8 @@ namespace Heirloom
 
 	Application::Application()
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		HL_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
@@ -29,8 +31,12 @@ namespace Heirloom
 
 	void Application::Run()
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		while (m_IsRunning)
 		{
+			HL_PROFILE_SCOPE("Frame")
+			
 			// TODO: Move this to a platform-dependant file
 			const float time = static_cast<float>(glfwGetTime());
 			const Timestep timestep(time - m_LastFrameTime);
@@ -38,16 +44,23 @@ namespace Heirloom
 		
 			if (!m_Minimized)
 			{
-				for (Layer* layer : m_LayerStack)
-					layer->OnUpdate(timestep);
+				{
+					HL_PROFILE_SCOPE("LayerStack OnUpdate")
+					
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate(timestep);
+				}
+
+				m_ImGuiLayer->Begin();
+		
+				{
+					HL_PROFILE_SCOPE("LayerStack OnImGuiRender")
+					for (Layer* layer : m_LayerStack)
+						layer->OnImGuiRender();
+				}
+		
+				m_ImGuiLayer->End();
 			}
-		
-			m_ImGuiLayer->Begin();
-		
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-		
-			m_ImGuiLayer->End();
 		
 			m_Window->OnUpdate();
 		}
@@ -55,24 +68,32 @@ namespace Heirloom
 
 	void Application::PushLayer(Layer* layer)
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
+		HL_PROFILE_FUNCTION()
+    	
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
 
 	bool Application::OnWindowClosedEvent(const WindowClosedEventArgs)
 	{
+		HL_PROFILE_FUNCTION()
+	
 		m_IsRunning = false;
 		return true;
 	}
 
 	bool Application::OnWindowResizedEvent(const WindowResizedEventArgs eventArgs)
 	{
+		HL_PROFILE_FUNCTION()
+	
 		if (eventArgs.Width == 0 || eventArgs.Height == 0)
 		{
 			m_Minimized = true;

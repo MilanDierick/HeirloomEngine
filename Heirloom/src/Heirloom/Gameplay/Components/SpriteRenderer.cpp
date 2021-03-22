@@ -10,7 +10,6 @@ Heirloom::SpriteRenderer::SpriteRenderer()
 
 void Heirloom::SpriteRenderer::Update(Timestep)
 {
-	
 }
 
 void Heirloom::SpriteRenderer::Render() const

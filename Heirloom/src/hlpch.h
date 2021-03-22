@@ -18,6 +18,9 @@
 #include "Heirloom/Core/Core.h"
 #include "Heirloom/Core/Log.h"
 
+// TODO: Consider excluding this in distribution builds
+#include "Heirloom/Profiler/Instrumentation.h" 
+
 #ifdef HL_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif
