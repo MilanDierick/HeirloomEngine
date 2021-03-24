@@ -27,6 +27,8 @@ namespace Heirloom
 		void Unbind() const override;
 
 		void SetInt(std::string name, int value) override;
+		void SetFloat(std::string name, float value) override;
+		void SetFloat2(std::string name, glm::float2 value) override;
 		void SetFloat3(std::string name, glm::float3 value) override;
 		void SetFloat4(std::string name, glm::float4 value) override;
 		void SetMat4(std::string name, glm::mat4 value) override;

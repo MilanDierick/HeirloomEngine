@@ -8,7 +8,7 @@ void Sandbox2D::OnAttach()
 {
 	HL_PROFILE_FUNCTION()
 
-	m_BackgroundTexture = Heirloom::Texture2D::Create("assets/textures/background.jpg");
+	m_BackgroundTexture = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_Logo              = Heirloom::Texture2D::Create("assets/textures/logo.png");
 }
 
@@ -27,7 +27,7 @@ void Sandbox2D::OnUpdate(const Heirloom::Timestep ts)
 
 	// Heirloom::Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, m_SquareColor);
 	// Heirloom::Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, m_SquareColor);
-	Heirloom::Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {3.0f, 3.0f}, m_BackgroundTexture);
+	Heirloom::Renderer2D::DrawRotatedQuad({0.0f, 0.0f, -0.1f}, {5.0f, 5.0f}, glm::radians(45.0f), m_BackgroundTexture, 10.0f, {1.0f, 0.9f, 0.9f, 1.0f});
 	Heirloom::Renderer2D::DrawQuad({0.0f, 0.8f}, {1.0f, 1.0f}, m_Logo);
 
 	Heirloom::Renderer2D::EndScene();

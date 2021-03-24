@@ -24,6 +24,8 @@ namespace Heirloom
 		virtual void Unbind() const = 0;
 
 		virtual void SetInt(std::string name, int value) = 0;
+		virtual void SetFloat(std::string name, float value) = 0;
+		virtual void SetFloat2(std::string name, glm::float2 value) = 0;
 		virtual void SetFloat3(std::string name, glm::float3 value) = 0;
 		virtual void SetFloat4(std::string name, glm::float4 value) = 0;
 		virtual void SetMat4(std::string name, glm::mat4 value) = 0;
