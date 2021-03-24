@@ -9,6 +9,8 @@ Heirloom::OrthographicCameraController::OrthographicCameraController(const float
 	  m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel),
 	  m_Rotation(rotation)
 {
+	HL_PROFILE_FUNCTION();
+	
 	Input::MouseScrolledEvent += HL_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolledEvent);
 	Application::Get().GetWindow().WindowResizedEvent += HL_BIND_EVENT_FN(OrthographicCameraController::OnWindowResizedEvent);
 }

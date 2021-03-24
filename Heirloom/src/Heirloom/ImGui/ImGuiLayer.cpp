@@ -27,7 +27,7 @@ namespace Heirloom
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
+		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
@@ -95,19 +95,32 @@ namespace Heirloom
 		                          static_cast<float>(app.GetWindow().GetHeight()));
 
 		{
-			HL_PROFILE_SCOPE("ImGui Rendering")
+			HL_PROFILE_SCOPE("ImGui::End Rendering")
 
 			// Rendering
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		}
 
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
-			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault();
-			glfwMakeContextCurrent(backupCurrentContext);
+			HL_PROFILE_SCOPE("ImGui::End ViewportsConfig")
+			
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
+				{
+					HL_PROFILE_SCOPE("ImGui::UpdatePlatformWindows()")
+					ImGui::UpdatePlatformWindows();
+				}
+				{
+					HL_PROFILE_SCOPE("ImGui::RenderPlatformWindowsDefault()")
+					ImGui::RenderPlatformWindowsDefault();
+				}
+				{
+					HL_PROFILE_SCOPE("ImGui::glfwMakeContextCurrent()")
+					glfwMakeContextCurrent(backupCurrentContext);
+				}
+			}
 		}
 	}
 }

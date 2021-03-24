@@ -24,7 +24,7 @@ namespace Heirloom
 
 	static uint32_t ShaderDataTypeSize(const ShaderDataType type)
 	{
-		// HL_PROFILE_FUNCTION();
+		HL_PROFILE_FUNCTION();
 		
 		switch (type)
 		{
@@ -63,7 +63,7 @@ namespace Heirloom
 
 		uint32_t GetComponentCount() const
 		{
-			// HL_PROFILE_FUNCTION();
+			HL_PROFILE_FUNCTION();
 		
 			switch (Type)
 			{
@@ -94,7 +94,7 @@ namespace Heirloom
 
 		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
 		{
-			// HL_PROFILE_FUNCTION();
+			HL_PROFILE_FUNCTION();
 		
 			CalculateOffsetsAndStride();
 		}
