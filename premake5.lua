@@ -34,7 +34,8 @@ project "Sandbox"
 		"Heirloom/src",
 		"Heirloom/thirdparty",
 		"Heirloom/%{IncludeDir.GLFW}",
-		"Heirloom/%{IncludeDir.glm}"
+		"Heirloom/%{IncludeDir.glm}",
+		"Heirloom/%{IncludeDir.irrKlang}"
 	}
 
 	links
@@ -64,3 +65,17 @@ project "Sandbox"
 		defines "HL_DIST"
 		runtime "Release"
 		optimize "On"
+
+	filter "platforms:Win32"
+		postbuildcommands 
+		{
+			"{COPY} \"$(SolutionDir)Sandbox\\assets\" \"$(TargetDir)\\assets\\\"",
+			"{COPY} \"$(SolutionDir)Heirloom\\thirdparty\\irrKlang\\bin\\Win32\\*.dll\" \"$(TargetDir)\""
+		}
+	
+	filter "platforms:Win64"
+		postbuildcommands 
+		{
+			"{COPY} \"$(SolutionDir)Sandbox\\assets\" \"$(TargetDir)\\assets\\\"",
+			"{COPY} \"$(SolutionDir)Heirloom\\thirdparty\\irrKlang\\bin\\Win64\\*.dll\" \"$(TargetDir)\""
+		}

@@ -5,6 +5,7 @@ IncludeDir["glad"] = "thirdparty/glad/include"
 IncludeDir["ImGui"] = "thirdparty/imgui"
 IncludeDir["glm"] = "thirdparty/glm"
 IncludeDir["stb_image"] = "thirdparty/stb_image"
+IncludeDir["irrKlang"] = "thirdparty/irrKlang/include"
 
 configurations 
 {
@@ -75,7 +76,8 @@ project "Heirloom"
 		"%{IncludeDir.glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.irrKlang}"
 	}
 
 	links 
@@ -83,12 +85,23 @@ project "Heirloom"
 		"GLFW",
 		"Glad",
 		"ImGui",
-		"opengl32.lib"
+		"irrKlang.lib"
 	}
+
+	filter "platforms:Win32"
+		libdirs
+		{
+			"thirdparty/irrKlang/lib/Win32"
+		}
+
+	filter "platforms:Win64"
+		libdirs 
+		{
+			"thirdparty/irrKlang/lib/Win64"
+		}
 
 	filter "system:windows"
 		systemversion "latest"
-		
 		defines
 		{
 			"HL_BUILD_DLL",

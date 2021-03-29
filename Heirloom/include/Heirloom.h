@@ -25,6 +25,9 @@
 #include "Heirloom/Renderer/Texture.h"
 // =================================================================
 
+#include "Heirloom/Profiler/Instrumentation.h"
+#include "Heirloom/Audio/SimpleSoundEngine.h"
+
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtx/transform.hpp"
 

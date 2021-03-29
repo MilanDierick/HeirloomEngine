@@ -5,6 +5,7 @@
 #pragma once
 #include "Heirloom/Audio/SoundEngine.h"
 #include "Heirloom/Core/LockFreeStack.h"
+#include <irrKlang.h>
 
 namespace Heirloom
 {
@@ -12,7 +13,7 @@ namespace Heirloom
 	{
 	public:
 		[[nodiscard]] SimpleSoundEngine();
-		~SimpleSoundEngine()              = default;
+		~SimpleSoundEngine();
 
 		void Update() override;
 		void Play(Ref<Sound> sound) override;
@@ -21,6 +22,8 @@ namespace Heirloom
 
 	private:
 		void SwapBuffers();
+
+		irrklang::ISoundEngine* m_SoundEngine;
 		
 		LockFreeStack<Sound> m_SoundsQueue;
 		LockFreeStack<Sound> m_SoundsQueueBuffer;

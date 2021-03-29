@@ -5,8 +5,6 @@
 #pragma once
 #include "Heirloom.h"
 
-#include "Heirloom/Audio/SimpleSoundEngine.h"
-
 class Sandbox2D final : public Heirloom::Layer
 {
 public:
