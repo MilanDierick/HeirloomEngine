@@ -7,3 +7,6 @@
 [submodule "Heirloom/thirdparty/glm"]
 	path = Heirloom/thirdparty/glm
 	url = https://github.com/g-truc/glm
+[submodule "Heirloom/thirdparty/OneSound"]
+	path = Heirloom/thirdparty/OneSound
+	url = https://github.com/MilanDierick/OneSound
