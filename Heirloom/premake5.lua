@@ -6,6 +6,27 @@ IncludeDir["ImGui"] = "thirdparty/imgui"
 IncludeDir["glm"] = "thirdparty/glm"
 IncludeDir["stb_image"] = "thirdparty/stb_image"
 
+configurations 
+{
+	"Debug",
+	"Release",
+	"Dist"
+}
+
+platforms 
+{
+	"Win32",
+	"Win64"
+}
+
+filter "platforms:Win32"
+	system "windows"
+	architecture "x86"
+
+filter "platforms:Win64"
+	system "windows"
+	architecture "x86_64"
+
 group "Dependencies"
 	include "thirdparty/GLFW"
 	include "thirdparty/glad"
@@ -15,7 +36,7 @@ group ""
 project "Heirloom"
 	kind "StaticLib"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++latest"
 	staticruntime "On"
 	warnings "Extra"
 
@@ -56,15 +77,15 @@ project "Heirloom"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}"
 	}
-	
-	links
+
+	links 
 	{
 		"GLFW",
 		"Glad",
 		"ImGui",
 		"opengl32.lib"
 	}
-	
+
 	filter "system:windows"
 		systemversion "latest"
 		

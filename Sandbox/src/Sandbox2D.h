@@ -5,6 +5,8 @@
 #pragma once
 #include "Heirloom.h"
 
+#include "Heirloom/Audio/SimpleSoundEngine.h"
+
 class Sandbox2D final : public Heirloom::Layer
 {
 public:
@@ -16,6 +18,8 @@ public:
 	void OnImGuiRender() override;
 
 private:
+	Heirloom::Ref<Heirloom::SimpleSoundEngine> m_SoundEngine;
+	
 	Heirloom::OrthographicCameraController m_CameraController;
 
 	Heirloom::Ref<Heirloom::Texture2D> m_BackgroundTexture;

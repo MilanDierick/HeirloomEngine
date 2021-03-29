@@ -178,7 +178,9 @@ std::string Heirloom::OpenGLShader::ReadFile(const std::string& filePath)
 	if (in)
 	{
 		in.seekg(0, std::ios::end);
+#pragma warning(disable : 4244)
 		result.resize(in.tellg());
+#pragma warning(default : 4244)
 		in.seekg(0, std::ios::beg);
 		in.read(&result[0], result.size());
 		in.close();

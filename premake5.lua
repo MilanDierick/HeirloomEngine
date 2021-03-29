@@ -1,13 +1,5 @@
 workspace "HeirloomEngine"
-	architecture "x64"
 	startproject "Sandbox"
-
-	configurations
-	{
-		"Debug",
-		"Release",
-		"Dist"
-	}
 
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -17,10 +9,10 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++latest"
 	staticruntime "On"
 	warnings "Extra"
-	
+
 	flags
 	{
 		"FatalWarnings"

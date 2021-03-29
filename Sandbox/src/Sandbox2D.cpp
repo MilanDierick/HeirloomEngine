@@ -2,12 +2,16 @@
 
 #include "Heirloom/Profiler/Instrumentation.h"
 
-Sandbox2D::Sandbox2D() : Layer("Sandbox2D"), m_CameraController(640.0f / 480.0f, false) { }
+Sandbox2D::Sandbox2D() : Layer("Sandbox2D"), m_CameraController(1280.0f / 960.0f, false) { }
 
 void Sandbox2D::OnAttach()
 {
 	HL_PROFILE_FUNCTION()
 
+	m_SoundEngine = Heirloom::CreateRef<Heirloom::SimpleSoundEngine>();
+
+	m_SoundEngine = Heirloom::CreateRef<Heirloom::SimpleSoundEngine>();
+	
 	m_BackgroundTexture = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_Logo              = Heirloom::Texture2D::Create("assets/textures/logo.png");
 }
@@ -17,7 +21,7 @@ void Sandbox2D::OnDetach() {}
 void Sandbox2D::OnUpdate(const Heirloom::Timestep ts)
 {
 	HL_PROFILE_FUNCTION()
-
+	
 	m_CameraController.Update(ts);
 
 	Heirloom::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});

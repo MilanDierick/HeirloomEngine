@@ -23,7 +23,6 @@
 #include "Heirloom/Renderer/Renderer.h"
 #include "Heirloom/Renderer/Renderer2D.h"
 #include "Heirloom/Renderer/Texture.h"
-#include "Heirloom/Renderer/Texture.h"
 // =================================================================
 
 #include "glm/gtc/type_ptr.hpp"
