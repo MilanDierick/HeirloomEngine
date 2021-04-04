@@ -20,6 +20,7 @@ namespace Heirloom
 
 		virtual void Update() = 0;
 		virtual void Play(Ref<Sound> sound) = 0;
+		virtual void Play(std::string filePath) = 0;
 		virtual void Stop(Ref<Sound> sound) = 0;
 		virtual void StopAll() = 0;
 	};

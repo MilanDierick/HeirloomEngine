@@ -1,6 +1,8 @@
 ﻿#include "hlpch.h"
 #include "Application.h"
 #include "GLFW/glfw3.h"
+
+#include "Heirloom/Audio/SoundService.h"
 #include "Heirloom/Renderer/Renderer.h"
 
 namespace Heirloom
@@ -60,6 +62,8 @@ namespace Heirloom
 				}
 		
 				m_ImGuiLayer->End();
+
+				SoundService::GetSoundEngine()->Update();
 			}
 		
 			m_Window->OnUpdate();

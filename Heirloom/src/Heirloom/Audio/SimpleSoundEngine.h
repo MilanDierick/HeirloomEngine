@@ -16,16 +16,21 @@ namespace Heirloom
 		~SimpleSoundEngine();
 
 		void Update() override;
+		void Play(std::string filePath) override;
 		void Play(Ref<Sound> sound) override;
 		void Stop(Ref<Sound> sound) override;
 		void StopAll() override;
 
 	private:
 		void SwapBuffers();
+		void CacheSound(irrklang::ISoundSource* soundSource);
+		void PlayBufferedSounds();
 
 		irrklang::ISoundEngine* m_SoundEngine;
-		
-		LockFreeStack<Sound> m_SoundsQueue;
-		LockFreeStack<Sound> m_SoundsQueueBuffer;
+
+		// TODO: Consider if this actually needs to be thread-safe
+		LockFreeStack<Ref<Sound>>* m_SoundsQueue;
+		LockFreeStack<Ref<Sound>>* m_SoundsQueueBuffer;
+		std::vector<irrklang::ISoundSource*> m_CachedSoundSources;
 	};
 }
