@@ -44,6 +44,8 @@ namespace Heirloom
 	template <LockFreeStackType T>
 	LockFreeStack<T>::~LockFreeStack()
 	{
+		HL_PROFILE_FUNCTION()
+		
 		Node<T>* currentNode = m_pHead.load();
 		size_t counter       = 0;
 
@@ -59,6 +61,8 @@ namespace Heirloom
 	template <LockFreeStackType T>
 	void LockFreeStack<T>::Push(T value)
 	{
+		HL_PROFILE_FUNCTION()
+		
 		Node<T>* pNewNode = new Node<T>(value, nullptr);
 
 		do
@@ -71,8 +75,10 @@ namespace Heirloom
 	template <LockFreeStackType T>
 	Node<T>* LockFreeStack<T>::Pop()
 	{
+		HL_PROFILE_FUNCTION()
+		
 		Node<T>* pOldHead;
-
+			
 		do
 		{
 			pOldHead = m_pHead.load();
@@ -85,6 +91,8 @@ namespace Heirloom
 	template <LockFreeStackType T>
 	size_t LockFreeStack<T>::Size() const
 	{
+		HL_PROFILE_FUNCTION()
+		
 		size_t size          = 0;
 		Node<T>* currentNode = m_pHead;
 
