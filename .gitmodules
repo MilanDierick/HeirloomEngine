@@ -4,9 +4,9 @@
 [submodule "Heirloom/thirdparty/imgui"]
 	path = Heirloom/thirdparty/imgui
 	url = https://github.com/MilanDierick/imgui
-[submodule "Heirloom/thirdparty/glm"]
-	path = Heirloom/thirdparty/glm
-	url = https://github.com/g-truc/glm
 [submodule "Heirloom/thirdparty/OneSound"]
 	path = Heirloom/thirdparty/OneSound
 	url = https://github.com/MilanDierick/OneSound
+[submodule "Heirloom/thirdparty/glm"]
+	path = Heirloom/thirdparty/glm
+	url = https://github.com/MilanDierick/glm.git
