@@ -16,7 +16,7 @@ namespace Heirloom
 	public:
 		explicit OpenGLShader(const std::string& filePath);
 		OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
-		virtual ~OpenGLShader();
+		~OpenGLShader() override;
 
 		OpenGLShader(const OpenGLShader& other)                = delete;
 		OpenGLShader(OpenGLShader&& other) noexcept            = delete;
@@ -34,7 +34,7 @@ namespace Heirloom
 		void SetMat4(std::string name, glm::mat4 value) override;
 
 		const std::string& GetName() override { return m_Name; }
-		
+
 		void UploadUniformInt(const std::string& name, int value) const;
 
 		void UploadUniformFloat(const std::string& name, float value) const;
@@ -44,7 +44,7 @@ namespace Heirloom
 
 		void UploadUniformMat3(const std::string& name, glm::mat3 matrix) const;
 		void UploadUniformMat4(const std::string& name, glm::mat4 matrix) const;
-	
+
 	private:
 		std::string ReadFile(const std::string& filePath);
 		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);

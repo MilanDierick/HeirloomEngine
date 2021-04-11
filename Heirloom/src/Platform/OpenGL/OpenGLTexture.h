@@ -20,12 +20,12 @@ namespace Heirloom
 		OpenGLTexture2D(OpenGLTexture2D&& other) noexcept            = delete;
 		OpenGLTexture2D& operator=(const OpenGLTexture2D& other)     = delete;
 		OpenGLTexture2D& operator=(OpenGLTexture2D&& other) noexcept = delete;
-		
+
 		uint32_t GetWidth() const override { return m_Width; }
 		uint32_t GetHeight() const override { return m_Height; }
 
 		void SetData(void* data, uint32_t size) override;
-		
+
 		void Bind(uint32_t slot = 0) override;
 
 	private:

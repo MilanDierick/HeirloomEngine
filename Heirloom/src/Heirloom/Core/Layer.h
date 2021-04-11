@@ -20,7 +20,7 @@ namespace Heirloom
 		Layer(Layer&& other) noexcept            = delete;
 		Layer& operator=(const Layer& other)     = delete;
 		Layer& operator=(Layer&& other) noexcept = delete;
-		
+
 		virtual void OnAttach() = 0;
 		virtual void OnDetach() = 0;
 		virtual void OnUpdate(Timestep ts) = 0;

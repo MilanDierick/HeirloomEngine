@@ -14,7 +14,7 @@ namespace Heirloom
 	{
 	public:
 		explicit WindowsWindow(const WindowProps& props);
-		virtual ~WindowsWindow();
+		~WindowsWindow() override;
 
 		WindowsWindow(const WindowsWindow& other)                = delete;
 		WindowsWindow(WindowsWindow&& other) noexcept            = delete;

@@ -8,14 +8,12 @@
 Heirloom::Ref<Heirloom::VertexArray> Heirloom::VertexArray::Create()
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	switch (Renderer::GetAPI())
 	{
-		case RendererAPI::API::None:
-			HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-		return nullptr;
-		case RendererAPI::API::OpenGL:
-			return Heirloom::CreateRef<OpenGLVertexArray>();
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return Heirloom::CreateRef<OpenGLVertexArray>();
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");

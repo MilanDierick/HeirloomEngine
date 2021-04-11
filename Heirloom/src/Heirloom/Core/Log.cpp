@@ -11,7 +11,7 @@ namespace Heirloom
 	void Log::Init()
 	{
 		HL_PROFILE_FUNCTION()
-    	
+
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 		s_CoreLogger = spdlog::stdout_color_mt("HEIRLOOM");
 		s_CoreLogger->set_level(spdlog::level::trace);

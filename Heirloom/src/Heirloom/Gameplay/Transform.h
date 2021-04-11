@@ -5,9 +5,6 @@
 #pragma once
 
 #include "Components/Component.h"
-
-#include "Heirloom/Core/Core.h"
-
 #include "glm/vec3.hpp"
 
 namespace Heirloom
@@ -27,7 +24,7 @@ namespace Heirloom
 
 		void Update(Timestep ts) override;
 		void Render() const override;
-	
+
 	private:
 		glm::vec3 m_Position;
 		glm::vec3 m_Scale;

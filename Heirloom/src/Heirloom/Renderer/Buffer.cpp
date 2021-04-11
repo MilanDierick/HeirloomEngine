@@ -21,14 +21,12 @@ void Heirloom::BufferLayout::CalculateOffsetsAndStride()
 Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(float* vertices, const uint32_t size)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	switch (Renderer::GetAPI())
 	{
-		case RendererAPI::API::None:
-		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
-		case RendererAPI::API::OpenGL:
-			return CreateRef<OpenGLVertexBuffer>(vertices, size);
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(vertices, size);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -38,14 +36,12 @@ Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(float* vert
 Heirloom::Ref<Heirloom::IndexBuffer> Heirloom::IndexBuffer::Create(uint32_t* indices, const uint32_t size)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	switch (Renderer::GetAPI())
 	{
-		case RendererAPI::API::None:
-		HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
-		case RendererAPI::API::OpenGL:
-			return CreateRef<OpenGLIndexBuffer>(indices, size);
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, size);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");

@@ -9,7 +9,7 @@ class Sandbox2D final : public Heirloom::Layer
 {
 public:
 	[[nodiscard]] Sandbox2D();
-	
+
 	void OnAttach() override;
 	void OnDetach() override;
 	void OnUpdate(Heirloom::Timestep ts) override;
@@ -17,7 +17,7 @@ public:
 
 private:
 	Heirloom::Ref<Heirloom::SimpleSoundEngine> m_SoundEngine;
-	
+
 	Heirloom::OrthographicCameraController m_CameraController;
 
 	Heirloom::Ref<Heirloom::Texture2D> m_BackgroundTexture;

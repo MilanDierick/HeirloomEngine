@@ -11,7 +11,7 @@ namespace Heirloom
 	{
 	public:
 		virtual ~Component() = default;
-		
+
 		virtual void Update(Timestep ts) = 0;
 		virtual void Render() const = 0;
 	};

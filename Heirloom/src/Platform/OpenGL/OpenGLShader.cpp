@@ -11,10 +11,8 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		if (type == "vertex")
-			return GL_VERTEX_SHADER;
-		if (type == "fragment" || type == "pixel")
-			return GL_FRAGMENT_SHADER;
+		if (type == "vertex") return GL_VERTEX_SHADER;
+		if (type == "fragment" || type == "pixel") return GL_FRAGMENT_SHADER;
 
 		HL_CORE_ASSERT(false, "Unknown shader type!");
 		return 0;
@@ -38,8 +36,10 @@ Heirloom::OpenGLShader::OpenGLShader(const std::string& filePath)
 	m_Name = filePath.substr(lastSlash, count);
 }
 
-Heirloom::OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSource,
-                                     const std::string& fragmentSource): m_RendererID(0), m_Name(name)
+Heirloom::OpenGLShader::OpenGLShader(const std::string& name,
+									 const std::string& vertexSource,
+									 const std::string& fragmentSource)
+	: m_RendererID(0), m_Name(name)
 {
 	HL_PROFILE_FUNCTION()
 
@@ -165,7 +165,7 @@ void Heirloom::OpenGLShader::UploadUniformMat4(const std::string& name, const gl
 	HL_PROFILE_FUNCTION()
 
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+	glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(matrix));
 }
 
 std::string Heirloom::OpenGLShader::ReadFile(const std::string& filePath)
@@ -178,17 +178,15 @@ std::string Heirloom::OpenGLShader::ReadFile(const std::string& filePath)
 	if (in)
 	{
 		in.seekg(0, std::ios::end);
-#pragma warning(disable : 4244)
+		#pragma warning(disable : 4244)
 		result.resize(in.tellg());
-#pragma warning(default : 4244)
+		#pragma warning(default : 4244)
 		in.seekg(0, std::ios::beg);
 		in.read(&result[0], result.size());
 		in.close();
 	}
 	else
-	{
 		HL_CORE_ERROR("Could not open file '{0}'", filePath);
-	}
 
 	return result;
 }
@@ -213,9 +211,9 @@ std::unordered_map<GLenum, std::string> Heirloom::OpenGLShader::PreProcess(const
 		const size_t nextLinePos                  = source.find_first_not_of("\r\n", eol);
 		pos                                       = source.find(typeToken, nextLinePos);
 		shaderSources[ShaderTypeFromString(type)] = source.substr(nextLinePos,
-		                                                          pos - (nextLinePos == std::string::npos
-			                                                                 ? source.size() - 1
-			                                                                 : nextLinePos));
+																  pos - (nextLinePos == std::string::npos
+																			 ? source.size() - 1
+																			 : nextLinePos));
 	}
 
 	return shaderSources;

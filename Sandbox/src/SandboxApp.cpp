@@ -14,17 +14,19 @@ public:
 	Sandbox()
 	{
 		HL_PROFILE_FUNCTION()
-    	
+
 		PushLayer(new Sandbox2D);
 		HL_INFO("Initialized Sandbox application");
 	}
 
-	~Sandbox() { }
+	~Sandbox() override
+	{
+	}
 };
 
 Heirloom::Application* Heirloom::CreateApplication()
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	return new Sandbox();
 }

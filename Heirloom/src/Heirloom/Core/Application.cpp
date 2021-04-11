@@ -14,7 +14,7 @@ namespace Heirloom
 	Application::Application()
 	{
 		HL_PROFILE_FUNCTION()
-    	
+
 		HL_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
@@ -22,50 +22,50 @@ namespace Heirloom
 
 		m_Window->WindowResizedEvent += HL_BIND_EVENT_FN(Application::OnWindowResizedEvent);
 		m_Window->WindowClosedEvent += HL_BIND_EVENT_FN(Application::OnWindowClosedEvent);
-		
+
 		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 	}
 
-	Application::~Application() { }
+	Application::~Application()
+	{
+	}
 
 	void Application::Run()
 	{
 		HL_PROFILE_FUNCTION()
-    	
+
 		while (m_IsRunning)
 		{
 			HL_PROFILE_SCOPE("Frame")
-			
+
 			// TODO: Move this to a platform-dependant file
 			const float time = static_cast<float>(glfwGetTime());
 			const Timestep timestep(time - m_LastFrameTime);
 			m_LastFrameTime = time;
-		
+
 			if (!m_Minimized)
 			{
 				{
 					HL_PROFILE_SCOPE("LayerStack OnUpdate")
-					
-					for (Layer* layer : m_LayerStack)
-						layer->OnUpdate(timestep);
+
+					for (Layer* layer : m_LayerStack) layer->OnUpdate(timestep);
 				}
 
 				m_ImGuiLayer->Begin();
-		
+
 				{
 					HL_PROFILE_SCOPE("LayerStack OnImGuiRender")
-					for (Layer* layer : m_LayerStack)
-						layer->OnImGuiRender();
+					for (Layer* layer : m_LayerStack) layer->OnImGuiRender();
 				}
-		
+
 				m_ImGuiLayer->End();
 
 				SoundService::GetSoundEngine()->Update();
 			}
-		
+
 			m_Window->OnUpdate();
 		}
 	}
@@ -73,7 +73,7 @@ namespace Heirloom
 	void Application::PushLayer(Layer* layer)
 	{
 		HL_PROFILE_FUNCTION()
-    	
+
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
@@ -81,7 +81,7 @@ namespace Heirloom
 	void Application::PushOverlay(Layer* layer)
 	{
 		HL_PROFILE_FUNCTION()
-    	
+
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
@@ -89,7 +89,7 @@ namespace Heirloom
 	bool Application::OnWindowClosedEvent(const WindowClosedEventArgs)
 	{
 		HL_PROFILE_FUNCTION()
-	
+
 		m_IsRunning = false;
 		return true;
 	}
@@ -97,7 +97,7 @@ namespace Heirloom
 	bool Application::OnWindowResizedEvent(const WindowResizedEventArgs eventArgs)
 	{
 		HL_PROFILE_FUNCTION()
-	
+
 		if (eventArgs.Width == 0 || eventArgs.Height == 0)
 		{
 			m_Minimized = true;

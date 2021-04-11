@@ -13,8 +13,12 @@ namespace Heirloom
 		unsigned int Width;
 		unsigned int Height;
 
-		explicit WindowProps(const std::string& title  = "Heirloom Engine", const unsigned int width = 1280,
-		                     const unsigned int height = 960) : Title(title), Width(width), Height(height) { }
+		explicit WindowProps(const std::string& title  = "Heirloom Engine",
+							 const unsigned int width  = 1280,
+							 const unsigned int height = 960)
+			: Title(title), Width(width), Height(height)
+		{
+		}
 	};
 
 	/**
@@ -23,10 +27,12 @@ namespace Heirloom
 	class HL_API Window
 	{
 	public:
-		virtual ~Window() {}
-		
+		virtual ~Window()
+		{
+		}
+
 		EventNew<WindowResizedEventArgs> WindowResizedEvent = EventNew<WindowResizedEventArgs>();
-		EventNew<WindowClosedEventArgs> WindowClosedEvent = EventNew<WindowClosedEventArgs>();
+		EventNew<WindowClosedEventArgs> WindowClosedEvent   = EventNew<WindowClosedEventArgs>();
 
 		virtual void OnUpdate() = 0;
 		virtual unsigned int GetWidth() const = 0;

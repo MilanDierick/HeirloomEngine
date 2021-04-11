@@ -25,7 +25,7 @@ namespace Heirloom
 	static uint32_t ShaderDataTypeSize(const ShaderDataType type)
 	{
 		HL_PROFILE_FUNCTION();
-		
+
 		switch (type)
 		{
 			case ShaderDataType::None: return 0;
@@ -54,17 +54,20 @@ namespace Heirloom
 		uint32_t Size;
 		bool Normalized;
 
-		BufferElement(): Type(ShaderDataType::None), Offset(0), Size(0), Normalized(false) {}
+		BufferElement()
+			: Type(ShaderDataType::None), Offset(0), Size(0), Normalized(false)
+		{
+		}
 
-		BufferElement(const ShaderDataType type, const std::string& name, const bool normalized = false) :
-			Type(type), Name(name), Offset(0),
-			Size(ShaderDataTypeSize(type)),
-			Normalized(normalized) { }
+		BufferElement(const ShaderDataType type, const std::string& name, const bool normalized = false)
+			: Type(type), Name(name), Offset(0), Size(ShaderDataTypeSize(type)), Normalized(normalized)
+		{
+		}
 
 		uint32_t GetComponentCount() const
 		{
 			HL_PROFILE_FUNCTION();
-		
+
 			switch (Type)
 			{
 				case ShaderDataType::None: return 0;
@@ -90,12 +93,15 @@ namespace Heirloom
 	class BufferLayout
 	{
 	public:
-		BufferLayout() {}
+		BufferLayout()
+		{
+		}
 
-		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
+		BufferLayout(const std::initializer_list<BufferElement>& elements)
+			: m_Elements(elements)
 		{
 			HL_PROFILE_FUNCTION();
-		
+
 			CalculateOffsetsAndStride();
 		}
 
@@ -119,7 +125,7 @@ namespace Heirloom
 	class VertexBuffer
 	{
 	public:
-		VertexBuffer() = default;
+		VertexBuffer()          = default;
 		virtual ~VertexBuffer() = default;
 
 		VertexBuffer(const VertexBuffer& other)                = delete;
@@ -139,7 +145,7 @@ namespace Heirloom
 	class IndexBuffer
 	{
 	public:
-		IndexBuffer() = default;
+		IndexBuffer()          = default;
 		virtual ~IndexBuffer() = default;
 
 		IndexBuffer(const IndexBuffer& other)                = delete;

@@ -13,18 +13,18 @@ namespace Heirloom
 	{
 	public:
 		explicit SpriteRenderer();
-		virtual ~SpriteRenderer() = default;
+		~SpriteRenderer() override = default;
 
 		SpriteRenderer(const SpriteRenderer& other)                = delete;
 		SpriteRenderer(SpriteRenderer&& other) noexcept            = delete;
 		SpriteRenderer& operator=(const SpriteRenderer& other)     = delete;
 		SpriteRenderer& operator=(SpriteRenderer&& other) noexcept = delete;
-		
+
 		void Update(Timestep ts) override;
 		void Render() const override;
 
 		void LoadTextureFromPath(std::string path);
-	
+
 	private:
 		Ref<Texture2D> m_Texture;
 	};

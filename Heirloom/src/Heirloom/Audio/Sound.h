@@ -9,12 +9,12 @@ namespace Heirloom
 	struct Sound
 	{
 		std::string FileName;
-		float       Volume;
-		bool        ShouldLoop;
+		float Volume;
+		bool ShouldLoop;
 
 		[[nodiscard]] explicit Sound(const std::string& fileName,
-									 const float        volume     = 1.0f,
-									 const bool         shouldLoop = false)
+									 const float volume    = 1.0f,
+									 const bool shouldLoop = false)
 			: FileName(fileName), Volume(volume), ShouldLoop(shouldLoop)
 		{
 		}

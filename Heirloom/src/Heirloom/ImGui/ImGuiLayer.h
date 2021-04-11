@@ -12,18 +12,22 @@ namespace Heirloom
 	{
 	public:
 		ImGuiLayer();
-		~ImGuiLayer() = default;
+		~ImGuiLayer() override = default;
 
 		ImGuiLayer(const ImGuiLayer& other)                = delete;
 		ImGuiLayer(ImGuiLayer&& other) noexcept            = delete;
 		ImGuiLayer& operator=(const ImGuiLayer& other)     = delete;
 		ImGuiLayer& operator=(ImGuiLayer&& other) noexcept = delete;
-		
+
 		void OnAttach() override;
 		void OnDetach() override;
-		void OnUpdate(Timestep) override { }
+
+		void OnUpdate(Timestep) override
+		{
+		}
+
 		void OnImGuiRender() override;
-		
+
 		void Begin();
 		void End();
 

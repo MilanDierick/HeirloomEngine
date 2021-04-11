@@ -6,10 +6,11 @@
 #include "stb_image.h"
 #include "glad/glad.h"
 
-Heirloom::OpenGLTexture2D::OpenGLTexture2D(const uint32_t width, const uint32_t height): m_Width(width), m_Height(height)
+Heirloom::OpenGLTexture2D::OpenGLTexture2D(const uint32_t width, const uint32_t height)
+	: m_Width(width), m_Height(height)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	m_InternalFormat = GL_RGBA8;
 	m_DataFormat     = GL_RGBA;
 
@@ -25,10 +26,11 @@ Heirloom::OpenGLTexture2D::OpenGLTexture2D(const uint32_t width, const uint32_t 
 	glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 
-Heirloom::OpenGLTexture2D::OpenGLTexture2D(const std::string& path): m_Path(path), m_InternalFormat(0), m_DataFormat(0)
+Heirloom::OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
+	: m_Path(path), m_InternalFormat(0), m_DataFormat(0)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	int width, height, channels;
 	stbi_set_flip_vertically_on_load(1);
 	stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
@@ -70,10 +72,9 @@ Heirloom::OpenGLTexture2D::OpenGLTexture2D(const std::string& path): m_Path(path
 Heirloom::OpenGLTexture2D::~OpenGLTexture2D()
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	glDeleteTextures(1, &m_RendererID);
 }
-
 
 void Heirloom::OpenGLTexture2D::SetData(void* data, const uint32_t size)
 {
@@ -82,11 +83,11 @@ void Heirloom::OpenGLTexture2D::SetData(void* data, const uint32_t size)
 	const uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 
 	// This is an edge case, where size is only used in debug, so it can't be an unnamed parameter
-#ifdef HL_DEBUG
+	#ifdef HL_DEBUG
 	HL_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be the entire texture!");
-#else 
+	#else
 	UNREFERENCED_PARAMETER(size);
-#endif
+	#endif
 
 	glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 }
@@ -94,6 +95,6 @@ void Heirloom::OpenGLTexture2D::SetData(void* data, const uint32_t size)
 void Heirloom::OpenGLTexture2D::Bind(const uint32_t slot)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	glBindTextureUnit(slot, m_RendererID);
 }

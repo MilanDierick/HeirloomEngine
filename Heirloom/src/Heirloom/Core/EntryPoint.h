@@ -20,10 +20,7 @@ int main()
 		app->Run();
 		HL_PROFILE_END_SESSION();
 	}
-	catch (std::exception& exception)
-	{
-		HL_CORE_FATAL(exception.what());
-	}
+	catch (std::exception& exception) { HL_CORE_FATAL(exception.what()); }
 
 	HL_PROFILE_BEGIN_SESSION("Termination", "HeirloomProfiling-Termination.json");
 	delete app;

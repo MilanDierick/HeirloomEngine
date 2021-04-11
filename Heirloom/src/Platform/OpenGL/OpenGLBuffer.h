@@ -11,9 +11,7 @@ namespace Heirloom
 	{
 	public:
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
-		virtual ~OpenGLVertexBuffer();
-
-		
+		~OpenGLVertexBuffer() override;
 
 		void Bind() const override;
 		void Unbind() const override;
@@ -30,7 +28,7 @@ namespace Heirloom
 	{
 	public:
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
-		virtual ~OpenGLIndexBuffer();
+		~OpenGLIndexBuffer() override;
 
 		void Bind() const override;
 		void Unbind() const override;

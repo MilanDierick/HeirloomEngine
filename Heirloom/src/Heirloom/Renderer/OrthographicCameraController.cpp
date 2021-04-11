@@ -10,15 +10,16 @@ Heirloom::OrthographicCameraController::OrthographicCameraController(const float
 	  m_Rotation(rotation)
 {
 	HL_PROFILE_FUNCTION();
-	
+
 	Input::MouseScrolledEvent += HL_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolledEvent);
-	Application::Get().GetWindow().WindowResizedEvent += HL_BIND_EVENT_FN(OrthographicCameraController::OnWindowResizedEvent);
+	Application::Get().GetWindow().WindowResizedEvent += HL_BIND_EVENT_FN(
+		OrthographicCameraController::OnWindowResizedEvent);
 }
 
 void Heirloom::OrthographicCameraController::Update(const Timestep ts)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	if (Input::IsKeyPressed(HL_KEY_A))
 	{
 		m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
@@ -43,20 +44,12 @@ void Heirloom::OrthographicCameraController::Update(const Timestep ts)
 
 	if (m_Rotation)
 	{
-		if (Input::IsKeyPressed(HL_KEY_Q))
-		{
-			m_CameraRotation += m_CameraRotationSpeed * ts;
-		}
-		if (Input::IsKeyPressed(HL_KEY_E))
-		{
-			m_CameraRotation -= m_CameraRotationSpeed * ts;
-		}
+		if (Input::IsKeyPressed(HL_KEY_Q)) m_CameraRotation += m_CameraRotationSpeed * ts;
+		if (Input::IsKeyPressed(HL_KEY_E)) m_CameraRotation -= m_CameraRotationSpeed * ts;
 
-		if (m_CameraRotation > 180.0f)
-			m_CameraRotation -= 360.0f;
-		else if (m_CameraRotation <= -180.0f)
-			m_CameraRotation += 360.0f;
-		
+		if (m_CameraRotation > 180.0f) m_CameraRotation -= 360.0f;
+		else if (m_CameraRotation <= -180.0f) m_CameraRotation += 360.0f;
+
 		m_Camera.SetRotation(m_CameraRotation);
 	}
 
@@ -68,7 +61,7 @@ void Heirloom::OrthographicCameraController::Update(const Timestep ts)
 void Heirloom::OrthographicCameraController::OnMouseScrolledEvent(const MouseScrolledEventArgs eventArgs)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	m_ZoomLevel -= eventArgs.YOffset * 0.25f;
 	m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 	m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -77,7 +70,7 @@ void Heirloom::OrthographicCameraController::OnMouseScrolledEvent(const MouseScr
 void Heirloom::OrthographicCameraController::OnWindowResizedEvent(const WindowResizedEventArgs eventArgs)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	m_AspectRatio = static_cast<float>(eventArgs.Width) / static_cast<float>(eventArgs.Height);
 	m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 }

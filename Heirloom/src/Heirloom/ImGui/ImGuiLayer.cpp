@@ -13,7 +13,10 @@
 
 namespace Heirloom
 {
-	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") { }
+	ImGuiLayer::ImGuiLayer()
+		: Layer("ImGuiLayer")
+	{
+	}
 
 	void ImGuiLayer::OnAttach()
 	{
@@ -63,7 +66,9 @@ namespace Heirloom
 		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnImGuiRender() { }
+	void ImGuiLayer::OnImGuiRender()
+	{
+	}
 
 	void ImGuiLayer::Begin()
 	{
@@ -92,7 +97,7 @@ namespace Heirloom
 		ImGuiIO& io      = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize   = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
-		                          static_cast<float>(app.GetWindow().GetHeight()));
+								  static_cast<float>(app.GetWindow().GetHeight()));
 
 		{
 			HL_PROFILE_SCOPE("ImGui::End Rendering")
@@ -104,7 +109,7 @@ namespace Heirloom
 
 		{
 			HL_PROFILE_SCOPE("ImGui::End ViewportsConfig")
-			
+
 			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 			{
 				GLFWwindow* backupCurrentContext = glfwGetCurrentContext();

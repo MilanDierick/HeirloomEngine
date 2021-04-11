@@ -38,7 +38,7 @@ namespace Heirloom
 		 * \return Returns a reference to the newly created
 		 */
 		static Ref<Shader> Create(const std::string& filePath);
-		
+
 		/**
 		 * \brief Creates a new shader asset depending on the current graphics API being used
 		 * \param name The name of the shader assets
@@ -46,8 +46,9 @@ namespace Heirloom
 		 * \param fragmentSource A string containing the code of the fragment shader 
 		 * \return Returns a reference to the newly created
 		 */
-		static Ref<Shader> Create(const std::string& name, const std::string& vertexSource,
-		                          const std::string& fragmentSource);
+		static Ref<Shader> Create(const std::string& name,
+								  const std::string& vertexSource,
+								  const std::string& fragmentSource);
 	};
 
 	class ShaderLibrary

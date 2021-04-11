@@ -9,7 +9,7 @@ Heirloom::Scope<Heirloom::Renderer::SceneData> Heirloom::Renderer::s_SceneData =
 void Heirloom::Renderer::Init()
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	RenderCommand::Init();
 	Renderer2D::Init();
 }
@@ -17,27 +17,30 @@ void Heirloom::Renderer::Init()
 void Heirloom::Renderer::OnWindowResize(const uint32_t width, const uint32_t height)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	RenderCommand::SetViewport(0, 0, width, height);
 }
 
 void Heirloom::Renderer::BeginScene(OrthographicCamera& camera)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 }
 
-void Heirloom::Renderer::EndScene() { }
+void Heirloom::Renderer::EndScene()
+{
+}
 
-void Heirloom::Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray,
-                                const glm::mat4& transform)
+void Heirloom::Renderer::Submit(const Ref<Shader>& shader,
+								const Ref<VertexArray>& vertexArray,
+								const glm::mat4& transform)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	shader->Bind();
 	std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection",
-	                                                                   s_SceneData->ViewProjectionMatrix);
+																	   s_SceneData->ViewProjectionMatrix);
 	std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
 
 	vertexArray->Bind();

@@ -8,7 +8,7 @@ namespace Heirloom
 	static GLenum ShaderDataTypeToOpenGLBaseType(const ShaderDataType type)
 	{
 		HL_PROFILE_FUNCTION()
-    	
+
 		switch (type)
 		{
 			case ShaderDataType::None: return GL_FLOAT;
@@ -33,51 +33,51 @@ namespace Heirloom
 Heirloom::OpenGLVertexArray::OpenGLVertexArray()
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	glCreateVertexArrays(1, &m_RendererID);
 }
 
 Heirloom::OpenGLVertexArray::~OpenGLVertexArray()
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	glDeleteVertexArrays(1, &m_RendererID);
 }
 
 void Heirloom::OpenGLVertexArray::Bind() const
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	glBindVertexArray(m_RendererID);
 }
 
 void Heirloom::OpenGLVertexArray::Unbind() const
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	glBindVertexArray(0);
 }
 
 void Heirloom::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	HL_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "VertexBuffer has no layout!");
 
 	glBindVertexArray(m_RendererID);
 	vertexBuffer->Bind();
 
-	uint32_t index = 0;
+	uint32_t index     = 0;
 	const auto& layout = vertexBuffer->GetLayout();
 	for (const auto& element : layout)
 	{
 		glEnableVertexAttribArray(index);
 		glVertexAttribPointer(index,
-            element.GetComponentCount(),
-            ShaderDataTypeToOpenGLBaseType(element.Type),
-            element.Normalized ? GL_TRUE : GL_FALSE,
-            layout.GetStride(),
-            UIntToPtr(element.Offset));
+							  element.GetComponentCount(),
+							  ShaderDataTypeToOpenGLBaseType(element.Type),
+							  element.Normalized ? GL_TRUE : GL_FALSE,
+							  layout.GetStride(),
+							  UIntToPtr(element.Offset));
 		index++;
 	}
 
@@ -87,7 +87,7 @@ void Heirloom::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& verte
 void Heirloom::OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	glBindVertexArray(m_RendererID);
 	indexBuffer->Bind();
 

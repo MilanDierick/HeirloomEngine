@@ -5,7 +5,8 @@
 
 #include "GLFW/glfw3.h"
 
-Heirloom::OpenGLContext::OpenGLContext(GLFWwindow* const windowHandle): m_WindowHandle(windowHandle)
+Heirloom::OpenGLContext::OpenGLContext(GLFWwindow* const windowHandle)
+	: m_WindowHandle(windowHandle)
 {
 	HL_PROFILE_FUNCTION()
 

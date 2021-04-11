@@ -14,22 +14,23 @@ namespace Heirloom
 	class GameObject final
 	{
 	public:
-		GameObject()          = default;
+		GameObject()  = default;
 		~GameObject() = default;
 
 		// Copy & move operations
 		GameObject(const GameObject& other)
-			: m_Transform(other.m_Transform),
-			  m_Components(other.m_Components) {}
+			: m_Transform(other.m_Transform), m_Components(other.m_Components)
+		{
+		}
 
 		GameObject(GameObject&& other) noexcept
-			: m_Transform(std::move(other.m_Transform)),
-			  m_Components(std::move(other.m_Components)) {}
+			: m_Transform(std::move(other.m_Transform)), m_Components(std::move(other.m_Components))
+		{
+		}
 
 		GameObject& operator=(const GameObject& other)
 		{
-			if (this == &other)
-				return *this;
+			if (this == &other) return *this;
 			m_Transform  = other.m_Transform;
 			m_Components = other.m_Components;
 			return *this;
@@ -37,8 +38,7 @@ namespace Heirloom
 
 		GameObject& operator=(GameObject&& other) noexcept
 		{
-			if (this == &other)
-				return *this;
+			if (this == &other) return *this;
 			m_Transform  = std::move(other.m_Transform);
 			m_Components = std::move(other.m_Components);
 			return *this;
@@ -67,8 +67,9 @@ namespace Heirloom
 	template <typename ComponentType>
 	Ref<ComponentType> GameObject::AddComponent(ComponentType* component)
 	{
-		const std::pair<std::map<uint32_t, Component*>::iterator, bool> value = m_Components.
-			emplace(typeid(ComponentType), component);
+		const std::pair<std::map<uint32_t, Component*>::iterator, bool> value = m_Components.emplace(
+			typeid(ComponentType),
+			component);
 
 		HL_CORE_TRACE("Added component of type {0} to game object", typeid(ComponentType));
 		return value.second ? value.first->second : nullptr;
@@ -77,10 +78,7 @@ namespace Heirloom
 	template <typename ComponentType>
 	Ref<ComponentType> GameObject::GetComponent()
 	{
-		try
-		{
-			return m_Components.at(typeid(ComponentType));
-		}
+		try { return m_Components.at(typeid(ComponentType)); }
 		catch (std::out_of_range&)
 		{
 			HL_CORE_WARN("Tried accessing non-existing component in gameobject!");

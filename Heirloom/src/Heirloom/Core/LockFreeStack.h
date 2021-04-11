@@ -9,8 +9,7 @@
 
 namespace Heirloom
 {
-	template <class T>
-	concept LockFreeStackType = std::destructible<T>;
+	template <class T> concept LockFreeStackType = std::destructible<T>;
 
 	template <LockFreeStackType T>
 	struct Node
@@ -19,7 +18,11 @@ namespace Heirloom
 		T Value;
 
 		Node() = default;
-		Node(T value, Node* nextNode) : pNext(nextNode), Value(value) {}
+
+		Node(T value, Node* nextNode)
+			: pNext(nextNode), Value(value)
+		{
+		}
 	};
 
 	struct SomeType
@@ -45,7 +48,7 @@ namespace Heirloom
 	LockFreeStack<T>::~LockFreeStack()
 	{
 		HL_PROFILE_FUNCTION()
-		
+
 		Node<T>* currentNode = m_pHead.load();
 		size_t counter       = 0;
 
@@ -62,13 +65,10 @@ namespace Heirloom
 	void LockFreeStack<T>::Push(T value)
 	{
 		HL_PROFILE_FUNCTION()
-		
+
 		Node<T>* pNewNode = new Node<T>(value, nullptr);
 
-		do
-		{
-			pNewNode->pNext = m_pHead.load();
-		}
+		do { pNewNode->pNext = m_pHead.load(); }
 		while (!m_pHead.compare_exchange_weak(pNewNode->pNext, pNewNode));
 	}
 
@@ -76,13 +76,10 @@ namespace Heirloom
 	Node<T>* LockFreeStack<T>::Pop()
 	{
 		HL_PROFILE_FUNCTION()
-		
+
 		Node<T>* pOldHead;
-			
-		do
-		{
-			pOldHead = m_pHead.load();
-		}
+
+		do { pOldHead = m_pHead.load(); }
 		while (!m_pHead.compare_exchange_weak(pOldHead, pOldHead->pNext));
 
 		return pOldHead;
@@ -92,7 +89,7 @@ namespace Heirloom
 	size_t LockFreeStack<T>::Size() const
 	{
 		HL_PROFILE_FUNCTION()
-		
+
 		size_t size          = 0;
 		Node<T>* currentNode = m_pHead;
 
@@ -102,10 +99,7 @@ namespace Heirloom
 			currentNode = currentNode->pNext;
 		}
 
-		if (m_pHead != nullptr)
-		{
-			++size;
-		}
+		if (m_pHead != nullptr) ++size;
 
 		return size;
 	}

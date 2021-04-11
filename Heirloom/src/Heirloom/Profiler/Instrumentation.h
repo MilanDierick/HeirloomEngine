@@ -10,7 +10,7 @@
 namespace Heirloom
 {
 	using FloatingPointMicroseconds = std::chrono::duration<double, std::micro>;
-	
+
 	struct ProfileResult
 	{
 		std::string Name;
@@ -39,7 +39,7 @@ namespace Heirloom
 		void WriteHeader();
 		void WriteFooter();
 		void InternalEndSession();
-		
+
 		std::mutex m_Mutex;
 		InstrumentationSession* m_CurrentSession;
 		std::ofstream m_OutputStream;
@@ -62,7 +62,7 @@ namespace Heirloom
 
 	#define TOKENPASTE(x, y) x ## y
 	#define TOKENPASTE2(x, y) TOKENPASTE(x, y)
-	
+
 	#if HL_PROFILE
 	// Resolve which function signature macro will be used. Note that this only
 	// is resolved when the (pre)compiler starts, so the syntax highlighting
@@ -94,5 +94,4 @@ namespace Heirloom
 	#define HL_PROFILE_SCOPE(name)
 	#define HL_PROFILE_FUNCTION()
 	#endif
-
 }

@@ -1,7 +1,10 @@
 #include "hlpch.h"
 #include "Instrumentation.h"
 
-Heirloom::Instrumentation::Instrumentation(): m_CurrentSession(nullptr), m_ProfileCount(0) { }
+Heirloom::Instrumentation::Instrumentation()
+	: m_CurrentSession(nullptr), m_ProfileCount(0)
+{
+}
 
 void Heirloom::Instrumentation::BeginSession(const std::string& name, const std::string& filepath)
 {
@@ -13,11 +16,10 @@ void Heirloom::Instrumentation::BeginSession(const std::string& name, const std:
 		// newly opened session instead.  That's better than having badly formatted
 		// profiling output.
 		if (Log::GetCoreLogger())
-		{
 			// Edge case: BeginSession() might be before Log::Init()
-			HL_CORE_ERROR("Instrumentor::BeginSession('{0}') when session '{1}' already open.", name,
-			              m_CurrentSession->Name);
-		}
+			HL_CORE_ERROR("Instrumentor::BeginSession('{0}') when session '{1}' already open.",
+					  name,
+					  m_CurrentSession->Name);
 		InternalEndSession();
 	}
 	m_OutputStream.open(filepath);
@@ -29,10 +31,8 @@ void Heirloom::Instrumentation::BeginSession(const std::string& name, const std:
 	else
 	{
 		if (Log::GetCoreLogger())
-		{
 			// Edge case: BeginSession() might be before Log::Init()
 			HL_CORE_ERROR("Instrumentor could not open results file '{0}'.", filepath);
-		}
 	}
 }
 
@@ -97,16 +97,10 @@ void Heirloom::Instrumentation::InternalEndSession()
 	}
 }
 
-Heirloom::InstrumentationTimer::InstrumentationTimer(const char* name): m_Name(name), m_Stopped(false)
-{
-	m_StartTimePoint = std::chrono::steady_clock::now();
-}
+Heirloom::InstrumentationTimer::InstrumentationTimer(const char* name)
+	: m_Name(name), m_Stopped(false) { m_StartTimePoint = std::chrono::steady_clock::now(); }
 
-Heirloom::InstrumentationTimer::~InstrumentationTimer()
-{
-	if (!m_Stopped)
-		Stop();
-}
+Heirloom::InstrumentationTimer::~InstrumentationTimer() { if (!m_Stopped) Stop(); }
 
 void Heirloom::InstrumentationTimer::Stop()
 {

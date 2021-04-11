@@ -14,7 +14,7 @@ namespace Heirloom
 		OrthographicCamera(float left, float right, float bottom, float top);
 
 		void SetProjection(float left, float right, float bottom, float top);
-		
+
 		glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; }
 		glm::mat4& GetViewMatrix() { return m_ViewMatrix; }
 		glm::mat4& GetViewProjectionMatrix() { return m_ViewProjectionMatrix; }

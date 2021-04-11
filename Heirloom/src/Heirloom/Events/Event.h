@@ -8,7 +8,9 @@
 
 #define HL_MAX_EVENT_LISTENERS 32
 
-struct HL_API EventArgs {};
+struct HL_API EventArgs
+{
+};
 
 template <typename EventArgsType = EventArgs, typename EventCallbackFunc = std::function<void(EventArgsType)>>
 class HL_API EventNew
@@ -28,14 +30,14 @@ EventNew<EventArgsType, EventCallbackFunc>& EventNew<EventArgsType, EventCallbac
 	EventCallbackFunc eventCallbackFunc)
 {
 	HL_PROFILE_FUNCTION()
-	
+
 	HL_CORE_ASSERT(m_EventListenerCount + 1 < HL_MAX_EVENT_LISTENERS,
-	               "Failed registering an event listener, only {0} listeners per event are supported!",
-	               HL_MAX_EVENT_LISTENERS);
+				   "Failed registering an event listener, only {0} listeners per event are supported!",
+				   HL_MAX_EVENT_LISTENERS);
 
 	m_EventListeners[m_EventListenerCount] = eventCallbackFunc;
 	++m_EventListenerCount;
-	
+
 	return *this;
 }
 
@@ -43,9 +45,6 @@ template <typename EventArgsType, typename EventCallbackFunc>
 void EventNew<EventArgsType, EventCallbackFunc>::Invoke(EventArgsType eventArgs)
 {
 	HL_PROFILE_FUNCTION()
-	
-	for (size_t index = 0; index < m_EventListenerCount; ++index)
-	{
-		m_EventListeners[index](eventArgs);
-	}
+
+	for (size_t index = 0; index < m_EventListenerCount; ++index) m_EventListeners[index](eventArgs);
 }

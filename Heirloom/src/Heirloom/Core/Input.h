@@ -14,13 +14,15 @@ namespace Heirloom
 	{
 	public:
 		virtual ~Input() = default;
-		
-		inline static EventNew<KeyPressedEventArgs> KeyPressedEvent = EventNew<KeyPressedEventArgs>();
-		inline static EventNew<KeyReleasedEventArgs> KeyReleasedEvent = EventNew<KeyReleasedEventArgs>();
-		inline static EventNew<KeyTypedEventArgs> KeyTypedEvent = EventNew<KeyTypedEventArgs>();
-		inline static EventNew<MouseButtonPressedEventArgs> MouseButtonPressedEvent = EventNew<MouseButtonPressedEventArgs>();
-		inline static EventNew<MouseButtonReleasedEventArgs> MouseButtonReleasedEvent = EventNew<MouseButtonReleasedEventArgs>();
-		inline static EventNew<MouseMovedEventArgs> MouseMovedEvent = EventNew<MouseMovedEventArgs>();
+
+		inline static EventNew<KeyPressedEventArgs> KeyPressedEvent                 = EventNew<KeyPressedEventArgs>();
+		inline static EventNew<KeyReleasedEventArgs> KeyReleasedEvent               = EventNew<KeyReleasedEventArgs>();
+		inline static EventNew<KeyTypedEventArgs> KeyTypedEvent                     = EventNew<KeyTypedEventArgs>();
+		inline static EventNew<MouseButtonPressedEventArgs> MouseButtonPressedEvent = EventNew<
+			MouseButtonPressedEventArgs>();
+		inline static EventNew<MouseButtonReleasedEventArgs> MouseButtonReleasedEvent = EventNew<
+			MouseButtonReleasedEventArgs>();
+		inline static EventNew<MouseMovedEventArgs> MouseMovedEvent       = EventNew<MouseMovedEventArgs>();
 		inline static EventNew<MouseScrolledEventArgs> MouseScrolledEvent = EventNew<MouseScrolledEventArgs>();
 
 		static bool IsKeyPressed(const int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }
