@@ -13,7 +13,7 @@ namespace Heirloom
 	{
 	public:
 		[[nodiscard]] SimpleSoundEngine();
-		~SimpleSoundEngine();
+		~SimpleSoundEngine() override;
 
 		void Update() override;
 		void Play(std::string filePath) override;
@@ -29,8 +29,8 @@ namespace Heirloom
 		irrklang::ISoundEngine* m_SoundEngine;
 
 		// TODO: Consider if this actually needs to be thread-safe
-		LockFreeStack<Ref<Sound>>* m_SoundsQueue;
-		LockFreeStack<Ref<Sound>>* m_SoundsQueueBuffer;
+		LockFreeStack<Ref<Sound>>*           m_SoundsQueue;
+		LockFreeStack<Ref<Sound>>*           m_SoundsQueueBuffer;
 		std::vector<irrklang::ISoundSource*> m_CachedSoundSources;
 	};
 }

@@ -3,7 +3,6 @@
 
 void Heirloom::NullSoundEngine::Update()
 {
-	
 }
 
 void Heirloom::NullSoundEngine::Play(const Ref<Sound> sound)

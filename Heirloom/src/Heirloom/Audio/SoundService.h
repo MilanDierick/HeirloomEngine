@@ -10,11 +10,8 @@ namespace Heirloom
 	class SoundService
 	{
 	public:
-		~SoundService()
-		{
-			delete m_SoundEngine;
-		}
-		
+		~SoundService() { delete m_SoundEngine; }
+
 		static SoundEngine* GetSoundEngine() { return m_SoundEngine; }
 
 		static void Provide(SoundEngine* soundEngine)

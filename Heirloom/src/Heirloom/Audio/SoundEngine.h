@@ -10,7 +10,7 @@ namespace Heirloom
 	class SoundEngine
 	{
 	public:
-		SoundEngine() = default;
+		SoundEngine()          = default;
 		virtual ~SoundEngine() = default;
 
 		SoundEngine(const SoundEngine& other)                = delete;

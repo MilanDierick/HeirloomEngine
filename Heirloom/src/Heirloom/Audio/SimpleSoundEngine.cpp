@@ -1,13 +1,12 @@
 ﻿#include "hlpch.h"
 #include "SimpleSoundEngine.h"
 
-Heirloom::SimpleSoundEngine::SimpleSoundEngine() : SoundEngine()
+Heirloom::SimpleSoundEngine::SimpleSoundEngine()
+	: SoundEngine()
 {
 	HL_PROFILE_FUNCTION()
 
 	m_SoundEngine = irrklang::createIrrKlangDevice();
-
-	// m_SoundEngine->play2D("assets/sounds/breakout.mp3");
 
 	m_SoundsQueue       = new LockFreeStack<Ref<Sound>>();
 	m_SoundsQueueBuffer = new LockFreeStack<Ref<Sound>>();
@@ -49,10 +48,7 @@ void Heirloom::SimpleSoundEngine::Stop(const Ref<Sound> sound)
 {
 	for (std::vector<irrklang::ISoundSource*>::value_type soundSource : m_CachedSoundSources)
 	{
-		if (sound->FileName == soundSource->getName())
-		{
-			m_SoundEngine->stopAllSoundsOfSoundSource(soundSource);
-		}
+		if (sound->FileName == soundSource->getName()) { m_SoundEngine->stopAllSoundsOfSoundSource(soundSource); }
 	}
 }
 
@@ -78,26 +74,17 @@ void Heirloom::SimpleSoundEngine::CacheSound(irrklang::ISoundSource* soundSource
 
 	for (std::vector<irrklang::ISoundSource*>::value_type cachedSoundSource : m_CachedSoundSources)
 	{
-		if (soundSource->getName() == cachedSoundSource->getName())
-		{
-			soundSourceFound = true;
-		}
+		if (soundSource->getName() == cachedSoundSource->getName()) { soundSourceFound = true; }
 	}
 
-	if (!soundSourceFound)
-	{
-		m_CachedSoundSources.push_back(soundSource);
-	}
+	if (!soundSourceFound) { m_CachedSoundSources.push_back(soundSource); }
 }
 
 void Heirloom::SimpleSoundEngine::PlayBufferedSounds()
 {
 	HL_PROFILE_FUNCTION()
 
-	if (m_SoundsQueueBuffer->Size() == 0)
-	{
-		return;
-	}
+	if (m_SoundsQueueBuffer->Size() == 0) { return; }
 
 	// TODO: Spawning a new thread every time we want to play a new sound is quite ridiculous, consider spawning a single thread that keeps on emptying the sound buffer
 	std::thread thread([this]()
@@ -107,8 +94,9 @@ void Heirloom::SimpleSoundEngine::PlayBufferedSounds()
 			Node<Ref<Sound>>* node = m_SoundsQueueBuffer->Pop();
 
 			irrklang::ISoundSource* result = m_SoundEngine->play2D(node->Value->FileName.c_str(),
-			                                                       node->Value->ShouldLoop, false, true)->
-			                                                getSoundSource();
+																   node->Value->ShouldLoop,
+																   false,
+																   true)->getSoundSource();
 
 			CacheSound(result);
 			delete node;
