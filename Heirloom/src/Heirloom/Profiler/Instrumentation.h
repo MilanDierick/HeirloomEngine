@@ -63,6 +63,7 @@ namespace Heirloom
 	#define TOKENPASTE(x, y) x ## y
 	#define TOKENPASTE2(x, y) TOKENPASTE(x, y)
 
+	#undef HL_PROFILE
 	#if HL_PROFILE
 	// Resolve which function signature macro will be used. Note that this only
 	// is resolved when the (pre)compiler starts, so the syntax highlighting

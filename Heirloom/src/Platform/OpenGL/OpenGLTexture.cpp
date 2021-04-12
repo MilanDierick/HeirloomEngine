@@ -94,7 +94,5 @@ void Heirloom::OpenGLTexture2D::SetData(void* data, const uint32_t size)
 
 void Heirloom::OpenGLTexture2D::Bind(const uint32_t slot)
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindTextureUnit(slot, m_RendererID);
 }

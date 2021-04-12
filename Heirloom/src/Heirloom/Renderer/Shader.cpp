@@ -72,15 +72,11 @@ Heirloom::Ref<Heirloom::Shader> Heirloom::ShaderLibrary::Load(const std::string&
 
 Heirloom::Ref<Heirloom::Shader> Heirloom::ShaderLibrary::Get(const std::string& name)
 {
-	HL_PROFILE_FUNCTION()
-
 	HL_CORE_ASSERT(Exists(name), "Shader not found!");
 	return m_Shaders[name];
 }
 
 bool Heirloom::ShaderLibrary::Exists(const std::string& name)
 {
-	HL_PROFILE_FUNCTION()
-
 	return m_Shaders.find(name) != m_Shaders.end();
 }

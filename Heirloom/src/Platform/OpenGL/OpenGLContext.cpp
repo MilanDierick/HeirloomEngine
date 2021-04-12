@@ -30,6 +30,6 @@ void Heirloom::OpenGLContext::Init()
 void Heirloom::OpenGLContext::SwapBuffers()
 {
 	HL_PROFILE_FUNCTION()
-
+	
 	glfwSwapBuffers(m_WindowHandle);
 }

@@ -16,15 +16,11 @@ void Heirloom::Renderer::Init()
 
 void Heirloom::Renderer::OnWindowResize(const uint32_t width, const uint32_t height)
 {
-	HL_PROFILE_FUNCTION()
-
 	RenderCommand::SetViewport(0, 0, width, height);
 }
 
 void Heirloom::Renderer::BeginScene(OrthographicCamera& camera)
 {
-	HL_PROFILE_FUNCTION()
-
 	s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 }
 

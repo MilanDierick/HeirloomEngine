@@ -13,10 +13,7 @@
 
 namespace Heirloom
 {
-	ImGuiLayer::ImGuiLayer()
-	{
-		OnAttach();
-	}
+	ImGuiLayer::ImGuiLayer() { OnAttach(); }
 
 	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::OnAttach()
@@ -73,20 +70,9 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		{
-			HL_PROFILE_SCOPE("ImGui_ImplOpenGL3_NewFrame")
-			ImGui_ImplOpenGL3_NewFrame();
-		}
-
-		{
-			HL_PROFILE_SCOPE("ImGui_ImplGlfw_NewFrame")
-			ImGui_ImplGlfw_NewFrame();
-		}
-
-		{
-			HL_PROFILE_SCOPE("ImGui::NewFrame")
-			ImGui::NewFrame();
-		}
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 	}
 
 	// ReSharper disable once CppMemberFunctionMayBeStatic
@@ -99,33 +85,19 @@ namespace Heirloom
 		io.DisplaySize   = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
 								  static_cast<float>(app.GetWindow().GetHeight()));
 
+		// Rendering
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			HL_PROFILE_SCOPE("ImGui::End Rendering")
+			GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
 
-			// Rendering
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		}
+			ImGui::UpdatePlatformWindows();
 
-		{
-			HL_PROFILE_SCOPE("ImGui::End ViewportsConfig")
+			ImGui::RenderPlatformWindowsDefault();
 
-			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-			{
-				GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
-				{
-					HL_PROFILE_SCOPE("ImGui::UpdatePlatformWindows()")
-					ImGui::UpdatePlatformWindows();
-				}
-				{
-					HL_PROFILE_SCOPE("ImGui::RenderPlatformWindowsDefault()")
-					ImGui::RenderPlatformWindowsDefault();
-				}
-				{
-					HL_PROFILE_SCOPE("ImGui::glfwMakeContextCurrent()")
-					glfwMakeContextCurrent(backupCurrentContext);
-				}
-			}
+			glfwMakeContextCurrent(backupCurrentContext);
 		}
 	}
 }

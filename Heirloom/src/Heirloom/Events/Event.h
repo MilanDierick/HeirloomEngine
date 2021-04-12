@@ -29,8 +29,6 @@ template <typename EventArgsType, typename EventCallbackFunc>
 EventNew<EventArgsType, EventCallbackFunc>& EventNew<EventArgsType, EventCallbackFunc>::operator+=(
 	EventCallbackFunc eventCallbackFunc)
 {
-	HL_PROFILE_FUNCTION()
-
 	HL_CORE_ASSERT(m_EventListenerCount + 1 < HL_MAX_EVENT_LISTENERS,
 				   "Failed registering an event listener, only {0} listeners per event are supported!",
 				   HL_MAX_EVENT_LISTENERS);
@@ -44,7 +42,5 @@ EventNew<EventArgsType, EventCallbackFunc>& EventNew<EventArgsType, EventCallbac
 template <typename EventArgsType, typename EventCallbackFunc>
 void EventNew<EventArgsType, EventCallbackFunc>::Invoke(EventArgsType eventArgs)
 {
-	HL_PROFILE_FUNCTION()
-
 	for (size_t index = 0; index < m_EventListenerCount; ++index) m_EventListeners[index](eventArgs);
 }

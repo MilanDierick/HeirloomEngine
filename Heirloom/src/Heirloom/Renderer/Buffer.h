@@ -24,8 +24,6 @@ namespace Heirloom
 
 	static uint32_t ShaderDataTypeSize(const ShaderDataType type)
 	{
-		HL_PROFILE_FUNCTION();
-
 		switch (type)
 		{
 			case ShaderDataType::None: return 0;
@@ -66,8 +64,6 @@ namespace Heirloom
 
 		uint32_t GetComponentCount() const
 		{
-			HL_PROFILE_FUNCTION();
-
 			switch (Type)
 			{
 				case ShaderDataType::None: return 0;

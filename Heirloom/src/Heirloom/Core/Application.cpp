@@ -41,8 +41,6 @@ namespace Heirloom
 	// ReSharper disable once CppMemberFunctionMayBeConst
 	void Application::Run()
 	{
-		HL_PROFILE_FUNCTION()
-
 		std::chrono::steady_clock::time_point previousTimePoint = std::chrono::steady_clock::now();
 		double lag                                              = 0.0;
 
@@ -61,14 +59,12 @@ namespace Heirloom
 
 			lag += elapsedTime.count();
 
-			m_Window->OnUpdate();
-
 			if (m_Minimized) continue;
 
 			while (lag >= MS_PER_TICK)
 			{
 				{
-					HL_PROFILE_SCOPE("LayerStack OnUpdate")
+					HL_PROFILE_SCOPE("SceneManager OnUpdate")
 
 					SceneManager::Update();
 				}
@@ -79,7 +75,7 @@ namespace Heirloom
 			SoundService::GetSoundEngine()->Update();
 
 			{
-				HL_PROFILE_SCOPE("LayerStack OnRender")
+				HL_PROFILE_SCOPE("SceneManager OnRender")
 
 				SceneManager::Render();
 			}
@@ -87,27 +83,25 @@ namespace Heirloom
 			m_ImGuiLayer->Begin();
 
 			{
-				HL_PROFILE_SCOPE("LayerStack OnImGuiRender")
+				HL_PROFILE_SCOPE("SceneManager OnImGuiRender")
 
 				SceneManager::ImGuiRender();
 			}
 
 			m_ImGuiLayer->End();
+
+			m_Window->OnUpdate();
 		}
 	}
 
 	bool Application::OnWindowClosedEvent(const WindowClosedEventArgs)
 	{
-		HL_PROFILE_FUNCTION()
-
 		m_IsRunning = false;
 		return true;
 	}
 
 	bool Application::OnWindowResizedEvent(const WindowResizedEventArgs eventArgs)
 	{
-		HL_PROFILE_FUNCTION()
-
 		if (eventArgs.Width == 0 || eventArgs.Height == 0)
 		{
 			m_Minimized = true;

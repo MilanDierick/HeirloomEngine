@@ -25,15 +25,11 @@ Heirloom::OpenGLVertexBuffer::~OpenGLVertexBuffer()
 
 void Heirloom::OpenGLVertexBuffer::Bind() const
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 }
 
 void Heirloom::OpenGLVertexBuffer::Unbind() const
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -60,14 +56,10 @@ Heirloom::OpenGLIndexBuffer::~OpenGLIndexBuffer()
 
 void Heirloom::OpenGLIndexBuffer::Bind() const
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 }
 
 void Heirloom::OpenGLIndexBuffer::Unbind() const
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

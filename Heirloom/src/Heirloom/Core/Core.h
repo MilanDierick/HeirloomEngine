@@ -78,8 +78,6 @@ namespace Heirloom
 	template <typename T, typename ... Args>
 	constexpr Scope<T> CreateScope(Args&& ... args)
 	{
-		HL_PROFILE_FUNCTION()
-
 		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
 
@@ -89,8 +87,6 @@ namespace Heirloom
 	template <typename T, typename ... Args>
 	constexpr Ref<T> CreateRef(Args&& ... args)
 	{
-		HL_PROFILE_FUNCTION()
-
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 }

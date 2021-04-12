@@ -27,16 +27,12 @@ void Heirloom::OrthographicCamera::SetProjection(const float left,
 
 void Heirloom::OrthographicCamera::SetPosition(const glm::vec3& position)
 {
-	HL_PROFILE_FUNCTION()
-
 	m_Position = position;
 	RecalculateViewMatrix();
 }
 
 void Heirloom::OrthographicCamera::SetRotation(const float rotation)
 {
-	HL_PROFILE_FUNCTION()
-
 	m_Rotation = rotation;
 	RecalculateViewMatrix();
 }

@@ -18,22 +18,16 @@ void Heirloom::OpenGLRendererAPI::SetViewport(const uint32_t x,
 											  const uint32_t width,
 											  const uint32_t height)
 {
-	HL_PROFILE_FUNCTION()
-
 	glViewport(x, y, width, height);
 }
 
 void Heirloom::OpenGLRendererAPI::SetClearColor(const glm::vec4& color)
 {
-	HL_PROFILE_FUNCTION()
-
 	glClearColor(color.r, color.g, color.b, color.a);
 }
 
 void Heirloom::OpenGLRendererAPI::Clear()
 {
-	HL_PROFILE_FUNCTION()
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

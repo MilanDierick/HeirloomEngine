@@ -10,15 +10,11 @@ namespace Heirloom
 
 	static void GLFWErrorCallback(const int error, const char* description)
 	{
-		HL_PROFILE_FUNCTION()
-
 		HL_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
 	Window* Window::Create(const WindowProps& props)
 	{
-		HL_PROFILE_FUNCTION()
-
 		return new WindowsWindow(props);
 	}
 
@@ -46,8 +42,6 @@ namespace Heirloom
 
 	void WindowsWindow::SetVSync(const bool enabled)
 	{
-		HL_PROFILE_FUNCTION()
-
 		if (enabled) glfwSwapInterval(1);
 		else glfwSwapInterval(0);
 
@@ -87,7 +81,7 @@ namespace Heirloom
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
-		SetVSync(false);
+		SetVSync(true);
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window,

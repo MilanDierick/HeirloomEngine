@@ -7,8 +7,6 @@ namespace Heirloom
 {
 	static GLenum ShaderDataTypeToOpenGLBaseType(const ShaderDataType type)
 	{
-		HL_PROFILE_FUNCTION()
-
 		switch (type)
 		{
 			case ShaderDataType::None: return GL_FLOAT;
@@ -46,15 +44,11 @@ Heirloom::OpenGLVertexArray::~OpenGLVertexArray()
 
 void Heirloom::OpenGLVertexArray::Bind() const
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindVertexArray(m_RendererID);
 }
 
 void Heirloom::OpenGLVertexArray::Unbind() const
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindVertexArray(0);
 }
 
@@ -86,8 +80,6 @@ void Heirloom::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& verte
 
 void Heirloom::OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 {
-	HL_PROFILE_FUNCTION()
-
 	glBindVertexArray(m_RendererID);
 	indexBuffer->Bind();
 

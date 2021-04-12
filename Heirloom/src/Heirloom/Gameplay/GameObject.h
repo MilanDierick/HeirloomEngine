@@ -67,6 +67,8 @@ namespace Heirloom
 	template <typename ComponentType>
 	Ref<ComponentType> GameObject::AddComponent(ComponentType* component)
 	{
+		HL_PROFILE_FUNCTION()
+
 		const std::pair<std::map<uint32_t, Component*>::iterator, bool> value = m_Components.emplace(
 			typeid(ComponentType),
 			component);
@@ -78,6 +80,8 @@ namespace Heirloom
 	template <typename ComponentType>
 	Ref<ComponentType> GameObject::GetComponent()
 	{
+		HL_PROFILE_FUNCTION()
+
 		try { return m_Components.at(typeid(ComponentType)); }
 		catch (std::out_of_range&)
 		{
@@ -89,7 +93,9 @@ namespace Heirloom
 	template <typename ComponentType>
 	bool GameObject::RemoveComponent(ComponentType component)
 	{
+		HL_PROFILE_FUNCTION()
+
 		HL_CORE_TRACE("Removed component of type {0} from game object", typeid(ComponentType));
-		return static_cast<bool>(m_Components.erase(typeid(component)));
+		return m_Components.erase(typeid(component));
 	}
 }
