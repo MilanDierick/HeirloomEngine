@@ -29,7 +29,6 @@ namespace Heirloom
 		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
-		m_ImGuiLayer->OnAttach();
 	}
 
 	Application::~Application()
