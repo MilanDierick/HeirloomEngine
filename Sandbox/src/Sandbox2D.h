@@ -13,8 +13,9 @@ public:
 	void OnAttach() override;
 	void OnDetach() override;
 	void OnUpdate(Heirloom::Timestep ts) override;
+	void OnRender() override;
 	void OnImGuiRender() override;
-
+	
 private:
 	Heirloom::Ref<Heirloom::SimpleSoundEngine> m_SoundEngine;
 
