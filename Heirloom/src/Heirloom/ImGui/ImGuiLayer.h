@@ -22,10 +22,9 @@ namespace Heirloom
 		void OnAttach() override;
 		void OnDetach() override;
 
-		void OnUpdate(Timestep) override
-		{
-		}
-
+		void OnUpdate(Timestep) override;
+		void OnRender() override;
+		
 		void OnImGuiRender() override;
 
 		void Begin();

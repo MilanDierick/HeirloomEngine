@@ -25,14 +25,17 @@ void Sandbox2D::OnDetach()
 {
 }
 
-void Sandbox2D::OnUpdate(const Heirloom::Timestep ts)
+void Sandbox2D::OnUpdate(const Heirloom::Timestep)
 {
 	HL_PROFILE_FUNCTION()
 
 	if (Heirloom::Input::IsKeyPressed(HL_KEY_SPACE)) Heirloom::SoundService::GetSoundEngine()->Stop(m_BackgroundMusic);
 
-	m_CameraController.Update(ts);
+	m_CameraController.Update(Heirloom::Timestep{0.016f});
+}
 
+void Sandbox2D::OnRender()
+{
 	Heirloom::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 	Heirloom::RenderCommand::Clear();
 
@@ -54,10 +57,6 @@ void Sandbox2D::OnUpdate(const Heirloom::Timestep ts)
 void Sandbox2D::OnImGuiRender()
 {
 	HL_PROFILE_FUNCTION()
-
-	ImGui::Begin("Settings");
-	ImGui::ColorEdit4("Square Color", value_ptr(m_SquareColor));
-	ImGui::End();
 
 	ImGui::SetNextWindowPos(ImVec2(10, 10));
 	ImGui::Begin("main",

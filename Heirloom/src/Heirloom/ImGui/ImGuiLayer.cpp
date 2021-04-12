@@ -66,10 +66,19 @@ namespace Heirloom
 		ImGui::DestroyContext();
 	}
 
+	void ImGuiLayer::OnUpdate(Timestep)
+	{
+	}
+
+	void ImGuiLayer::OnRender()
+	{
+	}
+
 	void ImGuiLayer::OnImGuiRender()
 	{
 	}
 
+	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::Begin()
 	{
 		HL_PROFILE_FUNCTION()
