@@ -3,7 +3,6 @@
 // Solution: HeirloomEngine
 
 #include "Heirloom.h"
-#include "Sandbox2D.h"
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include "Heirloom/Core/EntryPoint.h"

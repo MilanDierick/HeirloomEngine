@@ -14,10 +14,11 @@
 namespace Heirloom
 {
 	ImGuiLayer::ImGuiLayer()
-		: Layer("ImGuiLayer")
 	{
+		OnAttach();
 	}
 
+	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::OnAttach()
 	{
 		HL_PROFILE_FUNCTION()
@@ -57,6 +58,7 @@ namespace Heirloom
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
+	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::OnDetach()
 	{
 		HL_PROFILE_FUNCTION()
@@ -64,18 +66,6 @@ namespace Heirloom
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
-	}
-
-	void ImGuiLayer::OnUpdate(Timestep)
-	{
-	}
-
-	void ImGuiLayer::OnRender()
-	{
-	}
-
-	void ImGuiLayer::OnImGuiRender()
-	{
 	}
 
 	// ReSharper disable once CppMemberFunctionMayBeStatic
@@ -99,6 +89,7 @@ namespace Heirloom
 		}
 	}
 
+	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::End()
 	{
 		HL_PROFILE_FUNCTION()
