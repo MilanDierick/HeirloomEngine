@@ -71,8 +71,6 @@ void Heirloom::Renderer2D::EndScene()
 
 void Heirloom::Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 {
-	HL_PROFILE_FUNCTION()
-
 	DrawQuad({position.x, position.y, 0.0f}, size, color);
 }
 
@@ -100,8 +98,6 @@ void Heirloom::Renderer2D::DrawQuad(const glm::vec2& position,
 									const float tilingFactor,
 									const glm::vec4& tintColor)
 {
-	HL_PROFILE_FUNCTION()
-
 	DrawQuad({position.x, position.y, 0.0f}, size, texture, tilingFactor, tintColor);
 }
 
@@ -129,13 +125,16 @@ void Heirloom::Renderer2D::DrawQuad(const glm::vec3& position,
 	RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
 }
 
+void Heirloom::Renderer2D::DrawQuad(Sprite& sprite)
+{
+	DrawQuad(sprite.Position, sprite.Size, sprite.Texture, sprite.TilingFactor, sprite.TintColor);
+}
+
 void Heirloom::Renderer2D::DrawRotatedQuad(const glm::vec2& position,
 										   const glm::vec2& size,
 										   const float rotation,
 										   const glm::vec4& color)
 {
-	HL_PROFILE_FUNCTION()
-
 	DrawRotatedQuad({position.x, position.y, 0.0f}, size, rotation, color);
 }
 
@@ -169,8 +168,6 @@ void Heirloom::Renderer2D::DrawRotatedQuad(const glm::vec2& position,
 										   const float tilingFactor,
 										   const glm::vec4& tintColor)
 {
-	HL_PROFILE_FUNCTION()
-
 	DrawRotatedQuad({position.x, position.y, 0.0f}, size, rotation, texture, tilingFactor, tintColor);
 }
 
@@ -198,4 +195,14 @@ void Heirloom::Renderer2D::DrawRotatedQuad(const glm::vec3& position,
 
 	s_Data->QuadVertexArray->Bind();
 	RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+}
+
+void Heirloom::Renderer2D::DrawRotatedQuad(Sprite& sprite)
+{
+	DrawRotatedQuad(sprite.Position,
+					sprite.Size,
+					sprite.Rotation,
+					sprite.Texture,
+					sprite.TilingFactor,
+					sprite.TintColor);
 }

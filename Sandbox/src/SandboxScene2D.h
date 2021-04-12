@@ -19,6 +19,8 @@ public:
 private:
 	Heirloom::OrthographicCameraController m_CameraController;
 
+	Heirloom::Sprite m_BackgroundSprite;
+
 	Heirloom::Ref<Heirloom::Texture2D> m_BackgroundTexture;
 	Heirloom::Ref<Heirloom::Texture2D> m_Logo;
 

@@ -5,6 +5,7 @@
 #pragma once
 #include "OrthographicCamera.h"
 #include "Shader.h"
+#include "Sprite.h"
 #include "Texture.h"
 #include "VertexArray.h"
 
@@ -41,6 +42,7 @@ namespace Heirloom
 							 const Ref<Texture2D>& texture,
 							 float tilingFactor         = 1.0f,
 							 const glm::vec4& tintColor = glm::vec4(1.0f));
+		static void DrawQuad(Sprite& sprite);
 
 		static void DrawRotatedQuad(const glm::vec2& position,
 									const glm::vec2& size,
@@ -62,5 +64,6 @@ namespace Heirloom
 									const Ref<Texture2D>& texture,
 									float tilingFactor         = 1.0f,
 									const glm::vec4& tintColor = glm::vec4(1.0f));
+		static void DrawRotatedQuad(Sprite& sprite);
 	};
 }
