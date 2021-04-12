@@ -4,6 +4,7 @@
 
 #include "Heirloom/Audio/SoundService.h"
 #include "Heirloom/Renderer/Renderer.h"
+#include "Heirloom/Scenes/SceneManager.h"
 
 #define MS_PER_TICK 1000 / 144
 
@@ -28,14 +29,17 @@ namespace Heirloom
 		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
-		PushOverlay(m_ImGuiLayer);
+		m_ImGuiLayer->OnAttach();
 	}
 
 	Application::~Application()
 	{
+		SceneManager::RemoveAllScenes();
+		m_ImGuiLayer->OnDetach();
 	}
 
 	// TODO: A cheap solution is to walk the list backwards when you update. That way removing an object only shifts items that were already updated.
+	// ReSharper disable once CppMemberFunctionMayBeConst
 	void Application::Run()
 	{
 		HL_PROFILE_FUNCTION()
@@ -67,7 +71,7 @@ namespace Heirloom
 				{
 					HL_PROFILE_SCOPE("LayerStack OnUpdate")
 
-					for (Layer* layer : m_LayerStack) layer->OnUpdate(Timestep{1000 / MS_PER_TICK});
+					SceneManager::Update();
 				}
 
 				lag -= MS_PER_TICK;
@@ -78,7 +82,7 @@ namespace Heirloom
 			{
 				HL_PROFILE_SCOPE("LayerStack OnRender")
 
-				for (Layer* layer : m_LayerStack) layer->OnRender();
+				SceneManager::Render();
 			}
 
 			m_ImGuiLayer->Begin();
@@ -86,27 +90,11 @@ namespace Heirloom
 			{
 				HL_PROFILE_SCOPE("LayerStack OnImGuiRender")
 
-				for (Layer* layer : m_LayerStack) layer->OnImGuiRender();
+				SceneManager::ImGuiRender();
 			}
 
 			m_ImGuiLayer->End();
 		}
-	}
-
-	void Application::PushLayer(Layer* layer)
-	{
-		HL_PROFILE_FUNCTION()
-
-		m_LayerStack.PushLayer(layer);
-		layer->OnAttach();
-	}
-
-	void Application::PushOverlay(Layer* layer)
-	{
-		HL_PROFILE_FUNCTION()
-
-		m_LayerStack.PushOverlay(layer);
-		layer->OnAttach();
 	}
 
 	bool Application::OnWindowClosedEvent(const WindowClosedEventArgs)

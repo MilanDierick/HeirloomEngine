@@ -4,36 +4,28 @@
 
 #pragma once
 
-// Save scene
-// Load scene
-// Add scene
-// Remove scene
-
-#define MAX_CONCURRENT_LOADED_SCENES 8
 #include <future>
 
 namespace Heirloom
 {
-	class Timestep;
 	class Scene;
 	class Layer;
 
 	class SceneManager
 	{
 	public:
-		static void SaveScene(); // Should save a scene to disk, this is currently not supported
-		static std::future<bool> LoadScene(std::string sceneName, bool cacheCurrentScene = false);
-		static bool LoadScene(Scope<Scene> newScene, bool cacheCurrentScene = false);
+		static bool LoadScene(Scene* newScene, bool cacheCurrentScene = false);
+		static void RemoveAllScenes();
 
-		static bool AddLayerToActiveScene(Ref<Layer> layer);
-		static bool RemoveLayerFromActiveScene(Ref<Layer> layer);
-
-		static void UpdateScenes(Timestep timestep);
+		static void Update();
+		static void Render();
+		static void ImGuiRender();
 
 	private:
-		static bool LoadSceneFromDisk(std::string sceneName);
+		static void SetActiveScene(Scene* newScene);
 		static bool RemoveScene(std::string sceneName);
 
-		static std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES> m_SceneCache;
+		static Scene* m_ActiveScene;
+		static std::vector<Scene*> m_SceneCache;
 	};
 }

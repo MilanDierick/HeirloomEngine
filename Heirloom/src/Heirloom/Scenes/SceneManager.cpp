@@ -6,81 +6,73 @@
 
 namespace Heirloom
 {
-	void SceneManager::SaveScene() { throw std::exception("Not implemented!"); }
+	Scene* SceneManager::m_ActiveScene             = nullptr;
+	std::vector<Scene*> SceneManager::m_SceneCache = std::vector<Scene*>();
 
-	std::future<bool> SceneManager::LoadScene(std::string sceneName, const bool cacheCurrentScene)
+	bool SceneManager::LoadScene(Scene* newScene, const bool cacheCurrentScene)
 	{
-		if (!cacheCurrentScene) { RemoveScene(sceneName); }
+		HL_PROFILE_FUNCTION()
 
-		return std::async(std::launch::async, LoadSceneFromDisk, std::forward<std::string>(sceneName));
+		if (!cacheCurrentScene && m_ActiveScene != nullptr) { RemoveScene(newScene->GetName()); }
+
+		m_SceneCache.push_back(newScene);
+		SetActiveScene(newScene);
+		m_ActiveScene->OnLoad();
+		return true;
 	}
 
-	bool SceneManager::LoadScene(Scope<Scene> newScene, const bool cacheCurrentScene)
+	void SceneManager::RemoveAllScenes() { for (Scene* scene : m_SceneCache) { RemoveScene(scene->GetName()); } }
+
+	void SceneManager::Update()
 	{
-		if (!cacheCurrentScene) { RemoveScene(newScene->GetName()); }
+		HL_PROFILE_FUNCTION()
 
-		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
-			[=](Scope<Scene>& scene) { return scene == nullptr; });
-
-		if (it != std::end(m_SceneCache))
-		{
-			*it = CreateScope<Scene>(std::move(newScene));
-			return true;
-		}
-
-		HL_CORE_ERROR("Trying to load scene while there are already a maximum of {0} scenes loaded!",
-					  MAX_CONCURRENT_LOADED_SCENES);
-		return false;
+		for (Scene* scene : m_SceneCache) { scene->OnUpdate(); }
 	}
 
-	bool SceneManager::AddLayerToActiveScene(const Ref<Layer> layer)
+	void SceneManager::Render()
 	{
-		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
-			[=](Scope<Scene>& scene) { return scene->IsActive() == true; });
+		HL_PROFILE_FUNCTION()
 
-		if (it != std::end(m_SceneCache))
-		{
-			(*it)->AddLayer(layer);
-			return true;
-		}
-
-		HL_CORE_ERROR("Failed to add layer with name \"{0}\" to scene with name \"{1}\"",
-					  layer->GetName(),
-					  (*it)->GetName());
-		return false;
+		for (Scene* scene : m_SceneCache) { scene->OnRender(); }
 	}
 
-	bool SceneManager::RemoveLayerFromActiveScene(const Ref<Layer> layer)
+	void SceneManager::ImGuiRender()
 	{
-		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
-			[=](Scope<Scene>& scene) { return scene->IsActive() == true; });
+		HL_PROFILE_FUNCTION()
 
-		if (it != std::end(m_SceneCache))
-		{
-			(*it)->RemoveLayer(layer);
-			return true;
-		}
-
-		HL_CORE_ERROR("Failed to remove layer with name \"{0}\" from scene with name \"{1}\"",
-					  layer->GetName(),
-					  (*it)->GetName());
-		return false;
+		for (Scene* scene : m_SceneCache) { scene->OnImGuiRender(); }
 	}
 
-	bool SceneManager::LoadSceneFromDisk(std::string sceneName) { throw std::exception("Not implemented!"); }
+	void SceneManager::SetActiveScene(Scene* newScene)
+	{
+		HL_PROFILE_FUNCTION()
+
+		if (m_ActiveScene != nullptr) { m_ActiveScene->SetActive(false); }
+
+		m_ActiveScene = newScene;
+		m_ActiveScene->SetActive(true);
+	}
 
 	bool SceneManager::RemoveScene(const std::string sceneName)
 	{
-		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
-			[=](Scope<Scene>& scene) { return scene->GetName() == sceneName; });
+		HL_PROFILE_FUNCTION()
 
-		if (it != std::end(m_SceneCache))
+		const std::vector<Scene*>::iterator it = std::ranges::find_if(m_SceneCache,
+																	  [=](Scene* scene)
+																	  {
+																		  return scene->GetName() == sceneName;
+																	  });
+
+		if (it == std::end(m_SceneCache))
 		{
-			it->reset(nullptr);
-			return true;
+			HL_CORE_ERROR("Scene with name {0} designated to be removed could not be found!", sceneName);
+			return false;
 		}
 
-		HL_CORE_ERROR("Scene with name {0} designated to be removed could not be found!", sceneName);
-		return false;
+		(*it)->OnUnload();
+		delete *it;
+		m_SceneCache.erase(it);
+		return true;
 	}
 }

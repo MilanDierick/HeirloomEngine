@@ -8,6 +8,8 @@
 // ReSharper disable once CppUnusedIncludeDirective
 #include "Heirloom/Core/EntryPoint.h"
 
+#include "SandboxScene2D.h"
+
 class Sandbox final : public Heirloom::Application
 {
 public:
@@ -15,7 +17,8 @@ public:
 	{
 		HL_PROFILE_FUNCTION()
 
-		PushLayer(new Sandbox2D);
+		Heirloom::SceneManager::LoadScene(new SandboxScene2D("SandboxScene2D"), false);
+
 		HL_INFO("Initialized Sandbox application");
 	}
 
