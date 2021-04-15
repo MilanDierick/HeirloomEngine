@@ -80,15 +80,10 @@ void Heirloom::OpenGLTexture2D::SetData(void* data, const uint32_t size)
 {
 	HL_PROFILE_FUNCTION()
 
-	const uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
-
-	// This is an edge case, where size is only used in debug, so it can't be an unnamed parameter
-	#ifdef HL_DEBUG
-	HL_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be the entire texture!");
-	#else
 	UNREFERENCED_PARAMETER(size);
-	#endif
 
+	const uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+	HL_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be the entire texture!"); // Size is not referenced here when we're not using asserts
 	glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 }
 

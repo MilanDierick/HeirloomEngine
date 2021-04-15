@@ -5,12 +5,10 @@
 
 void Heirloom::BufferLayout::CalculateOffsetsAndStride()
 {
-	HL_PROFILE_FUNCTION()
+	HL_PROFILE_FUNCTION() uint32_t offset = 0;
+	m_Stride                              = 0;
 
-	uint32_t offset = 0;
-	m_Stride        = 0;
-
-	for (auto& element : m_Elements)
+	for (std::vector<BufferElement>::value_type& element : m_Elements)
 	{
 		element.Offset = offset;
 		offset += element.Size;
@@ -18,11 +16,22 @@ void Heirloom::BufferLayout::CalculateOffsetsAndStride()
 	}
 }
 
+Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(uint32_t size)
+{
+	switch (Renderer::GetAPI())
+	{
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(size);
+	}
+
+	HL_CORE_ASSERT(false, "Unknown RendererAPI!");
+	return nullptr;
+}
+
 Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(float* vertices, const uint32_t size)
 {
-	HL_PROFILE_FUNCTION()
-
-	switch (Renderer::GetAPI())
+	HL_PROFILE_FUNCTION() switch (Renderer::GetAPI())
 	{
 		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
@@ -33,15 +42,13 @@ Heirloom::Ref<Heirloom::VertexBuffer> Heirloom::VertexBuffer::Create(float* vert
 	return nullptr;
 }
 
-Heirloom::Ref<Heirloom::IndexBuffer> Heirloom::IndexBuffer::Create(uint32_t* indices, const uint32_t size)
+Heirloom::Ref<Heirloom::IndexBuffer> Heirloom::IndexBuffer::Create(uint32_t* indices, const uint32_t count)
 {
-	HL_PROFILE_FUNCTION()
-
-	switch (Renderer::GetAPI())
+	HL_PROFILE_FUNCTION() switch (Renderer::GetAPI())
 	{
 		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
-		case RendererAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, size);
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, count);
 	}
 
 	HL_CORE_ASSERT(false, "Unknown RendererAPI!");

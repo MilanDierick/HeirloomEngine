@@ -2,6 +2,7 @@
 
 #include <string>
 #include <chrono>
+// ReSharper disable once CppUnusedIncludeDirective
 #include <iomanip>
 #include <fstream>
 
@@ -90,9 +91,9 @@ namespace Heirloom
 	#define HL_PROFILE_SCOPE(name) ::Heirloom::InstrumentationTimer TOKENPASTE2(timer, __LINE__)(name);
 	#define HL_PROFILE_FUNCTION() HL_PROFILE_SCOPE(HL_FUNC_SIG)
 	#else
-	#define HL_PROFILE_BEGIN_SESSION(name, filepath)
-	#define HL_PROFILE_END_SESSION()
-	#define HL_PROFILE_SCOPE(name)
-	#define HL_PROFILE_FUNCTION()
+	#define HL_PROFILE_BEGIN_SESSION(name, filepath);
+	#define HL_PROFILE_END_SESSION();
+	#define HL_PROFILE_SCOPE(name);
+	#define HL_PROFILE_FUNCTION();
 	#endif
 }

@@ -6,6 +6,14 @@
 // =================================================================================================================
 // ==== VertexBuffer ===============================================================================================
 // =================================================================================================================
+Heirloom::OpenGLVertexBuffer::OpenGLVertexBuffer(const uint32_t size)
+{
+	HL_PROFILE_FUNCTION()
+
+    glCreateBuffers(1, &m_RendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+	glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+}
 
 Heirloom::OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, const uint32_t size)
 {
@@ -31,6 +39,12 @@ void Heirloom::OpenGLVertexBuffer::Bind() const
 void Heirloom::OpenGLVertexBuffer::Unbind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void Heirloom::OpenGLVertexBuffer::SetData(const void* data, const uint32_t size)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 }
 
 // =================================================================================================================

@@ -20,9 +20,9 @@ void Heirloom::RenderCommand::Clear()
 	s_RendererAPI->Clear();
 }
 
-void Heirloom::RenderCommand::DrawIndexed(const Ref<VertexArray>& vertexArray)
+void Heirloom::RenderCommand::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count)
 {
-	s_RendererAPI->DrawIndexed(vertexArray);
+	s_RendererAPI->DrawIndexed(vertexArray, count);
 }
 
 void Heirloom::RenderCommand::SetViewport(const uint32_t x,

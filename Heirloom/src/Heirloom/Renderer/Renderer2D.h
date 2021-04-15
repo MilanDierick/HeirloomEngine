@@ -11,14 +11,31 @@
 
 namespace Heirloom
 {
-	struct Renderer2DStorage
+	struct QuadVertex
 	{
+		glm::vec3 Position;
+		glm::vec4 Color;
+		glm::vec2 TexCoord;
+		// TODO: TexID
+	};
+	
+	struct Renderer2DData
+	{
+		const uint32_t MaxQuads = 10000;
+		const uint32_t MaxVertices = MaxQuads * 4;
+		const uint32_t MaxIndices = MaxQuads * 6;
+
 		Ref<VertexArray> QuadVertexArray;
+		Ref<VertexBuffer> QuadVertexBuffer;
 		Ref<Shader> TextureShader;
 		Ref<Texture2D> WhiteTexture;
+
+		uint32_t QuadIndexCount = 0;
+		QuadVertex* pQuadVertexBufferBase = nullptr;
+		QuadVertex* pQuadVertexBuffer = nullptr;
 	};
 
-	static Renderer2DStorage* s_Data;
+	static Renderer2DData s_Data;
 
 	class Renderer2D
 	{
@@ -28,6 +45,7 @@ namespace Heirloom
 
 		static void BeginScene(OrthographicCamera& camera);
 		static void EndScene();
+		static void Flush();
 
 		// Primitives
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
