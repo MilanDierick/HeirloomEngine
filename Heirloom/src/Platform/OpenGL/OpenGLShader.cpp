@@ -64,31 +64,42 @@ void Heirloom::OpenGLShader::Unbind() const
 	glUseProgram(0);
 }
 
-void Heirloom::OpenGLShader::SetInt(const std::string name, const int value) { UploadUniformInt(name, value); }
+void Heirloom::OpenGLShader::SetInt(const std::string& name, const int value) { UploadUniformInt(name, value); }
 
-void Heirloom::OpenGLShader::SetFloat(const std::string name, const float value) { UploadUniformFloat(name, value); }
+void Heirloom::OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+{
+	UploadUniformIntArray(name, values, count);
+}
 
-void Heirloom::OpenGLShader::SetFloat2(const std::string name, const glm::float2 value)
+void Heirloom::OpenGLShader::SetFloat(const std::string& name, const float value) { UploadUniformFloat(name, value); }
+
+void Heirloom::OpenGLShader::SetFloat2(const std::string& name, const glm::float2 value)
 {
 	UploadUniformFloat2(name, value);
 }
 
-void Heirloom::OpenGLShader::SetFloat3(const std::string name, const glm::float3 value)
+void Heirloom::OpenGLShader::SetFloat3(const std::string& name, const glm::float3 value)
 {
 	UploadUniformFloat3(name, value);
 }
 
-void Heirloom::OpenGLShader::SetFloat4(const std::string name, const glm::float4 value)
+void Heirloom::OpenGLShader::SetFloat4(const std::string& name, const glm::float4 value)
 {
 	UploadUniformFloat4(name, value);
 }
 
-void Heirloom::OpenGLShader::SetMat4(const std::string name, const glm::mat4 value) { UploadUniformMat4(name, value); }
+void Heirloom::OpenGLShader::SetMat4(const std::string& name, const glm::mat4 value) { UploadUniformMat4(name, value); }
 
 void Heirloom::OpenGLShader::UploadUniformInt(const std::string& name, const int value) const
 {
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 	glUniform1i(location, value);
+}
+
+void Heirloom::OpenGLShader::UploadUniformIntArray(const std::string& name, int* values, const uint32_t count) const
+{
+	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniform1iv(location, count, values);
 }
 
 void Heirloom::OpenGLShader::UploadUniformFloat(const std::string& name, const float value) const

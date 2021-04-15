@@ -91,3 +91,8 @@ void Heirloom::OpenGLTexture2D::Bind(const uint32_t slot)
 {
 	glBindTextureUnit(slot, m_RendererID);
 }
+
+bool Heirloom::OpenGLTexture2D::operator==(const Texture& other) const
+{
+	return m_RendererID == reinterpret_cast<const OpenGLTexture2D&>(other).m_RendererID;
+}

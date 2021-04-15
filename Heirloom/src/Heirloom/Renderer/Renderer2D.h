@@ -16,23 +16,28 @@ namespace Heirloom
 		glm::vec3 Position;
 		glm::vec4 Color;
 		glm::vec2 TexCoord;
-		// TODO: TexID
+		float TexIndex;
+		float TilingFactor;
 	};
-	
+
 	struct Renderer2DData
 	{
-		const uint32_t MaxQuads = 10000;
+		const uint32_t MaxQuads    = 10000;
 		const uint32_t MaxVertices = MaxQuads * 4;
-		const uint32_t MaxIndices = MaxQuads * 6;
+		const uint32_t MaxIndices  = MaxQuads * 6;
 
 		Ref<VertexArray> QuadVertexArray;
 		Ref<VertexBuffer> QuadVertexBuffer;
 		Ref<Shader> TextureShader;
 		Ref<Texture2D> WhiteTexture;
+		static const uint32_t MaxTextureSlots = 32;
 
-		uint32_t QuadIndexCount = 0;
+		uint32_t QuadIndexCount           = 0;
 		QuadVertex* pQuadVertexBufferBase = nullptr;
-		QuadVertex* pQuadVertexBuffer = nullptr;
+		QuadVertex* pQuadVertexBuffer     = nullptr;
+
+		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
+		uint32_t TextureSlotIndex = 1; // 0 = white texture
 	};
 
 	static Renderer2DData s_Data;
@@ -83,5 +88,12 @@ namespace Heirloom
 									float tilingFactor         = 1.0f,
 									const glm::vec4& tintColor = glm::vec4(1.0f));
 		static void DrawRotatedQuad(Sprite& sprite);
+
+	private:
+		static void ConfigureAndIncrementQuadVertexBufferPtr(const glm::vec3& position,
+												 const glm::vec4& color,
+												 const glm::vec2& texCoord,
+												 float texIndex,
+												 float tilingFactor);
 	};
 }

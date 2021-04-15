@@ -16,7 +16,7 @@ void SandboxScene2D::OnLoad()
 	m_BackgroundTexture = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_Logo              = Heirloom::Texture2D::Create("assets/textures/logo.png");
 
-	m_BackgroundSprite = Heirloom::Sprite({0.0f, 0.0f, -0.1f},
+	m_BackgroundSprite = Heirloom::Sprite({-2.5f, -2.5f, -0.1f},
 										  {5.0f, 5.0f},
 										  glm::radians(45.0f),
 										  m_BackgroundTexture,
@@ -44,8 +44,8 @@ void SandboxScene2D::OnRender()
 
 	Heirloom::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-	// Heirloom::Renderer2D::DrawRotatedQuad(m_BackgroundSprite);
-	// Heirloom::Renderer2D::DrawQuad({0.0f, 0.8f}, {1.0f, 1.0f}, m_Logo);
+	Heirloom::Renderer2D::DrawQuad(m_BackgroundSprite);
+	Heirloom::Renderer2D::DrawQuad({0.0f, 0.8f}, {1.0f, 1.0f}, m_Logo);
 
 	Heirloom::Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, {0.8f, 0.2f, 0.3f, 1.0f});
 	Heirloom::Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f});
