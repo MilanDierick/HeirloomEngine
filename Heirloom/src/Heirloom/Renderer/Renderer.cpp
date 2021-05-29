@@ -4,41 +4,44 @@
 #include "Shader.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
-Heirloom::Scope<Heirloom::Renderer::SceneData> Heirloom::Renderer::s_SceneData = Heirloom::CreateScope<SceneData>();
-
-void Heirloom::Renderer::Init()
+namespace Heirloom
 {
-	HL_PROFILE_FUNCTION()
+	Scope<Renderer::SceneData> Renderer::s_SceneData = Heirloom::CreateScope<SceneData>();
 
-	RenderCommand::Init();
-	Renderer2D::Init();
-}
+	void Renderer::Init()
+	{
+		HL_PROFILE_FUNCTION()
 
-void Heirloom::Renderer::OnWindowResize(const uint32_t width, const uint32_t height)
-{
-	RenderCommand::SetViewport(0, 0, width, height);
-}
+		RenderCommand::Init();
+		Renderer2D::Init();
+	}
 
-void Heirloom::Renderer::BeginScene(OrthographicCamera& camera)
-{
-	s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
-}
+	void Renderer::OnWindowResize(const uint32_t width, const uint32_t height)
+	{
+		RenderCommand::SetViewport(0, 0, width, height);
+	}
 
-void Heirloom::Renderer::EndScene()
-{
-}
+	void Renderer::BeginScene(OrthographicCamera& camera)
+	{
+		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+	}
 
-void Heirloom::Renderer::Submit(const Ref<Shader>& shader,
-								const Ref<VertexArray>& vertexArray,
-								const glm::mat4& transform)
-{
-	HL_PROFILE_FUNCTION()
+	void Renderer::EndScene()
+	{
+	}
 
-	shader->Bind();
-	std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection",
-																	   s_SceneData->ViewProjectionMatrix);
-	std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
+	void Renderer::Submit(const Ref<Shader>& shader,
+						  const Ref<VertexArray>& vertexArray,
+						  const glm::mat4& transform)
+	{
+		HL_PROFILE_FUNCTION()
 
-	vertexArray->Bind();
-	RenderCommand::DrawIndexed(vertexArray);
+		shader->Bind();
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection",
+																		   s_SceneData->ViewProjectionMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
+
+		vertexArray->Bind();
+		RenderCommand::DrawIndexed(vertexArray);
+	}
 }

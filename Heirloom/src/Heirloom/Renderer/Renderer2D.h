@@ -91,9 +91,9 @@ namespace Heirloom
 
 	private:
 		static void ConfigureAndIncrementQuadVertexBufferPtr(const glm::vec3& position,
-												 const glm::vec4& color,
-												 const glm::vec2& texCoord,
-												 float texIndex,
-												 float tilingFactor);
+															 const glm::vec4& color,
+															 const glm::vec2& texCoord,
+															 float texIndex,
+															 float tilingFactor);
 	};
 }

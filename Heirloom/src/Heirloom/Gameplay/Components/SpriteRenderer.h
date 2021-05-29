@@ -4,8 +4,7 @@
 
 #pragma once
 #include "Component.h"
-
-#include "Heirloom/Renderer/Texture.h"
+#include "Heirloom/Renderer/Sprite.h"
 
 namespace Heirloom
 {
@@ -20,12 +19,15 @@ namespace Heirloom
 		SpriteRenderer& operator=(const SpriteRenderer& other)     = delete;
 		SpriteRenderer& operator=(SpriteRenderer&& other) noexcept = delete;
 
+		[[nodiscard]] Sprite& GetSprite() { return m_Sprite; }
+		void SetSprite(const Sprite& sprite) { m_Sprite = sprite; }
+
 		void Update(Timestep ts) override;
 		void Render() const override;
 
 		void LoadTextureFromPath(std::string path);
 
 	private:
-		Ref<Texture2D> m_Texture;
+		Sprite m_Sprite;
 	};
 }

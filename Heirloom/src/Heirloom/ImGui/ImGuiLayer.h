@@ -20,7 +20,7 @@ namespace Heirloom
 
 		void OnAttach();
 		void OnDetach();
-		
+
 		void Begin();
 		void End();
 

@@ -6,6 +6,7 @@
 #include "Heirloom/Renderer/Renderer.h"
 #include "Heirloom/Scenes/SceneManager.h"
 
+// TODO: No magic numbers, this should probably be in a settings object
 #define MS_PER_TICK 1000 / 144
 
 namespace Heirloom
@@ -72,7 +73,11 @@ namespace Heirloom
 				lag -= MS_PER_TICK;
 			}
 
-			SoundService::GetSoundEngine()->Update();
+			{
+				HL_PROFILE_SCOPE("SoundEngine Update")
+				
+				SoundService::GetSoundEngine()->Update();
+			}
 
 			{
 				HL_PROFILE_SCOPE("SceneManager OnRender")

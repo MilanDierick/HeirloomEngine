@@ -3,4 +3,13 @@
 
 #include "NullSoundEngine.h"
 
-Heirloom::SoundEngine* Heirloom::SoundService::m_SoundEngine = new NullSoundEngine();
+namespace Heirloom
+{
+	SoundEngine* SoundService::m_SoundEngine = new NullSoundEngine();
+
+	void SoundService::Provide(SoundEngine* soundEngine)
+	{
+		delete m_SoundEngine;
+		m_SoundEngine = soundEngine;
+	}
+}

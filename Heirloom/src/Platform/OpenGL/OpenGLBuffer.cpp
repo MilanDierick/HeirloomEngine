@@ -3,77 +3,80 @@
 
 #include "glad/glad.h"
 
-// =================================================================================================================
-// ==== VertexBuffer ===============================================================================================
-// =================================================================================================================
-Heirloom::OpenGLVertexBuffer::OpenGLVertexBuffer(const uint32_t size)
+namespace Heirloom
 {
-	HL_PROFILE_FUNCTION()
+	// =================================================================================================================
+	// ==== VertexBuffer ===============================================================================================
+	// =================================================================================================================
+	OpenGLVertexBuffer::OpenGLVertexBuffer(const uint32_t size)
+	{
+		HL_PROFILE_FUNCTION()
 
-    glCreateBuffers(1, &m_RendererID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-	glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
-}
+		glCreateBuffers(1, &m_RendererID);
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+	}
 
-Heirloom::OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, const uint32_t size)
-{
-	HL_PROFILE_FUNCTION()
+	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, const uint32_t size)
+	{
+		HL_PROFILE_FUNCTION()
 
-	glCreateBuffers(1, &m_RendererID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-}
+		glCreateBuffers(1, &m_RendererID);
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+	}
 
-Heirloom::OpenGLVertexBuffer::~OpenGLVertexBuffer()
-{
-	HL_PROFILE_FUNCTION()
+	OpenGLVertexBuffer::~OpenGLVertexBuffer()
+	{
+		HL_PROFILE_FUNCTION()
 
-	glDeleteBuffers(1, &m_RendererID);
-}
+		glDeleteBuffers(1, &m_RendererID);
+	}
 
-void Heirloom::OpenGLVertexBuffer::Bind() const
-{
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-}
+	void OpenGLVertexBuffer::Bind() const
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+	}
 
-void Heirloom::OpenGLVertexBuffer::Unbind() const
-{
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
+	void OpenGLVertexBuffer::Unbind() const
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 
-void Heirloom::OpenGLVertexBuffer::SetData(const void* data, const uint32_t size)
-{
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
-}
+	void OpenGLVertexBuffer::SetData(const void* data, const uint32_t size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+	}
 
-// =================================================================================================================
-// ==== IndexBuffer ================================================================================================
-// =================================================================================================================
+	// =================================================================================================================
+	// ==== IndexBuffer ================================================================================================
+	// =================================================================================================================
 
-Heirloom::OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, const uint32_t count)
-	: m_Count(count)
-{
-	HL_PROFILE_FUNCTION()
+	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, const uint32_t count)
+		: m_Count(count)
+	{
+		HL_PROFILE_FUNCTION()
 
-	glCreateBuffers(1, &m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
-}
+		glCreateBuffers(1, &m_RendererID);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+	}
 
-Heirloom::OpenGLIndexBuffer::~OpenGLIndexBuffer()
-{
-	HL_PROFILE_FUNCTION()
+	OpenGLIndexBuffer::~OpenGLIndexBuffer()
+	{
+		HL_PROFILE_FUNCTION()
 
-	glDeleteBuffers(1, &m_RendererID);
-}
+		glDeleteBuffers(1, &m_RendererID);
+	}
 
-void Heirloom::OpenGLIndexBuffer::Bind() const
-{
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-}
+	void OpenGLIndexBuffer::Bind() const
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+	}
 
-void Heirloom::OpenGLIndexBuffer::Unbind() const
-{
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	void OpenGLIndexBuffer::Unbind() const
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 }

@@ -7,18 +7,14 @@
 
 namespace Heirloom
 {
-	class SoundService
+	class HL_API SoundService
 	{
 	public:
 		~SoundService() { delete m_SoundEngine; }
 
 		static SoundEngine* GetSoundEngine() { return m_SoundEngine; }
 
-		static void Provide(SoundEngine* soundEngine)
-		{
-			delete m_SoundEngine;
-			m_SoundEngine = soundEngine;
-		}
+		static void Provide(SoundEngine* soundEngine);
 
 	private:
 		static SoundEngine* m_SoundEngine;

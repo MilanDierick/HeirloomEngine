@@ -46,8 +46,8 @@ namespace Heirloom
 			unsigned int Height;
 			bool VSync;
 
-			EventNew<WindowResizedEventArgs>* WindowResizedEvent;
-			EventNew<WindowClosedEventArgs>* WindowClosedEvent;
+			Event<WindowResizedEventArgs>* WindowResizedEvent;
+			Event<WindowClosedEventArgs>* WindowClosedEvent;
 		};
 
 		WindowData m_Data;

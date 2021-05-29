@@ -26,62 +26,61 @@ namespace Heirloom
 		HL_CORE_ASSERT(false, "Unkown ShaderDataType!");
 		return 0;
 	}
-}
 
-Heirloom::OpenGLVertexArray::OpenGLVertexArray()
-{
-	HL_PROFILE_FUNCTION()
-
-	glCreateVertexArrays(1, &m_RendererID);
-}
-
-Heirloom::OpenGLVertexArray::~OpenGLVertexArray()
-{
-	HL_PROFILE_FUNCTION()
-
-	glDeleteVertexArrays(1, &m_RendererID);
-}
-
-void Heirloom::OpenGLVertexArray::Bind() const
-{
-	glBindVertexArray(m_RendererID);
-}
-
-void Heirloom::OpenGLVertexArray::Unbind() const
-{
-	glBindVertexArray(0);
-}
-
-void Heirloom::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
-{
-	HL_PROFILE_FUNCTION()
-
-	HL_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "VertexBuffer has no layout!");
-
-	glBindVertexArray(m_RendererID);
-	vertexBuffer->Bind();
-
-	uint32_t index     = 0;
-	const auto& layout = vertexBuffer->GetLayout();
-	for (const auto& element : layout)
+	OpenGLVertexArray::OpenGLVertexArray()
 	{
-		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(index,
-							  element.GetComponentCount(),
-							  ShaderDataTypeToOpenGLBaseType(element.Type),
-							  element.Normalized ? GL_TRUE : GL_FALSE,
-							  layout.GetStride(),
-							  UIntToPtr(element.Offset));
-		index++;
+		HL_PROFILE_FUNCTION()
+
+		glCreateVertexArrays(1, &m_RendererID);
 	}
 
-	m_VertexBuffers.push_back(vertexBuffer);
-}
+	OpenGLVertexArray::~OpenGLVertexArray()
+	{
+		HL_PROFILE_FUNCTION()
 
-void Heirloom::OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
-{
-	glBindVertexArray(m_RendererID);
-	indexBuffer->Bind();
+		glDeleteVertexArrays(1, &m_RendererID);
+	}
 
-	m_IndexBuffer = indexBuffer;
+	void OpenGLVertexArray::Bind() const
+	{
+		glBindVertexArray(m_RendererID);
+	}
+
+	void OpenGLVertexArray::Unbind() const
+	{
+		glBindVertexArray(0);
+	}
+
+	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
+	{
+		HL_PROFILE_FUNCTION()
+
+		HL_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "VertexBuffer has no layout!");
+
+		glBindVertexArray(m_RendererID);
+		vertexBuffer->Bind();
+
+		const auto& layout = vertexBuffer->GetLayout();
+		for (uint32_t index = 0; const auto& element : layout)
+		{
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(index,
+								  element.GetComponentCount(),
+								  ShaderDataTypeToOpenGLBaseType(element.Type),
+								  element.Normalized ? GL_TRUE : GL_FALSE,
+								  layout.GetStride(),
+								  UIntToPtr(element.Offset));
+			index++;
+		}
+
+		m_VertexBuffers.push_back(vertexBuffer);
+	}
+
+	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
+	{
+		glBindVertexArray(m_RendererID);
+		indexBuffer->Bind();
+
+		m_IndexBuffer = indexBuffer;
+	}
 }

@@ -5,31 +5,34 @@
 
 #include "GLFW/glfw3.h"
 
-Heirloom::OpenGLContext::OpenGLContext(GLFWwindow* const windowHandle)
-	: m_WindowHandle(windowHandle)
+namespace Heirloom
 {
-	HL_PROFILE_FUNCTION()
+	OpenGLContext::OpenGLContext(GLFWwindow* const windowHandle)
+		: m_WindowHandle(windowHandle)
+	{
+		HL_PROFILE_FUNCTION()
 
-	HL_CORE_ASSERT(windowHandle, "Window handle is null!");
-}
+		HL_CORE_ASSERT(windowHandle, "Window handle is null!");
+	}
 
-void Heirloom::OpenGLContext::Init()
-{
-	HL_PROFILE_FUNCTION()
+	void OpenGLContext::Init()
+	{
+		HL_PROFILE_FUNCTION()
 
-	glfwMakeContextCurrent(m_WindowHandle);
-	const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-	HL_CORE_ASSERT(status, "Failed to initialize Glad!");
+		glfwMakeContextCurrent(m_WindowHandle);
+		const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+		HL_CORE_ASSERT(status, "Failed to initialize Glad!");
 
-	HL_CORE_INFO("OpenGL Info:");
-	HL_CORE_INFO("    Vendor: {0}", glGetString(GL_VENDOR));
-	HL_CORE_INFO("    Renderer: {0}", glGetString(GL_RENDERER));
-	HL_CORE_INFO("    Version: {0}", glGetString(GL_VERSION));
-}
+		HL_CORE_INFO("OpenGL Info:");
+		HL_CORE_INFO("    Vendor: {0}", glGetString(GL_VENDOR));
+		HL_CORE_INFO("    Renderer: {0}", glGetString(GL_RENDERER));
+		HL_CORE_INFO("    Version: {0}", glGetString(GL_VERSION));
+	}
 
-void Heirloom::OpenGLContext::SwapBuffers()
-{
-	HL_PROFILE_FUNCTION()
-	
-	glfwSwapBuffers(m_WindowHandle);
+	void OpenGLContext::SwapBuffers()
+	{
+		HL_PROFILE_FUNCTION()
+
+		glfwSwapBuffers(m_WindowHandle);
+	}
 }

@@ -6,7 +6,7 @@
 
 namespace Heirloom
 {
-	struct Sound
+	struct HL_API Sound
 	{
 		std::string FileName;
 		float Volume;

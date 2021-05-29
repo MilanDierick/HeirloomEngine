@@ -9,7 +9,7 @@
 
 namespace Heirloom
 {
-	class SimpleSoundEngine final : public SoundEngine
+	class HL_API SimpleSoundEngine final : public SoundEngine
 	{
 	public:
 		[[nodiscard]] SimpleSoundEngine();

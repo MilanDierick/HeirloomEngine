@@ -31,8 +31,8 @@ namespace Heirloom
 		{
 		}
 
-		EventNew<WindowResizedEventArgs> WindowResizedEvent = EventNew<WindowResizedEventArgs>();
-		EventNew<WindowClosedEventArgs> WindowClosedEvent   = EventNew<WindowClosedEventArgs>();
+		Event<WindowResizedEventArgs> WindowResizedEvent = Event<WindowResizedEventArgs>();
+		Event<WindowClosedEventArgs> WindowClosedEvent   = Event<WindowClosedEventArgs>();
 
 		virtual void OnUpdate() = 0;
 		virtual unsigned int GetWidth() const = 0;
