@@ -78,6 +78,8 @@ namespace Heirloom
 		return m_Shaders[name];
 	}
 
-	bool ShaderLibrary::Exists(const std::string& name) { return m_Shaders.find(name) != m_Shaders.end(); }
-	
+	bool ShaderLibrary::Exists(const std::string& name)
+	{
+		return m_Shaders.find(name) != m_Shaders.end();
+	}
 }

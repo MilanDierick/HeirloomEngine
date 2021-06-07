@@ -48,7 +48,10 @@ namespace Heirloom
 		s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 
 		int32_t samplers[s_Data.MaxTextureSlots];
-		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++) { samplers[i] = i; }
+		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
+		{
+			samplers[i] = i;
+		}
 
 		s_Data.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
 		s_Data.TextureShader->Bind();
@@ -93,7 +96,10 @@ namespace Heirloom
 	void Renderer2D::Flush()
 	{
 		// Bind textures
-		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++) { s_Data.TextureSlots[i]->Bind(i); }
+		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+		{
+			s_Data.TextureSlots[i]->Bind(i);
+		}
 
 		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 	}

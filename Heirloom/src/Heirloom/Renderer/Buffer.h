@@ -53,12 +53,19 @@ namespace Heirloom
 		bool Normalized;
 
 		BufferElement()
-			: Type(ShaderDataType::None), Offset(0), Size(0), Normalized(false)
+			: Type(ShaderDataType::None),
+			  Offset(0),
+			  Size(0),
+			  Normalized(false)
 		{
 		}
 
 		BufferElement(const ShaderDataType type, const std::string& name, const bool normalized = false)
-			: Type(type), Name(name), Offset(0), Size(ShaderDataTypeSize(type)), Normalized(normalized)
+			: Type(type),
+			  Name(name),
+			  Offset(0),
+			  Size(ShaderDataTypeSize(type)),
+			  Normalized(normalized)
 		{
 		}
 
@@ -101,14 +108,37 @@ namespace Heirloom
 			CalculateOffsetsAndStride();
 		}
 
-		const std::vector<BufferElement>& GetElements() const { return m_Elements; }
-		uint32_t GetStride() const { return m_Stride; }
+		const std::vector<BufferElement>& GetElements() const
+		{
+			return m_Elements;
+		}
+
+		uint32_t GetStride() const
+		{
+			return m_Stride;
+		}
 
 		// ReSharper disable CppInconsistentNaming
-		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
-		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
-		std::vector<BufferElement>::const_iterator begin() const { return m_Elements.cbegin(); }
-		std::vector<BufferElement>::const_iterator end() const { return m_Elements.cend(); }
+		std::vector<BufferElement>::iterator begin()
+		{
+			return m_Elements.begin();
+		}
+
+		std::vector<BufferElement>::iterator end()
+		{
+			return m_Elements.end();
+		}
+
+		std::vector<BufferElement>::const_iterator begin() const
+		{
+			return m_Elements.cbegin();
+		}
+
+		std::vector<BufferElement>::const_iterator end() const
+		{
+			return m_Elements.cend();
+		}
+
 		// ReSharper restore CppInconsistentNaming
 
 	private:

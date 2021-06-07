@@ -4,7 +4,8 @@
 namespace Heirloom
 {
 	Instrumentation::Instrumentation()
-		: m_CurrentSession(nullptr), m_ProfileCount(0)
+		: m_CurrentSession(nullptr),
+		  m_ProfileCount(0)
 	{
 	}
 
@@ -24,18 +25,18 @@ namespace Heirloom
 							  name,
 							  m_CurrentSession->Name);
 			}
-		
+
 			InternalEndSession();
 		}
-	
+
 		m_OutputStream.open(filepath);
-	
+
 		if (m_OutputStream.is_open())
 		{
 			m_CurrentSession = new InstrumentationSession({name});
 			WriteHeader();
 		}
-	
+
 		else
 		{
 			if (Log::GetCoreLogger())
@@ -108,17 +109,28 @@ namespace Heirloom
 	}
 
 	InstrumentationTimer::InstrumentationTimer(const char* name)
-		: m_Name(name), m_Stopped(false) { m_StartTimePoint = std::chrono::steady_clock::now(); }
+		: m_Name(name),
+		  m_Stopped(false)
+	{
+		m_StartTimePoint = std::chrono::steady_clock::now();
+	}
 
-	InstrumentationTimer::~InstrumentationTimer() { if (!m_Stopped) Stop(); }
+	InstrumentationTimer::~InstrumentationTimer()
+	{
+		if (!m_Stopped)
+		{
+			Stop();
+		}
+	}
 
 	void InstrumentationTimer::Stop()
 	{
 		const auto endTimePoint = std::chrono::steady_clock::now();
 
 		const auto highResStart = FloatingPointMicroseconds{m_StartTimePoint.time_since_epoch()};
-		const auto elapsedTime  = std::chrono::time_point_cast<std::chrono::microseconds>(endTimePoint).time_since_epoch() -
-			std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimePoint).time_since_epoch();
+		const auto elapsedTime  = std::chrono::time_point_cast<std::chrono::microseconds>(endTimePoint).
+			time_since_epoch() - std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimePoint).
+			time_since_epoch();
 
 		Instrumentation::Get().WriteProfile({m_Name, highResStart, elapsedTime, std::this_thread::get_id()});
 

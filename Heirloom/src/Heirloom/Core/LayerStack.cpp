@@ -36,7 +36,7 @@ void Heirloom::LayerStack::PopLayer(Layer* layer)
 {
 	HL_PROFILE_FUNCTION()
 
-	const auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
+	const auto it = std::ranges::find(m_Layers, layer);
 	if (it != m_Layers.end())
 	{
 		m_Layers.erase(it);
@@ -48,6 +48,29 @@ void Heirloom::LayerStack::PopOverlay(Layer* overlay)
 {
 	HL_PROFILE_FUNCTION()
 
-	const auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
-	if (it != m_Layers.end()) m_Layers.erase(it);
+	const auto it = std::ranges::find(m_Layers, overlay);
+	if (it != m_Layers.end())
+	{
+		m_Layers.erase(it);
+	}
+}
+
+std::vector<Heirloom::Layer*>::iterator Heirloom::LayerStack::begin()
+{
+	return m_Layers.begin();
+}
+
+std::vector<Heirloom::Layer*>::iterator Heirloom::LayerStack::end()
+{
+	return m_Layers.end();
+}
+
+std::vector<Heirloom::Layer*>::const_iterator Heirloom::LayerStack::cbegin() const
+{
+	return m_Layers.cbegin();
+}
+
+std::vector<Heirloom::Layer*>::const_iterator Heirloom::LayerStack::cend() const
+{
+	return m_Layers.cend();
 }

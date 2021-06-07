@@ -2,10 +2,10 @@
 
 #include "Heirloom/Audio/SoundService.h"
 
-Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"),
-	  m_CameraController(1280.0f / 960.0f, false),
-	  m_BackgroundMusic(Heirloom::CreateRef<Heirloom::Sound>("assets/sounds/breakout.mp3", 1.0f, false))
+Sandbox2D::Sandbox2D() : Layer("Sandbox2D"),
+						 m_CameraController(1280.0f / 960.0f, false),
+						 m_BackgroundMusic(
+							 Heirloom::CreateRef<Heirloom::Sound>("assets/sounds/breakout.mp3", 1.0f, false))
 {
 }
 
@@ -29,7 +29,10 @@ void Sandbox2D::OnUpdate(const Heirloom::Timestep)
 {
 	HL_PROFILE_FUNCTION()
 
-	if (Heirloom::Input::IsKeyPressed(HL_KEY_SPACE)) Heirloom::SoundService::GetSoundEngine()->Stop(m_BackgroundMusic);
+	if (Heirloom::Input::IsKeyPressed(HL_KEY_SPACE))
+	{
+		Heirloom::SoundService::GetSoundEngine()->Stop(m_BackgroundMusic);
+	}
 
 	m_CameraController.Update(Heirloom::Timestep{0.016f});
 }
@@ -43,12 +46,11 @@ void Sandbox2D::OnRender()
 
 	// Heirloom::Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, m_SquareColor);
 	// Heirloom::Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, m_SquareColor);
-	Heirloom::Renderer2D::DrawRotatedQuad({0.0f, 0.0f, -0.1f},
-										  {5.0f, 5.0f},
-										  glm::radians(45.0f),
-										  m_BackgroundTexture,
-										  10.0f,
-										  {1.0f, 0.9f, 0.9f, 1.0f});
+	Heirloom::Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f},
+								   {5.0f, 5.0f},
+								   m_BackgroundTexture,
+								   10.0f,
+								   {1.0f, 0.9f, 0.9f, 1.0f});
 	Heirloom::Renderer2D::DrawQuad({0.0f, 0.8f}, {1.0f, 1.0f}, m_Logo);
 
 	Heirloom::Renderer2D::EndScene();

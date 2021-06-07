@@ -30,8 +30,9 @@ namespace Heirloom
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
-		static Application& Get() { return *s_Instance; }
-		Window& GetWindow() const { return *m_Window; }
+		static Application& Get();
+
+		Window& GetWindow() const;
 
 	private:
 		// Private application methods

@@ -8,6 +8,16 @@ Heirloom::SpriteRenderer::SpriteRenderer()
 	// TODO: This ID should be unique and gotten from some static class that distributes ID's
 }
 
+Heirloom::Sprite& Heirloom::SpriteRenderer::GetSprite()
+{
+	return m_Sprite;
+}
+
+void Heirloom::SpriteRenderer::SetSprite(const Sprite& sprite)
+{
+	m_Sprite = sprite;
+}
+
 void Heirloom::SpriteRenderer::Update(Timestep)
 {
 }

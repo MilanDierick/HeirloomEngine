@@ -15,10 +15,10 @@ namespace Heirloom
 		Transform();
 		Transform(glm::vec3 position, glm::vec3 scale);
 
-		[[nodiscard]] const glm::vec3& GetPosition() const { return m_Position; }
+		[[nodiscard]] const glm::vec3& GetPosition() const;
 		void SetPosition(float x, float y, float z);
 		void SetPosition(glm::vec3 position);
-		[[nodiscard]] const glm::vec3& GetScale() const { return m_Scale; }
+		[[nodiscard]] const glm::vec3& GetScale() const;
 		void SetScale(float x, float y, float z);
 		void SetScale(glm::vec3 scale);
 

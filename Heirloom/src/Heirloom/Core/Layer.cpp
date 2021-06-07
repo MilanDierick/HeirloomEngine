@@ -7,4 +7,9 @@ namespace Heirloom
 		: m_DebugName(debugName)
 	{
 	}
+
+	const std::string& Layer::GetName() const
+	{
+		return m_DebugName;
+	}
 }

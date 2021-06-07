@@ -1,11 +1,10 @@
 #pragma once
 
-#include <string>
 #include <chrono>
+#include <fstream>
 // ReSharper disable once CppUnusedIncludeDirective
 #include <iomanip>
-#include <fstream>
-
+#include <string>
 #include <thread>
 
 namespace Heirloom

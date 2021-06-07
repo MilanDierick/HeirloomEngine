@@ -27,10 +27,10 @@ namespace Heirloom
 		void PopOverlay(Layer* overlay);
 
 		// ReSharper disable CppInconsistentNaming
-		std::vector<Layer*>::iterator begin() { return m_Layers.begin(); }
-		std::vector<Layer*>::iterator end() { return m_Layers.end(); }
-		std::vector<Layer*>::const_iterator cbegin() const { return m_Layers.cbegin(); }
-		std::vector<Layer*>::const_iterator cend() const { return m_Layers.cend(); }
+		std::vector<Layer*>::iterator begin();
+		std::vector<Layer*>::iterator end();
+		std::vector<Layer*>::const_iterator cbegin() const;
+		std::vector<Layer*>::const_iterator cend() const;
 		// ReSharper restore CppInconsistentNaming
 
 	private:

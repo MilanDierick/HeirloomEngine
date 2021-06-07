@@ -13,12 +13,29 @@ namespace Heirloom
 	{
 	}
 
-	void OrthographicCamera::SetProjection(const float left, const float right, const float bottom, const float top)
+	glm::mat4& OrthographicCamera::GetProjectionMatrix()
 	{
-		HL_PROFILE_FUNCTION()
+		return m_ProjectionMatrix;
+	}
 
-		m_ProjectionMatrix     = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	glm::mat4& OrthographicCamera::GetViewMatrix()
+	{
+		return m_ViewMatrix;
+	}
+
+	glm::mat4& OrthographicCamera::GetViewProjectionMatrix()
+	{
+		return m_ViewProjectionMatrix;
+	}
+
+	glm::vec3& OrthographicCamera::GetPosition()
+	{
+		return m_Position;
+	}
+
+	float& OrthographicCamera::GetRotation()
+	{
+		return m_Rotation;
 	}
 
 	void OrthographicCamera::SetPosition(const glm::vec3& position)
@@ -31,6 +48,14 @@ namespace Heirloom
 	{
 		m_Rotation = rotation;
 		RecalculateViewMatrix();
+	}
+
+	void OrthographicCamera::SetProjection(const float left, const float right, const float bottom, const float top)
+	{
+		HL_PROFILE_FUNCTION()
+
+		m_ProjectionMatrix     = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 	void OrthographicCamera::RecalculateViewMatrix()

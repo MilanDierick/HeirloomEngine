@@ -10,7 +10,8 @@ namespace Heirloom
 	struct HL_API WindowResizedEventArgs : EventArgs
 	{
 		[[nodiscard]] WindowResizedEventArgs(const unsigned width, const unsigned height)
-			: Width(width), Height(height)
+			: Width(width),
+			  Height(height)
 		{
 		}
 

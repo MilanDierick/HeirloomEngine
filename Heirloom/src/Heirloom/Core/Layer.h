@@ -27,7 +27,7 @@ namespace Heirloom
 		virtual void OnRender() = 0;
 		virtual void OnImGuiRender() = 0;
 
-		const std::string& GetName() const { return m_DebugName; }
+		const std::string& GetName() const;
 
 	protected:
 		std::string m_DebugName;

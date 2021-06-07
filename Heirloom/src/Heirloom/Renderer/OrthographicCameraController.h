@@ -17,10 +17,10 @@ namespace Heirloom
 
 		void Update(Timestep ts);
 
-		OrthographicCamera& GetCamera() { return m_Camera; }
-		const OrthographicCamera& GetCamera() const { return m_Camera; }
-		float GetZoomLevel() const { return m_ZoomLevel; }
-		void SetZoomLevel(const float zoomLevel) { m_ZoomLevel = zoomLevel; }
+		OrthographicCamera& GetCamera();
+		const OrthographicCamera& GetCamera() const;
+		float GetZoomLevel() const;
+		void SetZoomLevel(float zoomLevel);
 
 	private:
 		void OnMouseScrolledEvent(MouseScrolledEventArgs eventArgs);

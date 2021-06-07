@@ -46,11 +46,24 @@ namespace Heirloom
 
 		if (m_Rotation)
 		{
-			if (Input::IsKeyPressed(HL_KEY_Q)) m_CameraRotation += m_CameraRotationSpeed * ts;
-			if (Input::IsKeyPressed(HL_KEY_E)) m_CameraRotation -= m_CameraRotationSpeed * ts;
+			if (Input::IsKeyPressed(HL_KEY_Q))
+			{
+				m_CameraRotation += m_CameraRotationSpeed * ts;
+			}
 
-			if (m_CameraRotation > 180.0f) m_CameraRotation -= 360.0f;
-			else if (m_CameraRotation <= -180.0f) m_CameraRotation += 360.0f;
+			if (Input::IsKeyPressed(HL_KEY_E))
+			{
+				m_CameraRotation -= m_CameraRotationSpeed * ts;
+			}
+
+			if (m_CameraRotation > 180.0f)
+			{
+				m_CameraRotation -= 360.0f;
+			}
+			else if (m_CameraRotation <= -180.0f)
+			{
+				m_CameraRotation += 360.0f;
+			}
 
 			m_Camera.SetRotation(m_CameraRotation);
 		}
@@ -58,6 +71,26 @@ namespace Heirloom
 		m_Camera.SetPosition(m_CameraPosition);
 
 		m_CameraTranslationSpeed = m_ZoomLevel;
+	}
+
+	OrthographicCamera& OrthographicCameraController::GetCamera()
+	{
+		return m_Camera;
+	}
+
+	const OrthographicCamera& OrthographicCameraController::GetCamera() const
+	{
+		return m_Camera;
+	}
+
+	float OrthographicCameraController::GetZoomLevel() const
+	{
+		return m_ZoomLevel;
+	}
+
+	void OrthographicCameraController::SetZoomLevel(const float zoomLevel)
+	{
+		m_ZoomLevel = zoomLevel;
 	}
 
 	void OrthographicCameraController::OnMouseScrolledEvent(const MouseScrolledEventArgs eventArgs)

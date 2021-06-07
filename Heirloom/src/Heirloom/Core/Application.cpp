@@ -61,14 +61,20 @@ namespace Heirloom
 
 			m_Window->OnUpdate();
 
-			if (m_Minimized) continue;
+			if (m_Minimized)
+			{
+				continue;
+			}
 
 			while (lag >= MS_PER_TICK)
 			{
 				{
 					HL_PROFILE_SCOPE("LayerStack OnUpdate")
 
-					for (Layer* layer : m_LayerStack) layer->OnUpdate(Timestep{1000 / MS_PER_TICK});
+					for (Layer* layer : m_LayerStack)
+					{
+						layer->OnUpdate(Timestep{1000 / MS_PER_TICK});
+					}
 				}
 
 				lag -= MS_PER_TICK;
@@ -79,7 +85,10 @@ namespace Heirloom
 			{
 				HL_PROFILE_SCOPE("LayerStack OnRender")
 
-				for (Layer* layer : m_LayerStack) layer->OnRender();
+				for (Layer* layer : m_LayerStack)
+				{
+					layer->OnRender();
+				}
 			}
 
 			m_ImGuiLayer->Begin();
@@ -87,7 +96,10 @@ namespace Heirloom
 			{
 				HL_PROFILE_SCOPE("LayerStack OnImGuiRender")
 
-				for (Layer* layer : m_LayerStack) layer->OnImGuiRender();
+				for (Layer* layer : m_LayerStack)
+				{
+					layer->OnImGuiRender();
+				}
 			}
 
 			m_ImGuiLayer->End();
@@ -108,6 +120,16 @@ namespace Heirloom
 
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
+	}
+
+	Application& Application::Get()
+	{
+		return *s_Instance;
+	}
+
+	Window& Application::GetWindow() const
+	{
+		return *m_Window;
 	}
 
 	bool Application::OnWindowClosedEvent(const WindowClosedEventArgs)

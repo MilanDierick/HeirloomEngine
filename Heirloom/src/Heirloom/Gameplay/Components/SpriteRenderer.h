@@ -19,8 +19,8 @@ namespace Heirloom
 		SpriteRenderer& operator=(const SpriteRenderer& other)     = delete;
 		SpriteRenderer& operator=(SpriteRenderer&& other) noexcept = delete;
 
-		[[nodiscard]] Sprite& GetSprite() { return m_Sprite; }
-		void SetSprite(const Sprite& sprite) { m_Sprite = sprite; }
+		[[nodiscard]] Sprite& GetSprite();
+		void SetSprite(const Sprite& sprite);
 
 		void Update(Timestep ts) override;
 		void Render() const override;

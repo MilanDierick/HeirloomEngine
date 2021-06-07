@@ -15,7 +15,9 @@ namespace Heirloom
 		[[nodiscard]] explicit Sound(const std::string& fileName,
 									 const float volume    = 1.0f,
 									 const bool shouldLoop = false)
-			: FileName(fileName), Volume(volume), ShouldLoop(shouldLoop)
+			: FileName(fileName),
+			  Volume(volume),
+			  ShouldLoop(shouldLoop)
 		{
 		}
 	};

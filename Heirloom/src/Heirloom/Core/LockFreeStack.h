@@ -20,7 +20,8 @@ namespace Heirloom
 		Node() = default;
 
 		Node(T value, Node* nextNode)
-			: pNext(nextNode), Value(value)
+			: pNext(nextNode),
+			  Value(value)
 		{
 		}
 	};
@@ -41,7 +42,6 @@ namespace Heirloom
 
 	private:
 		std::atomic<Node<T>*> m_pHead = nullptr;
-		size_t m_NodeCount            = 0; // TODO: Check if this can be incremented in a thread-safe manner
 	};
 
 	template <LockFreeStackType T>
@@ -64,7 +64,10 @@ namespace Heirloom
 	{
 		Node<T>* pNewNode = new Node<T>(value, nullptr);
 
-		do { pNewNode->pNext = m_pHead.load(); }
+		do
+		{
+			pNewNode->pNext = m_pHead.load();
+		}
 		while (!m_pHead.compare_exchange_weak(pNewNode->pNext, pNewNode));
 	}
 
@@ -73,7 +76,10 @@ namespace Heirloom
 	{
 		Node<T>* pOldHead;
 
-		do { pOldHead = m_pHead.load(); }
+		do
+		{
+			pOldHead = m_pHead.load();
+		}
 		while (!m_pHead.compare_exchange_weak(pOldHead, pOldHead->pNext));
 
 		return pOldHead;
@@ -91,7 +97,10 @@ namespace Heirloom
 			currentNode = currentNode->pNext;
 		}
 
-		if (m_pHead != nullptr) ++size;
+		if (m_pHead != nullptr)
+		{
+			++size;
+		}
 
 		return size;
 	}

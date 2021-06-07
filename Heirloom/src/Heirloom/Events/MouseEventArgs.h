@@ -10,7 +10,8 @@ namespace Heirloom
 	struct HL_API MouseMovedEventArgs : EventArgs
 	{
 		[[nodiscard]] MouseMovedEventArgs(const float mouseX, const float mouseY)
-			: MouseX(mouseX), MouseY(mouseY)
+			: MouseX(mouseX),
+			  MouseY(mouseY)
 		{
 		}
 
@@ -20,7 +21,8 @@ namespace Heirloom
 	struct HL_API MouseScrolledEventArgs : EventArgs
 	{
 		[[nodiscard]] MouseScrolledEventArgs(const float xOffset, const float yOffset)
-			: XOffset(xOffset), YOffset(yOffset)
+			: XOffset(xOffset),
+			  YOffset(yOffset)
 		{
 		}
 

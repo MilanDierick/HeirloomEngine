@@ -13,15 +13,15 @@ namespace Heirloom
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
 
-		void SetProjection(float left, float right, float bottom, float top);
-
-		glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; }
-		glm::mat4& GetViewMatrix() { return m_ViewMatrix; }
-		glm::mat4& GetViewProjectionMatrix() { return m_ViewProjectionMatrix; }
-		glm::vec3& GetPosition() { return m_Position; }
+		glm::mat4& GetProjectionMatrix();
+		glm::mat4& GetViewMatrix();
+		glm::mat4& GetViewProjectionMatrix();
+		glm::vec3& GetPosition();
 		void SetPosition(const glm::vec3& position);
-		float& GetRotation() { return m_Rotation; }
+		float& GetRotation();
 		void SetRotation(float rotation);
+
+		void SetProjection(float left, float right, float bottom, float top);
 
 	private:
 		void RecalculateViewMatrix();

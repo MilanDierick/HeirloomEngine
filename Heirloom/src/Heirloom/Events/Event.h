@@ -3,8 +3,8 @@
 // Solution: HeirloomEngine
 
 #pragma once
-#include <functional>
 #include <array>
+#include <functional>
 
 #define HL_MAX_EVENT_LISTENERS 32
 
@@ -44,6 +44,9 @@ namespace Heirloom
 	template <typename EventArgsType, typename EventCallbackFunc>
 	void Event<EventArgsType, EventCallbackFunc>::Invoke(EventArgsType eventArgs)
 	{
-		for (size_t index = 0; index < m_EventListenerCount; ++index) m_EventListeners[index](eventArgs);
+		for (size_t index = 0; index < m_EventListenerCount; ++index)
+		{
+			m_EventListeners[index](eventArgs);
+		}
 	}
 }

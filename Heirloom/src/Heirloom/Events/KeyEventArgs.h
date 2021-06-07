@@ -20,7 +20,8 @@ namespace Heirloom
 	struct HL_API KeyPressedEventArgs : EventArgs
 	{
 		[[nodiscard]] KeyPressedEventArgs(const int keyCode, const int repeatCount)
-			: KeyCode(keyCode), RepeatCount(repeatCount)
+			: KeyCode(keyCode),
+			  RepeatCount(repeatCount)
 		{
 		}
 

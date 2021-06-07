@@ -24,7 +24,7 @@ namespace Heirloom
 
 		void OnUpdate(Timestep) override;
 		void OnRender() override;
-		
+
 		void OnImGuiRender() override;
 
 		void Begin();

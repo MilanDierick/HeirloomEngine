@@ -50,7 +50,10 @@ namespace Heirloom
 
 		for (std::vector<irrklang::ISoundSource*>::value_type soundSource : m_CachedSoundSources)
 		{
-			if (sound->FileName == soundSource->getName()) m_SoundEngine->stopAllSoundsOfSoundSource(soundSource);
+			if (sound->FileName == soundSource->getName())
+			{
+				m_SoundEngine->stopAllSoundsOfSoundSource(soundSource);
+			}
 		}
 	}
 
@@ -61,7 +64,10 @@ namespace Heirloom
 		m_SoundEngine->stopAllSounds();
 	}
 
-	void SimpleSoundEngine::SwapBuffers() { std::swap(m_SoundsQueue, m_SoundsQueueBuffer); }
+	void SimpleSoundEngine::SwapBuffers()
+	{
+		std::swap(m_SoundsQueue, m_SoundsQueueBuffer);
+	}
 
 	void SimpleSoundEngine::CacheSound(irrklang::ISoundSource* soundSource)
 	{
@@ -69,15 +75,24 @@ namespace Heirloom
 
 		for (std::vector<irrklang::ISoundSource*>::value_type cachedSoundSource : m_CachedSoundSources)
 		{
-			if (soundSource->getName() == cachedSoundSource->getName()) soundSourceFound = true;
+			if (soundSource->getName() == cachedSoundSource->getName())
+			{
+				soundSourceFound = true;
+			}
 		}
 
-		if (!soundSourceFound) { m_CachedSoundSources.push_back(soundSource); }
+		if (!soundSourceFound)
+		{
+			m_CachedSoundSources.push_back(soundSource);
+		}
 	}
 
 	void SimpleSoundEngine::PlayBufferedSounds()
 	{
-		if (m_SoundsQueueBuffer->Size() == 0) return;
+		if (m_SoundsQueueBuffer->Size() == 0)
+		{
+			return;
+		}
 
 		// TODO: Spawning a new thread every time we want to play a new sound is quite ridiculous, consider spawning a single thread that keeps on emptying the sound buffer
 		std::thread thread([this]()

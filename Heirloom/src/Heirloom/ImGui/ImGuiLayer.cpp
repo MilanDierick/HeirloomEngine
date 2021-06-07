@@ -100,6 +100,7 @@ namespace Heirloom
 		}
 	}
 
+	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::End()
 	{
 		HL_PROFILE_FUNCTION()

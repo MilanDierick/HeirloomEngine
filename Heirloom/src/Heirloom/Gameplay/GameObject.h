@@ -19,12 +19,14 @@ namespace Heirloom
 
 		// Copy & move operations
 		GameObject(const GameObject& other)
-			: m_Transform(other.m_Transform), m_Components(other.m_Components)
+			: m_Transform(other.m_Transform),
+			  m_Components(other.m_Components)
 		{
 		}
 
 		GameObject(GameObject&& other) noexcept
-			: m_Transform(std::move(other.m_Transform)), m_Components(std::move(other.m_Components))
+			: m_Transform(std::move(other.m_Transform)),
+			  m_Components(std::move(other.m_Components))
 		{
 		}
 
@@ -45,7 +47,10 @@ namespace Heirloom
 		}
 
 		// ReSharper disable once CppMemberFunctionMayBeConst
-		[[nodiscard]] Ref<Transform> GetTransform() { return m_Transform; }
+		[[nodiscard]] Ref<Transform> GetTransform()
+		{
+			return m_Transform;
+		}
 
 		void Update(Timestep ts);
 		void Render() const;
@@ -82,7 +87,10 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		try { return m_Components.at(typeid(ComponentType)); }
+		try
+		{
+			return m_Components.at(typeid(ComponentType));
+		}
 		catch (std::out_of_range&)
 		{
 			HL_CORE_WARN("Tried accessing non-existing component in gameobject!");
