@@ -5,6 +5,8 @@
 #pragma once
 
 #include "Core.h"
+#include "Layer.h"
+#include "LayerStack.h"
 #include "Window.h"
 #include "Heirloom/ImGui/ImGuiLayer.h"
 

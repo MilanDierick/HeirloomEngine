@@ -5,6 +5,7 @@
 #include "Heirloom/Core/Core.h"
 #include "Heirloom/Core/Input.h"
 #include "Heirloom/Core/KeyCodes.h"
+#include "Heirloom/Core/Layer.h"
 #include "Heirloom/Core/Log.h"
 #include "Heirloom/Core/MouseButtonCodes.h"
 #include "Heirloom/Core/Timestep.h"

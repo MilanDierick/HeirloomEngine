@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 
 #include "Scene.h"
+#include "Heirloom/Core/Layer.h"
 
 namespace Heirloom
 {

@@ -13,7 +13,10 @@
 
 namespace Heirloom
 {
-	ImGuiLayer::ImGuiLayer() { OnAttach(); }
+	ImGuiLayer::ImGuiLayer()
+		: Layer("ImGuiLayer")
+	{
+	}
 
 	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::OnAttach()
@@ -55,7 +58,6 @@ namespace Heirloom
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::OnDetach()
 	{
 		HL_PROFILE_FUNCTION()
@@ -65,17 +67,39 @@ namespace Heirloom
 		ImGui::DestroyContext();
 	}
 
+	void ImGuiLayer::OnUpdate(Timestep)
+	{
+	}
+
+	void ImGuiLayer::OnRender()
+	{
+	}
+
+	void ImGuiLayer::OnImGuiRender()
+	{
+	}
+
 	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::Begin()
 	{
 		HL_PROFILE_FUNCTION()
 
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
+		{
+			HL_PROFILE_SCOPE("ImGui_ImplOpenGL3_NewFrame")
+			ImGui_ImplOpenGL3_NewFrame();
+		}
+
+		{
+			HL_PROFILE_SCOPE("ImGui_ImplGlfw_NewFrame")
+			ImGui_ImplGlfw_NewFrame();
+		}
+
+		{
+			HL_PROFILE_SCOPE("ImGui::NewFrame")
+			ImGui::NewFrame();
+		}
 	}
 
-	// ReSharper disable once CppMemberFunctionMayBeStatic
 	void ImGuiLayer::End()
 	{
 		HL_PROFILE_FUNCTION()
@@ -85,19 +109,33 @@ namespace Heirloom
 		io.DisplaySize   = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
 								  static_cast<float>(app.GetWindow().GetHeight()));
 
-		// Rendering
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
+			HL_PROFILE_SCOPE("ImGui::End Rendering")
 
-			ImGui::UpdatePlatformWindows();
+			// Rendering
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
 
-			ImGui::RenderPlatformWindowsDefault();
+		{
+			HL_PROFILE_SCOPE("ImGui::End ViewportsConfig")
 
-			glfwMakeContextCurrent(backupCurrentContext);
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
+				{
+					HL_PROFILE_SCOPE("ImGui::UpdatePlatformWindows()")
+					ImGui::UpdatePlatformWindows();
+				}
+				{
+					HL_PROFILE_SCOPE("ImGui::RenderPlatformWindowsDefault()")
+					ImGui::RenderPlatformWindowsDefault();
+				}
+				{
+					HL_PROFILE_SCOPE("ImGui::glfwMakeContextCurrent()")
+					glfwMakeContextCurrent(backupCurrentContext);
+				}
+			}
 		}
 	}
 }

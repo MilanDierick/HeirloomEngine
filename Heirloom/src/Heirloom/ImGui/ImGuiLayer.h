@@ -3,23 +3,29 @@
 // Solution: HeirloomEngine
 
 #pragma once
+#include "Heirloom/Core/Layer.h"
 
 namespace Heirloom
 {
 	// TODO: Start providing custom implementations for some of these ImGui example functions, they are slow!
-	class HL_API ImGuiLayer final
+	class HL_API ImGuiLayer final : public Layer
 	{
 	public:
 		ImGuiLayer();
-		~ImGuiLayer() = default;
+		~ImGuiLayer() override = default;
 
 		ImGuiLayer(const ImGuiLayer& other)                = delete;
 		ImGuiLayer(ImGuiLayer&& other) noexcept            = delete;
 		ImGuiLayer& operator=(const ImGuiLayer& other)     = delete;
 		ImGuiLayer& operator=(ImGuiLayer&& other) noexcept = delete;
 
-		void OnAttach();
-		void OnDetach();
+		void OnAttach() override;
+		void OnDetach() override;
+
+		void OnUpdate(Timestep) override;
+		void OnRender() override;
+		
+		void OnImGuiRender() override;
 
 		void Begin();
 		void End();
