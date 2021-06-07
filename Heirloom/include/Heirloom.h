@@ -32,10 +32,3 @@
 #include "glm/gtx/transform.hpp"
 
 #include "imgui/imgui.h"
-
-#include "Heirloom/Scenes/Scene.h"
-#include "Heirloom/Scenes/SceneManager.h"
-
-#include "Heirloom/Audio/SoundService.h"
-
-

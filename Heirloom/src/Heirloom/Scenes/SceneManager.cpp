@@ -6,73 +6,81 @@
 
 namespace Heirloom
 {
-	Scene* SceneManager::m_ActiveScene             = nullptr;
-	std::vector<Scene*> SceneManager::m_SceneCache = std::vector<Scene*>();
+	void SceneManager::SaveScene() { throw std::exception("Not implemented!"); }
 
-	bool SceneManager::LoadScene(Scene* newScene, const bool cacheCurrentScene)
+	std::future<bool> SceneManager::LoadScene(std::string sceneName, const bool cacheCurrentScene)
 	{
-		HL_PROFILE_FUNCTION()
+		if (!cacheCurrentScene) { RemoveScene(sceneName); }
 
-		if (!cacheCurrentScene && m_ActiveScene != nullptr) { RemoveScene(newScene->GetName()); }
-
-		m_SceneCache.push_back(newScene);
-		SetActiveScene(newScene);
-		m_ActiveScene->OnLoad();
-		return true;
+		return std::async(std::launch::async, LoadSceneFromDisk, std::forward<std::string>(sceneName));
 	}
 
-	void SceneManager::RemoveAllScenes() { for (Scene* scene : m_SceneCache) { RemoveScene(scene->GetName()); } }
-
-	void SceneManager::Update()
+	bool SceneManager::LoadScene(Scope<Scene> newScene, const bool cacheCurrentScene)
 	{
-		HL_PROFILE_FUNCTION()
+		if (!cacheCurrentScene) { RemoveScene(newScene->GetName()); }
 
-		for (Scene* scene : m_SceneCache) { scene->OnUpdate(); }
+		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
+			[=](Scope<Scene>& scene) { return scene == nullptr; });
+
+		if (it != std::end(m_SceneCache))
+		{
+			*it = CreateScope<Scene>(std::move(newScene));
+			return true;
+		}
+
+		HL_CORE_ERROR("Trying to load scene while there are already a maximum of {0} scenes loaded!",
+					  MAX_CONCURRENT_LOADED_SCENES);
+		return false;
 	}
 
-	void SceneManager::Render()
+	bool SceneManager::AddLayerToActiveScene(const Ref<Layer> layer)
 	{
-		HL_PROFILE_FUNCTION()
+		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
+			[=](Scope<Scene>& scene) { return scene->IsActive() == true; });
 
-		for (Scene* scene : m_SceneCache) { scene->OnRender(); }
+		if (it != std::end(m_SceneCache))
+		{
+			(*it)->AddLayer(layer);
+			return true;
+		}
+
+		HL_CORE_ERROR("Failed to add layer with name \"{0}\" to scene with name \"{1}\"",
+					  layer->GetName(),
+					  (*it)->GetName());
+		return false;
 	}
 
-	void SceneManager::ImGuiRender()
+	bool SceneManager::RemoveLayerFromActiveScene(const Ref<Layer> layer)
 	{
-		HL_PROFILE_FUNCTION()
+		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
+			[=](Scope<Scene>& scene) { return scene->IsActive() == true; });
 
-		for (Scene* scene : m_SceneCache) { scene->OnImGuiRender(); }
+		if (it != std::end(m_SceneCache))
+		{
+			(*it)->RemoveLayer(layer);
+			return true;
+		}
+
+		HL_CORE_ERROR("Failed to remove layer with name \"{0}\" from scene with name \"{1}\"",
+					  layer->GetName(),
+					  (*it)->GetName());
+		return false;
 	}
 
-	void SceneManager::SetActiveScene(Scene* newScene)
-	{
-		HL_PROFILE_FUNCTION()
-
-		if (m_ActiveScene != nullptr) { m_ActiveScene->SetActive(false); }
-
-		m_ActiveScene = newScene;
-		m_ActiveScene->SetActive(true);
-	}
+	bool SceneManager::LoadSceneFromDisk(std::string sceneName) { throw std::exception("Not implemented!"); }
 
 	bool SceneManager::RemoveScene(const std::string sceneName)
 	{
-		HL_PROFILE_FUNCTION()
+		const std::array<Scope<Scene>, MAX_CONCURRENT_LOADED_SCENES>::iterator it = std::ranges::find_if(m_SceneCache,
+			[=](Scope<Scene>& scene) { return scene->GetName() == sceneName; });
 
-		const std::vector<Scene*>::iterator it = std::ranges::find_if(m_SceneCache,
-																	  [=](Scene* scene)
-																	  {
-																		  return scene->GetName() == sceneName;
-																	  });
-
-		if (it == std::end(m_SceneCache))
+		if (it != std::end(m_SceneCache))
 		{
-			HL_CORE_ERROR("Scene with name {0} designated to be removed could not be found!", sceneName);
-			return false;
+			it->reset(nullptr);
+			return true;
 		}
 
-		(*it)->OnUnload();
-		delete *it;
-		m_SceneCache.erase(it);
-		return true;
+		HL_CORE_ERROR("Scene with name {0} designated to be removed could not be found!", sceneName);
+		return false;
 	}
 }

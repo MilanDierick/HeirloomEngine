@@ -4,7 +4,6 @@
 
 #include "Heirloom/Audio/SoundService.h"
 #include "Heirloom/Renderer/Renderer.h"
-#include "Heirloom/Scenes/SceneManager.h"
 
 // TODO: No magic numbers, this should probably be in a settings object
 #define MS_PER_TICK 1000 / 144
@@ -30,18 +29,18 @@ namespace Heirloom
 		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application()
 	{
-		SceneManager::RemoveAllScenes();
-		m_ImGuiLayer->OnDetach();
 	}
 
 	// TODO: A cheap solution is to walk the list backwards when you update. That way removing an object only shifts items that were already updated.
-	// ReSharper disable once CppMemberFunctionMayBeConst
 	void Application::Run()
 	{
+		HL_PROFILE_FUNCTION()
+
 		std::chrono::steady_clock::time_point previousTimePoint = std::chrono::steady_clock::now();
 		double lag                                              = 0.0;
 
@@ -60,53 +59,69 @@ namespace Heirloom
 
 			lag += elapsedTime.count();
 
+			m_Window->OnUpdate();
+
 			if (m_Minimized) continue;
 
 			while (lag >= MS_PER_TICK)
 			{
 				{
-					HL_PROFILE_SCOPE("SceneManager OnUpdate")
+					HL_PROFILE_SCOPE("LayerStack OnUpdate")
 
-					SceneManager::Update();
+					for (Layer* layer : m_LayerStack) layer->OnUpdate(Timestep{1000 / MS_PER_TICK});
 				}
 
 				lag -= MS_PER_TICK;
 			}
 
-			{
-				HL_PROFILE_SCOPE("SoundEngine Update")
-				
-				SoundService::GetSoundEngine()->Update();
-			}
+			SoundService::GetSoundEngine()->Update();
 
 			{
-				HL_PROFILE_SCOPE("SceneManager OnRender")
+				HL_PROFILE_SCOPE("LayerStack OnRender")
 
-				SceneManager::Render();
+				for (Layer* layer : m_LayerStack) layer->OnRender();
 			}
 
 			m_ImGuiLayer->Begin();
 
 			{
-				HL_PROFILE_SCOPE("SceneManager OnImGuiRender")
+				HL_PROFILE_SCOPE("LayerStack OnImGuiRender")
 
-				SceneManager::ImGuiRender();
+				for (Layer* layer : m_LayerStack) layer->OnImGuiRender();
 			}
 
 			m_ImGuiLayer->End();
-
-			m_Window->OnUpdate();
 		}
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		HL_PROFILE_FUNCTION()
+
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* layer)
+	{
+		HL_PROFILE_FUNCTION()
+
+		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	bool Application::OnWindowClosedEvent(const WindowClosedEventArgs)
 	{
+		HL_PROFILE_FUNCTION()
+
 		m_IsRunning = false;
 		return true;
 	}
 
 	bool Application::OnWindowResizedEvent(const WindowResizedEventArgs eventArgs)
 	{
+		HL_PROFILE_FUNCTION()
+
 		if (eventArgs.Width == 0 || eventArgs.Height == 0)
 		{
 			m_Minimized = true;

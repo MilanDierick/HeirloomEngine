@@ -27,6 +27,9 @@ namespace Heirloom
 		 */
 		void Run();
 
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
+
 		static Application& Get() { return *s_Instance; }
 		Window& GetWindow() const { return *m_Window; }
 
@@ -40,6 +43,7 @@ namespace Heirloom
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_IsRunning = true;
 		bool m_Minimized = false;
+		LayerStack m_LayerStack;
 		static Application* s_Instance;
 		float m_LastFrameTime = 0.0f;
 	};

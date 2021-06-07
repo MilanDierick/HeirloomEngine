@@ -21,7 +21,7 @@ namespace Heirloom
 	{
 	};
 
-	struct HL_API AppUpdateEventArgs : EventArgs
+	struct HL_API AppTickEventArgs : EventArgs
 	{
 	};
 
