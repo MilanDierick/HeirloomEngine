@@ -4,6 +4,41 @@
 
 namespace Heirloom
 {
+	struct QuadVertex
+	{
+		glm::vec3 Position;
+		glm::vec4 Color;
+		glm::vec2 TexCoord;
+		float TexIndex;
+		float TilingFactor;
+	};
+
+	struct Renderer2DData
+	{
+		static const uint32_t MaxQuads    = 20000;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices  = MaxQuads * 6;
+
+		Ref<VertexArray> QuadVertexArray;
+		Ref<VertexBuffer> QuadVertexBuffer;
+		Ref<Shader> TextureShader;
+		Ref<Texture2D> WhiteTexture;
+		static const uint32_t MaxTextureSlots = 32;
+
+		uint32_t QuadIndexCount           = 0;
+		QuadVertex* pQuadVertexBufferBase = nullptr;
+		QuadVertex* pQuadVertexBuffer     = nullptr;
+
+		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
+		uint32_t TextureSlotIndex = 1; // 0 = white texture
+
+		glm::vec4 QuadVertexPositions[4];
+
+		Renderer2D::Statistics Stats;
+	};
+
+	static Renderer2DData s_Data;
+	
 	void Renderer2D::Init()
 	{
 		HL_PROFILE_FUNCTION();
@@ -59,6 +94,11 @@ namespace Heirloom
 
 		// Set all texture slots to 0
 		s_Data.TextureSlots[0] = s_Data.WhiteTexture;
+
+		s_Data.QuadVertexPositions[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
+		s_Data.QuadVertexPositions[1] = {0.5f, -0.5f, 0.0f, 1.0f};
+		s_Data.QuadVertexPositions[2] = {0.5f, 0.5f, 0.0f, 1.0f};
+		s_Data.QuadVertexPositions[3] = {-0.5f, 0.5f, 0.0f, 1.0f};
 	}
 
 	void Renderer2D::Shutdown()
@@ -102,6 +142,17 @@ namespace Heirloom
 		}
 
 		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
+		++s_Data.Stats.DrawCalls;
+	}
+
+	void Renderer2D::FlushAndReset()
+	{
+		EndScene();
+
+		s_Data.QuadIndexCount    = 0;
+		s_Data.pQuadVertexBuffer = s_Data.pQuadVertexBufferBase;
+
+		s_Data.TextureSlotIndex = 1;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -113,32 +164,42 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		const float texIndex     = 0.0f; // White Texture
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
+
+		const float textureIndex = 0.0f; // White Texture
 		const float tilingFactor = 1.0f;
 
-		ConfigureAndIncrementQuadVertexBufferPtr(position, color, {0.0f, 0.0f}, texIndex, tilingFactor);
-		ConfigureAndIncrementQuadVertexBufferPtr({position.x + size.x, position.y, 0.0f},
+		const glm::mat4 transform = translate(glm::mat4(1.0f), position) * scale(
+			glm::mat4(1.0f),
+			{size.x, size.y, 1.0f});
+
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[0],
+												 color,
+												 {0.0f, 0.0f},
+												 textureIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[1],
 												 color,
 												 {1.0f, 0.0f},
-												 texIndex,
+												 textureIndex,
 												 tilingFactor);
-		ConfigureAndIncrementQuadVertexBufferPtr({position.x + size.x, position.y + size.y, 0.0f},
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[2],
 												 color,
 												 {1.0f, 1.0f},
-												 texIndex,
+												 textureIndex,
 												 tilingFactor);
-		ConfigureAndIncrementQuadVertexBufferPtr({position.x, position.y + size.y, 0.0f},
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[3],
 												 color,
 												 {0.0f, 1.0f},
-												 texIndex,
+												 textureIndex,
 												 tilingFactor);
 
 		s_Data.QuadIndexCount += 6;
 
-		s_Data.TextureShader->SetFloat4("u_Color", color);
-		s_Data.TextureShader->SetFloat("u_TexTilingFactor", 1.0f);
-
-		s_Data.WhiteTexture->Bind();
+		++s_Data.Stats.QuadCount;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position,
@@ -158,6 +219,11 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
+		
 		float texIndex = 0.0f;
 		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 		{
@@ -175,18 +241,26 @@ namespace Heirloom
 			s_Data.TextureSlotIndex++;
 		}
 
-		ConfigureAndIncrementQuadVertexBufferPtr(position, tintColor, {0.0f, 0.0f}, texIndex, tilingFactor);
-		ConfigureAndIncrementQuadVertexBufferPtr({position.x + size.x, position.y, 0.0f},
+		const glm::mat4 transform = translate(glm::mat4(1.0f), position) * scale(
+			glm::mat4(1.0f),
+			{size.x, size.y, 1.0f});
+
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[0],
+												 tintColor,
+												 {0.0f, 0.0f},
+												 texIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[1],
 												 tintColor,
 												 {1.0f, 0.0f},
 												 texIndex,
 												 tilingFactor);
-		ConfigureAndIncrementQuadVertexBufferPtr({position.x + size.x, position.y + size.y, 0.0f},
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[2],
 												 tintColor,
 												 {1.0f, 1.0f},
 												 texIndex,
 												 tilingFactor);
-		ConfigureAndIncrementQuadVertexBufferPtr({position.x, position.y + size.y, 0.0f},
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[3],
 												 tintColor,
 												 {0.0f, 1.0f},
 												 texIndex,
@@ -194,34 +268,7 @@ namespace Heirloom
 
 		s_Data.QuadIndexCount += 6;
 
-		#if OLD_PATH
-		s_Data.TextureShader->SetFloat4("u_Color", tintColor);
-		s_Data.TextureShader->SetFloat("u_TilingFactor", tilingFactor);
-		texture->Bind();
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		s_Data.TextureShader->SetMat4("u_Transform", transform);
-
-		s_Data.QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
-		#endif
-
-		s_Data.TextureShader->SetFloat4("u_Color", tintColor);
-		s_Data.TextureShader->SetFloat("u_TexTilingFactor", tilingFactor);
-
-		texture->Bind();
-
-		const float aspectRatio = static_cast<float>(texture->GetWidth()) / static_cast<float>(texture->GetHeight());
-
-		const glm::mat4 transform = translate(glm::mat4(1.0f), position) * scale(
-			glm::mat4(1.0f),
-			{size.x, size.y / aspectRatio, 1.0f});
-
-		s_Data.TextureShader->SetMat4("u_Transform", transform);
-
-		s_Data.QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
+		++s_Data.Stats.QuadCount;
 	}
 
 	void Renderer2D::DrawQuad(Sprite& sprite)
@@ -242,22 +289,45 @@ namespace Heirloom
 									 const float rotation,
 									 const glm::vec4& color)
 	{
-		HL_PROFILE_FUNCTION()
+		HL_PROFILE_FUNCTION();
 
-		s_Data.TextureShader->SetFloat4("u_Color", color);
-		s_Data.TextureShader->SetFloat("u_TexTilingFactor", 1.0f);
-
-		s_Data.WhiteTexture->Bind();
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
+		
+		const float textureIndex = 0.0f; // White Texture
+		const float tilingFactor = 1.0f;
 
 		const glm::mat4 transform = translate(glm::mat4(1.0f), position) * rotate(
 			glm::mat4(1.0f),
-			rotation,
+			glm::radians(rotation),
 			{0.0f, 0.0f, 1.0f}) * scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
-		s_Data.TextureShader->SetMat4("u_Transform", transform);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[0],
+												 color,
+												 {0.0f, 0.0f},
+												 textureIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[1],
+												 color,
+												 {1.0f, 0.0f},
+												 textureIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[2],
+												 color,
+												 {1.0f, 1.0f},
+												 textureIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[3],
+												 color,
+												 {0.0f, 1.0f},
+												 textureIndex,
+												 tilingFactor);
 
-		s_Data.QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
+		s_Data.QuadIndexCount += 6;
+
+		++s_Data.Stats.QuadCount;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position,
@@ -277,23 +347,63 @@ namespace Heirloom
 									 const float tilingFactor,
 									 const glm::vec4& tintColor)
 	{
+		UNREFERENCED_PARAMETER(tintColor);
+
 		HL_PROFILE_FUNCTION()
 
-		s_Data.TextureShader->SetFloat4("u_Color", tintColor);
-		s_Data.TextureShader->SetFloat("u_TexTilingFactor", tilingFactor);
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
 
-		texture->Bind();
+		constexpr glm::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f};
 
-		const float aspectRatio = static_cast<float>(texture->GetWidth()) / static_cast<float>(texture->GetHeight());
+		float textureIndex = 0.0f;
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		{
+			if (*s_Data.TextureSlots[i].get() == *texture.get())
+			{
+				textureIndex = static_cast<float>(i);
+				break;
+			}
+		}
 
-		const glm::mat4 transform = translate(glm::mat4(1.0f), position) *
-			rotate(glm::mat4(1.0f), rotation, {0.0f, 0.0f, 1.0f}) * scale(glm::mat4(1.0f),
-																		  {size.x, size.y / aspectRatio, 1.0f});
+		if (textureIndex == 0.0f)
+		{
+			textureIndex                                 = static_cast<float>(s_Data.TextureSlotIndex);
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			s_Data.TextureSlotIndex++;
+		}
 
-		s_Data.TextureShader->SetMat4("u_Transform", transform);
+		const glm::mat4 transform = translate(glm::mat4(1.0f), position) * rotate(
+			glm::mat4(1.0f),
+			glm::radians(rotation),
+			{0.0f, 0.0f, 1.0f}) * scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
-		s_Data.QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[0],
+												 color,
+												 {0.0f, 0.0f},
+												 textureIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[1],
+												 color,
+												 {1.0f, 0.0f},
+												 textureIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[2],
+												 color,
+												 {1.0f, 1.0f},
+												 textureIndex,
+												 tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[3],
+												 color,
+												 {0.0f, 1.0f},
+												 textureIndex,
+												 tilingFactor);
+
+		s_Data.QuadIndexCount += 6;
+
+		++s_Data.Stats.QuadCount;
 	}
 
 	void Renderer2D::DrawRotatedQuad(Sprite& sprite)
@@ -318,5 +428,15 @@ namespace Heirloom
 		s_Data.pQuadVertexBuffer->TexIndex     = texIndex;
 		s_Data.pQuadVertexBuffer->TilingFactor = tilingFactor;
 		s_Data.pQuadVertexBuffer++;
+	}
+
+	void Renderer2D::ResetStats()
+	{
+		memset(&s_Data.Stats, 0, sizeof(Statistics));
+	}
+
+	Renderer2D::Statistics Renderer2D::GetStats()
+	{
+		return s_Data.Stats;
 	}
 }
