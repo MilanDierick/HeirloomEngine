@@ -7,7 +7,7 @@
 
 namespace Heirloom
 {
-	class HL_API NullSoundEngine final : public SoundEngine
+	class NullSoundEngine final : public SoundEngine
 	{
 	public:
 		void Update() override;

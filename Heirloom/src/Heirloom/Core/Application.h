@@ -16,7 +16,7 @@ namespace Heirloom
 	 * \brief Contains application-specific code to properly start and manage the core game loop\n
 	 * The client application should derive from this
 	 */
-	class HL_API Application
+	class Application
 	{
 	public:
 		Application();

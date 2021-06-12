@@ -10,7 +10,7 @@
 
 namespace Heirloom
 {
-	class HL_API Layer
+	class Layer
 	{
 	public:
 		explicit Layer(const std::string& debugName = "Layer");

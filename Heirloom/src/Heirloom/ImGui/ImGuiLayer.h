@@ -8,7 +8,7 @@
 namespace Heirloom
 {
 	// TODO: Start providing custom implementations for some of these ImGui example functions, they are slow!
-	class HL_API ImGuiLayer final : public Layer
+	class ImGuiLayer final : public Layer
 	{
 	public:
 		ImGuiLayer();

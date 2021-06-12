@@ -38,10 +38,10 @@ namespace Heirloom
 	};
 
 	static Renderer2DData s_Data;
-	
+
 	void Renderer2D::Init()
 	{
-		HL_PROFILE_FUNCTION();
+		HL_PROFILE_FUNCTION()
 
 		s_Data.QuadVertexArray = VertexArray::Create();
 
@@ -105,10 +105,7 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		s_Data.QuadIndexCount    = 0;
-		s_Data.pQuadVertexBuffer = s_Data.pQuadVertexBufferBase;
-
-		s_Data.TextureSlotIndex = 1;
+		delete[] s_Data.pQuadVertexBufferBase;
 	}
 
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
@@ -135,6 +132,12 @@ namespace Heirloom
 
 	void Renderer2D::Flush()
 	{
+		// Nothing to draw
+		if (s_Data.QuadIndexCount == 0)
+		{
+			return; 
+		}
+
 		// Bind textures
 		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
 		{
@@ -219,11 +222,6 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-		{
-			FlushAndReset();
-		}
-		
 		float texIndex = 0.0f;
 		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 		{
@@ -236,6 +234,11 @@ namespace Heirloom
 
 		if (texIndex == 0.0f)
 		{
+			if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			{
+				FlushAndReset();
+			}
+
 			texIndex                                     = static_cast<float>(s_Data.TextureSlotIndex);
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 			s_Data.TextureSlotIndex++;
@@ -289,13 +292,13 @@ namespace Heirloom
 									 const float rotation,
 									 const glm::vec4& color)
 	{
-		HL_PROFILE_FUNCTION();
+		HL_PROFILE_FUNCTION()
 
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 		{
 			FlushAndReset();
 		}
-		
+
 		const float textureIndex = 0.0f; // White Texture
 		const float tilingFactor = 1.0f;
 
@@ -347,16 +350,7 @@ namespace Heirloom
 									 const float tilingFactor,
 									 const glm::vec4& tintColor)
 	{
-		UNREFERENCED_PARAMETER(tintColor);
-
 		HL_PROFILE_FUNCTION()
-
-		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-		{
-			FlushAndReset();
-		}
-
-		constexpr glm::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f};
 
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
@@ -370,6 +364,11 @@ namespace Heirloom
 
 		if (textureIndex == 0.0f)
 		{
+			if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			{
+				FlushAndReset();
+			}
+
 			textureIndex                                 = static_cast<float>(s_Data.TextureSlotIndex);
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 			s_Data.TextureSlotIndex++;
@@ -381,22 +380,22 @@ namespace Heirloom
 			{0.0f, 0.0f, 1.0f}) * scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
 		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[0],
-												 color,
+												 tintColor,
 												 {0.0f, 0.0f},
 												 textureIndex,
 												 tilingFactor);
 		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[1],
-												 color,
+												 tintColor,
 												 {1.0f, 0.0f},
 												 textureIndex,
 												 tilingFactor);
 		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[2],
-												 color,
+												 tintColor,
 												 {1.0f, 1.0f},
 												 textureIndex,
 												 tilingFactor);
 		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[3],
-												 color,
+												 tintColor,
 												 {0.0f, 1.0f},
 												 textureIndex,
 												 tilingFactor);

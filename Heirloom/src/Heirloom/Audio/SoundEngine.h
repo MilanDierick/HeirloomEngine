@@ -7,7 +7,7 @@
 
 namespace Heirloom
 {
-	class HL_API SoundEngine
+	class SoundEngine
 	{
 	public:
 		SoundEngine()          = default;

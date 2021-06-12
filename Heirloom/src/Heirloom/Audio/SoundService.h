@@ -7,7 +7,7 @@
 
 namespace Heirloom
 {
-	class HL_API SoundService
+	class SoundService
 	{
 	public:
 		~SoundService();

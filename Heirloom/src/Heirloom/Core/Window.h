@@ -26,7 +26,7 @@ namespace Heirloom
 	/**
 	 * \brief Interface representing a desktop system based window
 	 */
-	class HL_API Window
+	class Window
 	{
 	public:
 		virtual ~Window()

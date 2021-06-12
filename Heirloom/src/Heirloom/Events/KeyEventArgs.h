@@ -7,7 +7,7 @@
 
 namespace Heirloom
 {
-	struct HL_API KeyEventArgs : EventArgs
+	struct KeyEventArgs : EventArgs
 	{
 		[[nodiscard]] explicit KeyEventArgs(const int keyCode)
 			: KeyCode(keyCode)
@@ -17,7 +17,7 @@ namespace Heirloom
 		int KeyCode;
 	};
 
-	struct HL_API KeyPressedEventArgs : EventArgs
+	struct KeyPressedEventArgs : EventArgs
 	{
 		[[nodiscard]] KeyPressedEventArgs(const int keyCode, const int repeatCount)
 			: KeyCode(keyCode),
@@ -29,7 +29,7 @@ namespace Heirloom
 		int RepeatCount;
 	};
 
-	struct HL_API KeyReleasedEventArgs : EventArgs
+	struct KeyReleasedEventArgs : EventArgs
 	{
 		[[nodiscard]] explicit KeyReleasedEventArgs(const int keyCode)
 			: KeyCode(keyCode)
@@ -39,7 +39,7 @@ namespace Heirloom
 		int KeyCode;
 	};
 
-	struct HL_API KeyTypedEventArgs : EventArgs
+	struct KeyTypedEventArgs : EventArgs
 	{
 		[[nodiscard]] explicit KeyTypedEventArgs(const int keyCode)
 			: KeyCode(keyCode)

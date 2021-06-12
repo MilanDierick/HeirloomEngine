@@ -3,13 +3,13 @@
 // Solution: HeirloomEngine
 
 #pragma once
+#include <irrKlang.h>
 #include "Heirloom/Audio/SoundEngine.h"
 #include "Heirloom/Core/LockFreeStack.h"
-#include <irrKlang.h>
 
 namespace Heirloom
 {
-	class HL_API SimpleSoundEngine final : public SoundEngine
+	class SimpleSoundEngine final : public SoundEngine
 	{
 	public:
 		[[nodiscard]] SimpleSoundEngine();

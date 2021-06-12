@@ -36,22 +36,18 @@
 	#error "Unknown platform!"
 #endif
 
-#ifdef HL_PLATFORM_WINDOWS
-#if HL_DYNAMIC_LINK
-#ifdef HL_BUILD_DLL
-			#define HL_API __declspec(dllexport)
-#else
-			#define HL_API __declspec(dllimport)
-#endif
-#else
-#define HL_API
-#endif
-#else
-	#error Heirloom only supports Windows!
-#endif
-
 #ifdef HL_DEBUG
+#if defined(HL_PLATFORM_WINDOWS)
+#define HL_DEBUGBREAK() __debugbreak()
+#elif defined(HL_PLATFORM_LINUX)
+		#include <signal.h>
+		#define HL_DEBUGBREAK() raise(SIGTRAP)
+#else
+		#error "Platform doesn't support debugbreak yet!"
+#endif
 #define HL_ENABLE_ASSERTS
+#else
+	#define HL_DEBUGBREAK()
 #endif
 
 #include "Log.h"
@@ -59,8 +55,8 @@
 #include "Heirloom/Profiler/Instrumentation.h"
 
 #ifdef HL_ENABLE_ASSERTS
-#define HL_ASSERT(x, ...) { if(!(x)) { HL_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#define HL_CORE_ASSERT(x, ...) { if(!(x)) { HL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#define HL_ASSERT(x, ...) { if(!(x)) { HL_ERROR("Assertion Failed: {0}", __VA_ARGS__); HL_DEBUGBREAK(); } }
+#define HL_CORE_ASSERT(x, ...) { if(!(x)) { HL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); HL_DEBUGBREAK(); } }
 #else
 	#define HL_ASSERT(x, ...)
 	#define HL_CORE_ASSERT(x, ...)

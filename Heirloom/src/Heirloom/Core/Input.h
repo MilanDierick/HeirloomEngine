@@ -3,14 +3,14 @@
 // Solution: HeirloomEngine
 
 #pragma once
+#include "Heirloom/Core/Core.h"
 #include "Heirloom/Events/Event.h"
 #include "Heirloom/Events/KeyEventArgs.h"
 #include "Heirloom/Events/MouseEventArgs.h"
-#include "Heirloom/Core/Core.h"
 
 namespace Heirloom
 {
-	class HL_API Input
+	class Input
 	{
 	public:
 		virtual ~Input() = default;
