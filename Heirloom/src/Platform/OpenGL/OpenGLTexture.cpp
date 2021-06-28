@@ -78,6 +78,21 @@ namespace Heirloom
 		glDeleteTextures(1, &m_RendererID);
 	}
 
+	uint32_t OpenGLTexture2D::GetWidth() const
+	{
+		return m_Width;
+	}
+
+	uint32_t OpenGLTexture2D::GetHeight() const
+	{
+		return m_Height;
+	}
+
+	uint32_t OpenGLTexture2D::GetRendererID() const
+	{
+		return m_RendererID;
+	}
+
 	void OpenGLTexture2D::SetData(void* data, const uint32_t size)
 	{
 		HL_PROFILE_FUNCTION()

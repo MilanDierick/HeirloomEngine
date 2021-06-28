@@ -30,6 +30,8 @@ namespace Heirloom
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		void Close();
+
 		static Application& Get();
 
 		Window& GetWindow() const;

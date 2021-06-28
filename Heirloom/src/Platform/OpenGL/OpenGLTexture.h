@@ -21,8 +21,9 @@ namespace Heirloom
 		OpenGLTexture2D& operator=(const OpenGLTexture2D& other)     = delete;
 		OpenGLTexture2D& operator=(OpenGLTexture2D&& other) noexcept = delete;
 
-		uint32_t GetWidth() const override { return m_Width; }
-		uint32_t GetHeight() const override { return m_Height; }
+		uint32_t GetWidth() const override;
+		uint32_t GetHeight() const override;
+		uint32_t GetRendererID() const override;
 
 		void SetData(void* data, uint32_t size) override;
 

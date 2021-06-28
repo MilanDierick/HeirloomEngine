@@ -121,6 +121,11 @@ namespace Heirloom
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
+	
+	void Application::Close()
+	{
+		m_IsRunning = false;
+	}
 
 	Application& Application::Get()
 	{
