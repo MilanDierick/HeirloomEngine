@@ -24,6 +24,8 @@ private:
 	Heirloom::Ref<Heirloom::Texture2D> m_BackgroundTexture;
 	Heirloom::Ref<Heirloom::Texture2D> m_Logo;
 
+	Heirloom::Ref<Heirloom::Framebuffer> m_Framebuffer;
+
 	glm::vec4 m_SquareColor = {0.2f, 0.3f, 0.8f, 1.0f};
 
 	Heirloom::Ref<Heirloom::Sound> m_BackgroundMusic;

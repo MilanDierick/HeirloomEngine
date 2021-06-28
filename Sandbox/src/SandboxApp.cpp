@@ -8,10 +8,10 @@
 // ReSharper disable once CppUnusedIncludeDirective
 #include "Heirloom/Core/EntryPoint.h"
 
-class Sandbox final : public Heirloom::Application
+class SandboxApplication final : public Heirloom::Application
 {
 public:
-	Sandbox()
+	SandboxApplication()
 	{
 		HL_PROFILE_FUNCTION()
 
@@ -19,7 +19,7 @@ public:
 		HL_INFO("Initialized Sandbox application");
 	}
 
-	~Sandbox() override
+	~SandboxApplication() override
 	{
 	}
 };
@@ -28,5 +28,5 @@ Heirloom::Application* Heirloom::CreateApplication()
 {
 	HL_PROFILE_FUNCTION()
 
-	return new Sandbox();
+	return new SandboxApplication();
 }
