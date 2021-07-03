@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 
 namespace Heirloom
 {
@@ -35,3 +35,17 @@ namespace Heirloom
 #define HL_WARN(...) 		::Heirloom::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define HL_ERROR(...) 		::Heirloom::Log::GetClientLogger()->error(__VA_ARGS__)
 #define HL_FATAL(...) 		::Heirloom::Log::GetClientLogger()->critical(__VA_ARGS__)
+
+// // Core log macros
+// #define HL_CORE_TRACE(...)
+// #define HL_CORE_INFO(...) 
+// #define HL_CORE_WARN(...) 
+// #define HL_CORE_ERROR(...)
+// #define HL_CORE_FATAL(...)
+//
+// // Client log macros
+// #define HL_TRACE(...) 
+// #define HL_INFO(...) 
+// #define HL_WARN(...) 
+// #define HL_ERROR(...) 
+// #define HL_FATAL(...) 

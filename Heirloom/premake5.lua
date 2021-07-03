@@ -41,7 +41,7 @@ project "Heirloom"
 	staticruntime "On"
 	warnings "Extra"
 
-	flags 
+	flags
 	{
 		"FatalWarnings"
 	}

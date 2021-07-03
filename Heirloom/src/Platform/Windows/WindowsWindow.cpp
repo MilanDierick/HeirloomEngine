@@ -57,7 +57,7 @@ namespace Heirloom
 		m_Data.WindowResizedEvent = &WindowResizedEvent;
 		m_Data.WindowClosedEvent  = &WindowClosedEvent;
 
-		HL_CORE_INFO("Creating window {0} ({1} {2})", props.Title, props.Width, props.Height);
+		HL_CORE_INFO("Creating window {0} ({1} {2})", props.Title.c_str(), props.Width, props.Height);
 
 		if (!s_GLFWInitialized)
 		{

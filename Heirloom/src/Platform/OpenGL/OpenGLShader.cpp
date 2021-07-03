@@ -36,7 +36,8 @@ namespace Heirloom
 	OpenGLShader::OpenGLShader(const std::string& name,
 							   const std::string& vertexSource,
 							   const std::string& fragmentSource)
-		: m_RendererID(0), m_Name(name)
+		: m_RendererID(0),
+		  m_Name(name)
 	{
 		HL_PROFILE_FUNCTION()
 
@@ -63,22 +64,40 @@ namespace Heirloom
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetInt(const std::string& name, const int value) { UploadUniformInt(name, value); }
+	void OpenGLShader::SetInt(const std::string& name, const int value)
+	{
+		UploadUniformInt(name, value);
+	}
 
 	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
 	{
 		UploadUniformIntArray(name, values, count);
 	}
 
-	void OpenGLShader::SetFloat(const std::string& name, const float value) { UploadUniformFloat(name, value); }
+	void OpenGLShader::SetFloat(const std::string& name, const float value)
+	{
+		UploadUniformFloat(name, value);
+	}
 
-	void OpenGLShader::SetFloat2(const std::string& name, const glm::float2 value) { UploadUniformFloat2(name, value); }
+	void OpenGLShader::SetFloat2(const std::string& name, const glm::float2 value)
+	{
+		UploadUniformFloat2(name, value);
+	}
 
-	void OpenGLShader::SetFloat3(const std::string& name, const glm::float3 value) { UploadUniformFloat3(name, value); }
+	void OpenGLShader::SetFloat3(const std::string& name, const glm::float3 value)
+	{
+		UploadUniformFloat3(name, value);
+	}
 
-	void OpenGLShader::SetFloat4(const std::string& name, const glm::float4 value) { UploadUniformFloat4(name, value); }
+	void OpenGLShader::SetFloat4(const std::string& name, const glm::float4 value)
+	{
+		UploadUniformFloat4(name, value);
+	}
 
-	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4 value) { UploadUniformMat4(name, value); }
+	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4 value)
+	{
+		UploadUniformMat4(name, value);
+	}
 
 	void OpenGLShader::UploadUniformInt(const std::string& name, const int value) const
 	{
@@ -146,7 +165,10 @@ namespace Heirloom
 			in.read(&result[0], result.size());
 			in.close();
 		}
-		else { HL_CORE_ERROR("Could not open file '{0}'", filePath); }
+		else
+		{
+			HL_CORE_ERROR("Could not open file '{0}'", filePath.c_str());
+		}
 
 		return result;
 	}
@@ -239,7 +261,10 @@ namespace Heirloom
 			// We don't need the program anymore.
 			glDeleteProgram(program);
 
-			for (auto id : glShaderIDs) { glDeleteShader(id); }
+			for (auto id : glShaderIDs)
+			{
+				glDeleteShader(id);
+			}
 
 			HL_CORE_ERROR("{0}", infoLog.data());
 			HL_CORE_ASSERT(false, "Shader link failure!");

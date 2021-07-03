@@ -22,8 +22,8 @@ namespace Heirloom
 			{
 				// Edge case: BeginSession() might be before Log::Init()
 				HL_CORE_ERROR("Instrumentor::BeginSession('{0}') when session '{1}' already open.",
-							  name,
-							  m_CurrentSession->Name);
+							  name.c_str(),
+							  m_CurrentSession->Name.c_str());
 			}
 
 			InternalEndSession();
@@ -42,7 +42,7 @@ namespace Heirloom
 			if (Log::GetCoreLogger())
 			{
 				// Edge case: BeginSession() might be before Log::Init()
-				HL_CORE_ERROR("Instrumentor could not open results file '{0}'.", filepath);
+				HL_CORE_ERROR("Instrumentor could not open results file '{0}'.", filepath.c_str());
 			}
 		}
 	}
