@@ -17,6 +17,8 @@ namespace Heirloom
 
 		void Update(Timestep ts);
 
+		void OnResize(float width, float height);
+
 		OrthographicCamera& GetCamera();
 		const OrthographicCamera& GetCamera() const;
 		float GetZoomLevel() const;

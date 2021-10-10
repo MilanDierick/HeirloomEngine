@@ -69,6 +69,12 @@ namespace Heirloom
 		m_CameraTranslationSpeed = m_ZoomLevel;
 	}
 
+	void OrthographicCameraController::OnResize(const float width, const float height)
+	{
+		m_AspectRatio = width / height;
+		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+	}
+
 	OrthographicCamera& OrthographicCameraController::GetCamera()
 	{
 		return m_Camera;
