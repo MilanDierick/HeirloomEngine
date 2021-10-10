@@ -29,7 +29,7 @@ void Sandbox2D::OnUpdate(const Heirloom::Timestep)
 {
 	HL_PROFILE_FUNCTION()
 
-	if (Heirloom::Input::IsKeyPressed(HL_KEY_SPACE))
+	if (Heirloom::Input::IsKeyPressed(Heirloom::KeyCode::Space))
 	{
 		Heirloom::SoundService::GetSoundEngine()->Stop(m_BackgroundMusic);
 	}

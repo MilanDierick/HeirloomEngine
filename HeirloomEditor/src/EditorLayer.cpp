@@ -31,7 +31,7 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		if (Input::IsKeyPressed(HL_KEY_SPACE))
+		if (Input::IsKeyPressed(KeyCode::Space))
 		{
 			SoundService::GetSoundEngine()->Stop(m_BackgroundMusic);
 		}

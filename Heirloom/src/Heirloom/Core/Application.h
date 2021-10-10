@@ -32,6 +32,7 @@ namespace Heirloom
 
 		void Close();
 
+		ImGuiLayer* GetImGuiLayer() const;
 		static Application& Get();
 
 		Window& GetWindow() const;

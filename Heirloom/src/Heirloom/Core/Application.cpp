@@ -121,10 +121,15 @@ namespace Heirloom
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
-	
+
 	void Application::Close()
 	{
 		m_IsRunning = false;
+	}
+
+	ImGuiLayer* Application::GetImGuiLayer() const
+	{
+		return m_ImGuiLayer;
 	}
 
 	Application& Application::Get()

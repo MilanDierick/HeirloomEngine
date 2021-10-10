@@ -10,11 +10,9 @@
 
 namespace Heirloom
 {
-	class Input
+	class Input final
 	{
 	public:
-		virtual ~Input() = default;
-
 		static Event<KeyPressedEventArgs> KeyPressedEvent;
 		static Event<KeyReleasedEventArgs> KeyReleasedEvent;
 		static Event<KeyTypedEventArgs> KeyTypedEvent;

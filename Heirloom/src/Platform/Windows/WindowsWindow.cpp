@@ -13,7 +13,10 @@ namespace Heirloom
 		HL_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props) { return new WindowsWindow(props); }
+	Window* Window::Create(const WindowProps& props)
+	{
+		return new WindowsWindow(props);
+	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
@@ -45,7 +48,10 @@ namespace Heirloom
 		m_Data.VSync = enabled;
 	}
 
-	bool WindowsWindow::IsVSync() const { return m_Data.VSync; }
+	bool WindowsWindow::IsVSync() const
+	{
+		return m_Data.VSync;
+	}
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
@@ -108,19 +114,19 @@ namespace Heirloom
 							   {
 								   case GLFW_PRESS:
 								   {
-									   const KeyPressedEventArgs eventArgs(key, 0);
+									   const KeyPressedEventArgs eventArgs(static_cast<KeyCode>(key), 0);
 									   Input::KeyPressedEvent.Invoke(eventArgs);
 									   break;
 								   }
 								   case GLFW_RELEASE:
 								   {
-									   const KeyReleasedEventArgs eventArgs(key);
+									   const KeyReleasedEventArgs eventArgs(static_cast<KeyCode>(key));
 									   Input::KeyReleasedEvent.Invoke(eventArgs);
 									   break;
 								   }
 								   case GLFW_REPEAT:
 								   {
-									   const KeyTypedEventArgs eventArgs(key);
+									   const KeyTypedEventArgs eventArgs(static_cast<KeyCode>(key));
 									   Input::KeyTypedEvent.Invoke(eventArgs);
 									   break;
 								   }
@@ -132,7 +138,7 @@ namespace Heirloom
 		glfwSetCharCallback(m_Window,
 							[](GLFWwindow*, const unsigned int keycode)
 							{
-								const KeyTypedEventArgs eventArgs(keycode);
+								const KeyTypedEventArgs eventArgs(static_cast<KeyCode>(keycode));
 
 								Input::KeyTypedEvent.Invoke(eventArgs);
 							});
@@ -144,13 +150,13 @@ namespace Heirloom
 									   {
 										   case GLFW_PRESS:
 										   {
-											   const MouseButtonPressedEventArgs event(button);
+											   const MouseButtonPressedEventArgs event(static_cast<MouseCode>(button));
 											   Input::MouseButtonPressedEvent.Invoke(event);
 											   break;
 										   }
 										   case GLFW_RELEASE:
 										   {
-											   const MouseButtonReleasedEventArgs event(button);
+											   const MouseButtonReleasedEventArgs event(static_cast<MouseCode>(button));
 											   Input::MouseButtonReleasedEvent.Invoke(event);
 											   break;
 										   }
