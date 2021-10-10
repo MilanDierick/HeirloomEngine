@@ -3,7 +3,7 @@
 // Solution: HeirloomEngine
 
 #pragma once
-#include "Heirloom/Core/Core.h"
+#include "KeyCodes.h"
 #include "Heirloom/Events/Event.h"
 #include "Heirloom/Events/KeyEventArgs.h"
 #include "Heirloom/Events/MouseEventArgs.h"
@@ -23,20 +23,11 @@ namespace Heirloom
 		static Event<MouseMovedEventArgs> MouseMovedEvent;
 		static Event<MouseScrolledEventArgs> MouseScrolledEvent;
 
-		static bool IsKeyPressed(int keycode);
-		static bool IsMouseButtonPressed(int button);
+		static bool IsKeyPressed(KeyCode key);
+
+		static bool IsMouseButtonPressed(MouseCode button);
 		static std::pair<float, float> GetMousePosition();
 		static float GetMouseX();
 		static float GetMouseY();
-
-	protected:
-		virtual bool IsKeyPressedImpl(int keycode) = 0;
-		virtual bool IsMouseButtonPressedImpl(int button) = 0;
-		virtual std::pair<float, float> GetMousePositionImpl() = 0;
-		virtual bool GetMouseXImpl() = 0;
-		virtual bool GetMouseYImpl() = 0;
-
-	private:
-		static Scope<Input> s_Instance;
 	};
 }

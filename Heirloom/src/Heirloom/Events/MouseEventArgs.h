@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Event.h"
+#include "Heirloom/Core/MouseCodes.h"
 
 namespace Heirloom
 {
@@ -31,21 +32,21 @@ namespace Heirloom
 
 	struct MouseButtonPressedEventArgs : EventArgs
 	{
-		[[nodiscard]] explicit MouseButtonPressedEventArgs(const int button)
+		[[nodiscard]] explicit MouseButtonPressedEventArgs(const MouseCode button)
 			: Button(button)
 		{
 		}
 
-		int Button;
+		MouseCode Button;
 	};
 
 	struct MouseButtonReleasedEventArgs : EventArgs
 	{
-		[[nodiscard]] explicit MouseButtonReleasedEventArgs(const int button)
+		[[nodiscard]] explicit MouseButtonReleasedEventArgs(const MouseCode button)
 			: Button(button)
 		{
 		}
 
-		int Button;
+		MouseCode Button;
 	};
 }
