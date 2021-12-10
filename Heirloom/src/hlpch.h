@@ -21,7 +21,7 @@
 #include "Heirloom/Profiler/Instrumentation.h"
 
 #ifdef HL_PLATFORM_WINDOWS
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 #endif //HEIRLOOM_HLPCH_H

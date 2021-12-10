@@ -13,6 +13,7 @@ target_include_directories(Sandbox PRIVATE
         Heirloom/src
         Heirloom/thirdparty/spdlog/include
         Heirloom/thirdparty/imgui
+        Heirloom/thirdparty/glm
         )
 
 target_link_libraries(Sandbox PRIVATE
@@ -39,6 +40,7 @@ target_include_directories(Editor PRIVATE
         Heirloom/src
         Heirloom/thirdparty/spdlog/include
         Heirloom/thirdparty/imgui
+        Heirloom/thirdparty/glm
         )
 
 target_link_libraries(Editor PRIVATE

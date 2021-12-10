@@ -20,6 +20,11 @@ set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O4 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+
 add_subdirectory(thirdparty/spdlog)
 add_subdirectory(thirdparty/glfw)
 add_subdirectory(thirdparty/glm)
@@ -123,6 +128,7 @@ add_library(Heirloom
 target_compile_definitions(Heirloom PRIVATE
         HL_DEBUG
         HL_PROFILE
+        IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
         )
 
 target_include_directories(Heirloom PRIVATE
@@ -141,7 +147,7 @@ target_include_directories(Heirloom PRIVATE
 #        )
 
 target_link_libraries(Heirloom PRIVATE
-        spdlog
+        spdlog_header_only
         glfw
         glm
         ${CMAKE_DL_LIBS}

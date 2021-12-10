@@ -26,7 +26,7 @@ namespace Heirloom
 		}
 	};
 
-	Application* Heirloom::CreateApplication()
+	Application* CreateApplication()
 	{
 		HL_PROFILE_FUNCTION()
 
