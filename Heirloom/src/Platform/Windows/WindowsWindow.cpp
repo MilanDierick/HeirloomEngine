@@ -1,4 +1,4 @@
-﻿#include "hlpch.h"
+#include "hlpch.h"
 #include "WindowsWindow.h"
 #include "Heirloom/Core/Input.h"
 #include "Heirloom/Events/MouseEventArgs.h"
@@ -75,10 +75,10 @@ namespace Heirloom
 		}
 
 		m_Window = glfwCreateWindow(static_cast<int>(props.Width),
-									static_cast<int>(props.Height),
-									m_Data.Title.c_str(),
-									nullptr,
-									nullptr);
+				static_cast<int>(props.Height),
+				m_Data.Title.c_str(),
+				nullptr,
+				nullptr);
 
 		m_Context = CreateScope<OpenGLContext>(m_Window);
 		m_Context->Init();
@@ -88,98 +88,98 @@ namespace Heirloom
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window,
-								  [](GLFWwindow* window, const int width, const int height)
-								  {
-									  WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
-									  data->Width      = width;
-									  data->Height     = height;
+				[](GLFWwindow* window, const int width, const int height)
+				{
+					WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+					data->Width      = width;
+					data->Height     = height;
 
-									  const WindowResizedEventArgs eventArgs(width, height);
-									  data->WindowResizedEvent->Invoke(eventArgs);
-								  });
+					const WindowResizedEventArgs eventArgs(width, height);
+					data->WindowResizedEvent->Invoke(eventArgs);
+				});
 
 		glfwSetWindowCloseCallback(m_Window,
-								   [](GLFWwindow* window)
-								   {
-									   WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+				[](GLFWwindow* window)
+				{
+					WindowData* data = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
-									   const WindowClosedEventArgs eventArgs;
-									   data->WindowClosedEvent->Invoke(eventArgs);
-								   });
+					const WindowClosedEventArgs eventArgs;
+					data->WindowClosedEvent->Invoke(eventArgs);
+				});
 
 		glfwSetKeyCallback(m_Window,
-						   [](GLFWwindow*, const int key, int, const int action, int)
-						   {
-							   switch (action)
-							   {
-								   case GLFW_PRESS:
-								   {
-									   const KeyPressedEventArgs eventArgs(static_cast<KeyCode>(key), 0);
-									   Input::KeyPressedEvent.Invoke(eventArgs);
-									   break;
-								   }
-								   case GLFW_RELEASE:
-								   {
-									   const KeyReleasedEventArgs eventArgs(static_cast<KeyCode>(key));
-									   Input::KeyReleasedEvent.Invoke(eventArgs);
-									   break;
-								   }
-								   case GLFW_REPEAT:
-								   {
-									   const KeyTypedEventArgs eventArgs(static_cast<KeyCode>(key));
-									   Input::KeyTypedEvent.Invoke(eventArgs);
-									   break;
-								   }
-								   default: HL_CORE_ERROR("Tried to process missing GLFW key action");
-									   break;
-							   }
-						   });
+				[](GLFWwindow*, const int key, int, const int action, int)
+				{
+					switch (action)
+					{
+					case GLFW_PRESS:
+					{
+						const KeyPressedEventArgs eventArgs(static_cast<KeyCode>(key), 0);
+						Input::KeyPressedEvent.Invoke(eventArgs);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						const KeyReleasedEventArgs eventArgs(static_cast<KeyCode>(key));
+						Input::KeyReleasedEvent.Invoke(eventArgs);
+						break;
+					}
+					case GLFW_REPEAT:
+					{
+						const KeyTypedEventArgs eventArgs(static_cast<KeyCode>(key));
+						Input::KeyTypedEvent.Invoke(eventArgs);
+						break;
+					}
+					default: HL_CORE_ERROR("Tried to process missing GLFW key action");
+						break;
+					}
+				});
 
 		glfwSetCharCallback(m_Window,
-							[](GLFWwindow*, const unsigned int keycode)
-							{
-								const KeyTypedEventArgs eventArgs(static_cast<KeyCode>(keycode));
+				[](GLFWwindow*, const unsigned int keycode)
+				{
+					const KeyTypedEventArgs eventArgs(static_cast<KeyCode>(keycode));
 
-								Input::KeyTypedEvent.Invoke(eventArgs);
-							});
+					Input::KeyTypedEvent.Invoke(eventArgs);
+				});
 
 		glfwSetMouseButtonCallback(m_Window,
-								   [](GLFWwindow*, const int button, const int action, int)
-								   {
-									   switch (action)
-									   {
-										   case GLFW_PRESS:
-										   {
-											   const MouseButtonPressedEventArgs event(static_cast<MouseCode>(button));
-											   Input::MouseButtonPressedEvent.Invoke(event);
-											   break;
-										   }
-										   case GLFW_RELEASE:
-										   {
-											   const MouseButtonReleasedEventArgs event(static_cast<MouseCode>(button));
-											   Input::MouseButtonReleasedEvent.Invoke(event);
-											   break;
-										   }
-										   default: HL_CORE_ERROR("Tried to process missing GLFW key action");
-											   break;
-									   }
-								   });
+				[](GLFWwindow*, const int button, const int action, int)
+				{
+					switch (action)
+					{
+					case GLFW_PRESS:
+					{
+						const MouseButtonPressedEventArgs event(static_cast<MouseCode>(button));
+						Input::MouseButtonPressedEvent.Invoke(event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						const MouseButtonReleasedEventArgs event(static_cast<MouseCode>(button));
+						Input::MouseButtonReleasedEvent.Invoke(event);
+						break;
+					}
+					default: HL_CORE_ERROR("Tried to process missing GLFW key action");
+						break;
+					}
+				});
 
 		glfwSetScrollCallback(m_Window,
-							  [](GLFWwindow*, const double xOffset, const double yOffset)
-							  {
-								  const MouseScrolledEventArgs mouseScrolledEventArgs(static_cast<float>(xOffset),
-									  static_cast<float>(yOffset));
-								  Input::MouseScrolledEvent.Invoke(mouseScrolledEventArgs);
-							  });
+				[](GLFWwindow*, const double xOffset, const double yOffset)
+				{
+					const MouseScrolledEventArgs mouseScrolledEventArgs(static_cast<float>(xOffset),
+							static_cast<float>(yOffset));
+					Input::MouseScrolledEvent.Invoke(mouseScrolledEventArgs);
+				});
 
 		glfwSetCursorPosCallback(m_Window,
-								 [](GLFWwindow*, const double xPos, const double yPos)
-								 {
-									 const MouseMovedEventArgs
-										 event(static_cast<float>(xPos), static_cast<float>(yPos));
-									 Input::MouseMovedEvent.Invoke(event);
-								 });
+				[](GLFWwindow*, const double xPos, const double yPos)
+				{
+					const MouseMovedEventArgs
+							event(static_cast<float>(xPos), static_cast<float>(yPos));
+					Input::MouseMovedEvent.Invoke(event);
+				});
 	}
 
 	void WindowsWindow::Shutdown() const

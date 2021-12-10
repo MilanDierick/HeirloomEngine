@@ -1,4 +1,9 @@
-﻿#pragma once
+//
+// Created by developer on 09/12/2021.
+//
+
+#ifndef HEIRLOOM_HEIRLOOM_H
+#define HEIRLOOM_HEIRLOOM_H
 
 // ==== Core ======================================================
 #include "Heirloom/Core/Application.h"
@@ -26,10 +31,11 @@
 #include "Heirloom/Renderer/Texture.h"
 // =================================================================
 
-#include "Heirloom/Audio/SimpleSoundEngine.h"
 #include "Heirloom/Profiler/Instrumentation.h"
 
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtx/transform.hpp"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
+
+#endif //HEIRLOOM_HEIRLOOM_H

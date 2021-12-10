@@ -1,15 +1,13 @@
 #include "hlpch.h"
 #include "OpenGLTexture.h"
 
-#include <spdlog/fmt/bundled/format.h>
-
 #include "stb_image.h"
 #include "glad/glad.h"
 
 namespace Heirloom
 {
 	OpenGLTexture2D::OpenGLTexture2D(const uint32_t width, const uint32_t height)
-		: m_Width(width), m_Height(height)
+			: m_Width(width), m_Height(height)
 	{
 		HL_PROFILE_FUNCTION()
 
@@ -29,7 +27,7 @@ namespace Heirloom
 	}
 
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
-		: m_Path(path), m_InternalFormat(0), m_DataFormat(0)
+			: m_Path(path), m_InternalFormat(0), m_DataFormat(0)
 	{
 		HL_PROFILE_FUNCTION()
 
@@ -97,11 +95,9 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		UNREFERENCED_PARAMETER(size);
-
 		const uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 		HL_CORE_ASSERT(size == m_Width * m_Height * bpp,
-					   "Data must be the entire texture!"); // Size is not referenced here when we're not using asserts
+				"Data must be the entire texture!"); // Size is not referenced here when we're not using asserts
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 	}
 

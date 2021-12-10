@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_RENDERERAPI_H
+#define HEIRLOOM_RENDERERAPI_H
+
 #include <glm/glm.hpp>
 #include "VertexArray.h"
 
@@ -38,3 +40,5 @@ namespace Heirloom
 		static API s_API;
 	};
 }
+
+#endif //HEIRLOOM_RENDERERAPI_H

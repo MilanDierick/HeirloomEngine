@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_SHADER_H
+#define HEIRLOOM_SHADER_H
+
 #include "glm/glm.hpp"
 #include "glm/gtx/compatibility.hpp"
 
@@ -44,12 +46,12 @@ namespace Heirloom
 		 * \brief Creates a new shader asset depending on the current graphics API being used
 		 * \param name The name of the shader assets
 		 * \param vertexSource A string containing the code of the vertex shader
-		 * \param fragmentSource A string containing the code of the fragment shader 
+		 * \param fragmentSource A string containing the code of the fragment shader
 		 * \return Returns a reference to the newly created
 		 */
 		static Ref<Shader> Create(const std::string& name,
-								  const std::string& vertexSource,
-								  const std::string& fragmentSource);
+				const std::string& vertexSource,
+				const std::string& fragmentSource);
 	};
 
 	class ShaderLibrary
@@ -101,3 +103,5 @@ namespace Heirloom
 		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 	};
 }
+
+#endif //HEIRLOOM_SHADER_H

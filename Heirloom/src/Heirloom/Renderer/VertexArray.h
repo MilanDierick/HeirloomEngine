@@ -1,8 +1,9 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_VERTEXARRAY_H
+#define HEIRLOOM_VERTEXARRAY_H
 
 #include <memory>
 #include "Buffer.h"
@@ -32,3 +33,5 @@ namespace Heirloom
 		static Ref<VertexArray> Create();
 	};
 }
+
+#endif //HEIRLOOM_VERTEXARRAY_H

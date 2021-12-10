@@ -12,9 +12,9 @@ namespace Heirloom
 
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-				return nullptr;
-			case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(filePath);
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(filePath);
 		}
 
 		HL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -22,16 +22,16 @@ namespace Heirloom
 	}
 
 	Ref<Shader> Shader::Create(const std::string& name,
-							   const std::string& vertexSource,
-							   const std::string& fragmentSource)
+			const std::string& vertexSource,
+			const std::string& fragmentSource)
 	{
 		HL_PROFILE_FUNCTION()
 
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-				return nullptr;
-			case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(name, vertexSource, fragmentSource);
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(name, vertexSource, fragmentSource);
 		}
 
 		HL_CORE_ASSERT(false, "Unknown RendererAPI!");

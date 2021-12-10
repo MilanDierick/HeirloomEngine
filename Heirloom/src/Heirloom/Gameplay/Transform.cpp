@@ -1,17 +1,20 @@
-#include "hlpch.h"
+//
+// Created by developer on 09/12/2021.
+//
+
 #include "Transform.h"
 
 namespace Heirloom
 {
 	Transform::Transform()
-		: m_Position(0.0f),
-		  m_Scale(0.0f)
+			: m_Position(0.0F),
+			  m_Scale(0.0F)
 	{
 	}
 
 	Transform::Transform(const glm::vec3 position, const glm::vec3 scale)
-		: m_Position(position),
-		  m_Scale(scale)
+			: m_Position(position),
+			  m_Scale(scale)
 	{
 	}
 

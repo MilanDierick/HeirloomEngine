@@ -9,21 +9,21 @@ namespace Heirloom
 	{
 		switch (type)
 		{
-			case ShaderDataType::None: return GL_FLOAT;
-			case ShaderDataType::Float: return GL_FLOAT;
-			case ShaderDataType::Float2: return GL_FLOAT;
-			case ShaderDataType::Float3: return GL_FLOAT;
-			case ShaderDataType::Float4: return GL_FLOAT;
-			case ShaderDataType::Mat3: return GL_FLOAT;
-			case ShaderDataType::Mat4: return GL_FLOAT;
-			case ShaderDataType::Int: return GL_INT;
-			case ShaderDataType::Int2: return GL_INT;
-			case ShaderDataType::Int3: return GL_INT;
-			case ShaderDataType::Int4: return GL_INT;
-			case ShaderDataType::Bool: return GL_BOOL;
+		case ShaderDataType::None: return GL_FLOAT;
+		case ShaderDataType::Float: return GL_FLOAT;
+		case ShaderDataType::Float2: return GL_FLOAT;
+		case ShaderDataType::Float3: return GL_FLOAT;
+		case ShaderDataType::Float4: return GL_FLOAT;
+		case ShaderDataType::Mat3: return GL_FLOAT;
+		case ShaderDataType::Mat4: return GL_FLOAT;
+		case ShaderDataType::Int: return GL_INT;
+		case ShaderDataType::Int2: return GL_INT;
+		case ShaderDataType::Int3: return GL_INT;
+		case ShaderDataType::Int4: return GL_INT;
+		case ShaderDataType::Bool: return GL_BOOL;
 		}
 
-		HL_CORE_ASSERT(false, "Unkown ShaderDataType!");
+		HL_CORE_ASSERT(false, "Unknown ShaderDataType!");
 		return 0;
 	}
 
@@ -60,57 +60,52 @@ namespace Heirloom
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
 
-		#pragma warning (push)
-		#pragma warning (disable : 4312 4244 )
-
 		const auto& layout = vertexBuffer->GetLayout();
 		for (uint32_t index = 0; const auto& element : layout)
 		{
 			switch (element.Type)
 			{
-				case ShaderDataType::Float:
-				case ShaderDataType::Float2:
-				case ShaderDataType::Float3:
-				case ShaderDataType::Float4:
-				case ShaderDataType::Int:
-				case ShaderDataType::Int2:
-				case ShaderDataType::Int3:
-				case ShaderDataType::Int4:
-				case ShaderDataType::Bool:
+			case ShaderDataType::Float:
+			case ShaderDataType::Float2:
+			case ShaderDataType::Float3:
+			case ShaderDataType::Float4:
+			case ShaderDataType::Int:
+			case ShaderDataType::Int2:
+			case ShaderDataType::Int3:
+			case ShaderDataType::Int4:
+			case ShaderDataType::Bool:
+			{
+				glEnableVertexAttribArray(index);
+				glVertexAttribPointer(index,
+						element.GetComponentCount(),
+						ShaderDataTypeToOpenGLBaseType(element.Type),
+						element.Normalized ? GL_TRUE : GL_FALSE,
+						layout.GetStride(),
+						reinterpret_cast<const void*>(element.Offset));
+				index++;
+				break;
+			}
+			case ShaderDataType::Mat3:
+			case ShaderDataType::Mat4:
+			{
+				const uint8_t count = element.GetComponentCount();
+				for (uint8_t i = 0; i < count; i++)
 				{
 					glEnableVertexAttribArray(index);
 					glVertexAttribPointer(index,
-										  element.GetComponentCount(),
-										  ShaderDataTypeToOpenGLBaseType(element.Type),
-										  element.Normalized ? GL_TRUE : GL_FALSE,
-										  layout.GetStride(),
-										  reinterpret_cast<const void*>(element.Offset));
+							count,
+							ShaderDataTypeToOpenGLBaseType(element.Type),
+							element.Normalized ? GL_TRUE : GL_FALSE,
+							layout.GetStride(),
+							reinterpret_cast<const void*>(sizeof(float) * count * i));
+					glVertexAttribDivisor(index, 1);
 					index++;
-					break;
 				}
-				case ShaderDataType::Mat3:
-				case ShaderDataType::Mat4:
-				{
-					const uint8_t count = element.GetComponentCount();
-					for (uint8_t i = 0; i < count; i++)
-					{
-						glEnableVertexAttribArray(index);
-						glVertexAttribPointer(index,
-											  count,
-											  ShaderDataTypeToOpenGLBaseType(element.Type),
-											  element.Normalized ? GL_TRUE : GL_FALSE,
-											  layout.GetStride(),
-											  reinterpret_cast<const void*>(sizeof(float) * count * i));
-						glVertexAttribDivisor(index, 1);
-						index++;
-					}
-					break;
-				}
-				default: HL_CORE_ASSERT(false, "Unknown ShaderDataType!");
+				break;
+			}
+			default: HL_CORE_ASSERT(false, "Unknown ShaderDataType!");
 			}
 		}
-
-		#pragma warning (pop)
 
 		m_VertexBuffers.push_back(vertexBuffer);
 	}

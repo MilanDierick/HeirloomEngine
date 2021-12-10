@@ -1,8 +1,8 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_APPLICATION_H
+#define HEIRLOOM_APPLICATION_H
 
 #include "Core.h"
 #include "Layer.h"
@@ -49,7 +49,6 @@ namespace Heirloom
 		bool m_Minimized = false;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
-		float m_LastFrameTime = 0.0f;
 	};
 
 	/**
@@ -58,3 +57,5 @@ namespace Heirloom
 	 */
 	Application* CreateApplication();
 }
+
+#endif //HEIRLOOM_APPLICATION_H

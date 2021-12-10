@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_OPENGLTEXTURE_H
+#define HEIRLOOM_OPENGLTEXTURE_H
+
 #include "OpenGLShader.h"
 
 #include "Heirloom/Renderer/Texture.h"
@@ -38,3 +40,5 @@ namespace Heirloom
 		GLenum m_InternalFormat, m_DataFormat;
 	};
 }
+
+#endif //HEIRLOOM_OPENGLTEXTURE_H

@@ -1,8 +1,9 @@
-// Author: Milan Dierick
-// Created: 28/06/2021 2:51 AM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_FRAMEBUFFER_H
+#define HEIRLOOM_FRAMEBUFFER_H
 
 #include "Heirloom/Core/Core.h"
 
@@ -32,3 +33,5 @@ namespace Heirloom
 		static Ref<Framebuffer> Create(const FramebufferSpecification& spec);
 	};
 }
+
+#endif //HEIRLOOM_FRAMEBUFFER_H

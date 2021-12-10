@@ -1,8 +1,8 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_HLPCH_H
+#define HEIRLOOM_HLPCH_H
 
 #include <algorithm>
 #include <array>
@@ -15,12 +15,13 @@
 #include <unordered_set>
 #include <utility>
 
-#include "Heirloom/Core/Core.h"
 #include "Heirloom/Core/Log.h"
+#include "Heirloom/Core/Core.h"
 
-// TODO: Consider excluding this in distribution builds
 #include "Heirloom/Profiler/Instrumentation.h"
 
 #ifdef HL_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif
+
+#endif //HEIRLOOM_HLPCH_H

@@ -1,8 +1,12 @@
 // Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+//
+// Created by developer on 09/12/2021.
+//
+
+#ifndef HEIRLOOM_TRANSFORM_H
+#define HEIRLOOM_TRANSFORM_H
 
 #include "Components/Component.h"
 #include "glm/vec3.hpp"
@@ -30,3 +34,5 @@ namespace Heirloom
 		glm::vec3 m_Scale;
 	};
 }
+
+#endif //HEIRLOOM_TRANSFORM_H

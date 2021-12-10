@@ -1,8 +1,9 @@
 // Author: Milan Dierick
-// Created: 03/03/2021 2:37 AM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_MOUSEEVENTARGS_H
+#define HEIRLOOM_MOUSEEVENTARGS_H
+
 #include "Event.h"
 #include "Heirloom/Core/MouseCodes.h"
 
@@ -11,8 +12,8 @@ namespace Heirloom
 	struct MouseMovedEventArgs : EventArgs
 	{
 		[[nodiscard]] MouseMovedEventArgs(const float mouseX, const float mouseY)
-			: MouseX(mouseX),
-			  MouseY(mouseY)
+				: MouseX(mouseX),
+				  MouseY(mouseY)
 		{
 		}
 
@@ -22,8 +23,8 @@ namespace Heirloom
 	struct MouseScrolledEventArgs : EventArgs
 	{
 		[[nodiscard]] MouseScrolledEventArgs(const float xOffset, const float yOffset)
-			: XOffset(xOffset),
-			  YOffset(yOffset)
+				: XOffset(xOffset),
+				  YOffset(yOffset)
 		{
 		}
 
@@ -33,7 +34,7 @@ namespace Heirloom
 	struct MouseButtonPressedEventArgs : EventArgs
 	{
 		[[nodiscard]] explicit MouseButtonPressedEventArgs(const MouseCode button)
-			: Button(button)
+				: Button(button)
 		{
 		}
 
@@ -43,10 +44,12 @@ namespace Heirloom
 	struct MouseButtonReleasedEventArgs : EventArgs
 	{
 		[[nodiscard]] explicit MouseButtonReleasedEventArgs(const MouseCode button)
-			: Button(button)
+				: Button(button)
 		{
 		}
 
 		MouseCode Button;
 	};
 }
+
+#endif //HEIRLOOM_MOUSEEVENTARGS_H

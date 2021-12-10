@@ -1,8 +1,9 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_ORTHOGRAPHICCAMERA_H
+#define HEIRLOOM_ORTHOGRAPHICCAMERA_H
 
 #include <glm/glm.hpp>
 
@@ -34,3 +35,5 @@ namespace Heirloom
 		float m_Rotation = 0.0f;
 	};
 }
+
+#endif //HEIRLOOM_ORTHOGRAPHICCAMERA_H

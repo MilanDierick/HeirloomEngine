@@ -11,9 +11,9 @@ namespace Heirloom
 
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-				break;
-			case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(width, height);
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			break;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(width, height);
 		}
 
 		HL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -26,9 +26,9 @@ namespace Heirloom
 
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-				return nullptr;
-			case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(path);
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(path);
 		}
 
 		HL_CORE_ASSERT(false, "Unknown RendererAPI!");

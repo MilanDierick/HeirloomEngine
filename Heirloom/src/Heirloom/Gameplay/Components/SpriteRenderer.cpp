@@ -1,7 +1,8 @@
-#include "hlpch.h"
-#include "SpriteRenderer.h"
+//
+// Created by developer on 09/12/2021.
+//
 
-// #include "Heirloom/Renderer/Renderer.h"
+#include "SpriteRenderer.h"
 
 Heirloom::SpriteRenderer::SpriteRenderer()
 {

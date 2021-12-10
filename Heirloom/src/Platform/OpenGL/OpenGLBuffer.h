@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_OPENGLBUFFER_H
+#define HEIRLOOM_OPENGLBUFFER_H
+
 #include "Heirloom/Renderer/Buffer.h"
 
 namespace Heirloom
@@ -43,3 +45,5 @@ namespace Heirloom
 		uint32_t m_Count;
 	};
 }
+
+#endif //HEIRLOOM_OPENGLBUFFER_H

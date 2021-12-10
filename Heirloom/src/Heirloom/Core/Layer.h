@@ -1,12 +1,13 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_LAYER_H
+#define HEIRLOOM_LAYER_H
+
 #include <string>
 #include <vector>
 #include "Heirloom/Core/Timestep.h"
-#include "Heirloom/Gameplay/GameObject.h"
+//#include "Heirloom/Gameplay/GameObject.h"
 
 namespace Heirloom
 {
@@ -31,6 +32,9 @@ namespace Heirloom
 
 	protected:
 		std::string m_DebugName;
-		std::vector<GameObject> m_GameObjects;
+//		std::vector<GameObject> m_GameObjects; // TODO: Add GameObjects
 	};
 }
+
+
+#endif //HEIRLOOM_LAYER_H

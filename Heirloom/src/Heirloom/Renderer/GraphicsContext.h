@@ -1,8 +1,9 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_GRAPHICSCONTEXT_H
+#define HEIRLOOM_GRAPHICSCONTEXT_H
 
 namespace Heirloom
 {
@@ -15,3 +16,5 @@ namespace Heirloom
 		virtual void SwapBuffers() = 0;
 	};
 }
+
+#endif //HEIRLOOM_GRAPHICSCONTEXT_H

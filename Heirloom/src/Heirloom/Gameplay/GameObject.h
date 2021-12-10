@@ -1,12 +1,15 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_GAMEOBJECT_H
+#define HEIRLOOM_GAMEOBJECT_H
+
 #include <map>
 #include <typeindex>
 #include "Transform.h"
 #include "Components/Component.h"
+#include "Heirloom/Core/Core.h"
 
 namespace Heirloom
 {
@@ -19,14 +22,14 @@ namespace Heirloom
 
 		// Copy & move operations
 		GameObject(const GameObject& other)
-			: m_Transform(other.m_Transform),
-			  m_Components(other.m_Components)
+				: m_Transform(other.m_Transform),
+				  m_Components(other.m_Components)
 		{
 		}
 
 		GameObject(GameObject&& other) noexcept
-			: m_Transform(std::move(other.m_Transform)),
-			  m_Components(std::move(other.m_Components))
+				: m_Transform(std::move(other.m_Transform)),
+				  m_Components(std::move(other.m_Components))
 		{
 		}
 
@@ -75,10 +78,10 @@ namespace Heirloom
 		HL_PROFILE_FUNCTION()
 
 		const std::pair<std::map<uint32_t, Component*>::iterator, bool> value = m_Components.emplace(
-			typeid(ComponentType),
-			component);
+				typeid(ComponentType),
+				component);
 
-		HL_CORE_TRACE("Added component of type {0} to game object", typeid(ComponentType));
+		HL_CORE_TRACE("Added component of type {0} to game object", typeid(ComponentType).name());
 		return value.second ? value.first->second : nullptr;
 	}
 
@@ -103,7 +106,9 @@ namespace Heirloom
 	{
 		HL_PROFILE_FUNCTION()
 
-		HL_CORE_TRACE("Removed component of type {0} from game object", typeid(ComponentType));
+		HL_CORE_TRACE("Removed component of type {0} from game object", typeid(ComponentType).name());
 		return m_Components.erase(typeid(component));
 	}
 }
+
+#endif //HEIRLOOM_GAMEOBJECT_H

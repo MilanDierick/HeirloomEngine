@@ -1,8 +1,10 @@
-﻿#include "hlpch.h"
+// Author: Milan Dierick
+// Solution: Heirloom
+
+#include "hlpch.h"
 #include "Application.h"
 #include "GLFW/glfw3.h"
 
-#include "Heirloom/Audio/SoundService.h"
 #include "Heirloom/Renderer/Renderer.h"
 
 // TODO: No magic numbers, this should probably be in a settings object
@@ -10,7 +12,7 @@
 
 namespace Heirloom
 {
-	#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
 
@@ -49,11 +51,11 @@ namespace Heirloom
 			HL_PROFILE_SCOPE("Frame")
 
 			const std::chrono::time_point<std::chrono::steady_clock> currentTimePoint =
-				std::chrono::steady_clock::now();
+					std::chrono::steady_clock::now();
 
 			const auto elapsedTime = std::chrono::time_point_cast<std::chrono::milliseconds>(currentTimePoint).
-				time_since_epoch() - std::chrono::time_point_cast<std::chrono::milliseconds>(previousTimePoint).
-				time_since_epoch();
+					time_since_epoch() - std::chrono::time_point_cast<std::chrono::milliseconds>(previousTimePoint).
+					time_since_epoch();
 
 			previousTimePoint = currentTimePoint;
 
@@ -79,8 +81,6 @@ namespace Heirloom
 
 				lag -= MS_PER_TICK;
 			}
-
-			SoundService::GetSoundEngine()->Update();
 
 			{
 				HL_PROFILE_SCOPE("LayerStack OnRender")

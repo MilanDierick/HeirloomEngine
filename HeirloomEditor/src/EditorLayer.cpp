@@ -1,7 +1,5 @@
 #include "EditorLayer.h"
 
-#include "Heirloom/Audio/SoundService.h"
-
 namespace Heirloom
 {
 	EditorLayer::EditorLayer()
@@ -136,7 +134,7 @@ namespace Heirloom
 			{
 				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 				// which we can't undo at the moment without finer window depth/z control.
-				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+//				ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
 
 				if (ImGui::MenuItem("Exit"))
 				{

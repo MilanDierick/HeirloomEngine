@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_ORTHOGRAPHICCAMERACONTROLLER_H
+#define HEIRLOOM_ORTHOGRAPHICCAMERACONTROLLER_H
+
 #include "Heirloom/Core/Timestep.h"
 #include "Heirloom/Events/ApplicationEventArgs.h"
 #include "Heirloom/Events/MouseEventArgs.h"
@@ -38,3 +40,5 @@ namespace Heirloom
 		float m_CameraTranslationSpeed = 5.0f, m_CameraRotationSpeed = 180.0f;
 	};
 }
+
+#endif //HEIRLOOM_ORTHOGRAPHICCAMERACONTROLLER_H

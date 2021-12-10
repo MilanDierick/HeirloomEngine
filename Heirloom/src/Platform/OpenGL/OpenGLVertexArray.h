@@ -1,8 +1,13 @@
 // Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+//
+// Created by developer on 09/12/2021.
+//
+
+#ifndef HEIRLOOM_OPENGLVERTEXARRAY_H
+#define HEIRLOOM_OPENGLVERTEXARRAY_H
+
 #include "Heirloom/Renderer/VertexArray.h"
 
 namespace Heirloom
@@ -34,3 +39,5 @@ namespace Heirloom
 		Ref<IndexBuffer> m_IndexBuffer;
 	};
 }
+
+#endif //HEIRLOOM_OPENGLVERTEXARRAY_H

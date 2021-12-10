@@ -1,5 +1,7 @@
-// ReSharper disable CppUseElementsView
-#include "hlpch.h"
+//
+// Created by developer on 09/12/2021.
+//
+
 #include "GameObject.h"
 
 namespace Heirloom

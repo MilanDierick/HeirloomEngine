@@ -1,4 +1,11 @@
-#pragma once
+//
+// Created by developer on 09/12/2021.
+//
+
+#ifndef HEIRLOOM_MOUSECODES_H
+#define HEIRLOOM_MOUSECODES_H
+
+#include <ostream>
 
 namespace Heirloom
 {
@@ -39,3 +46,6 @@ namespace Heirloom
 #define HL_MOUSE_BUTTON_LEFT   ::Heirloom::Mouse::ButtonLeft
 #define HL_MOUSE_BUTTON_RIGHT  ::Heirloom::Mouse::ButtonRight
 #define HL_MOUSE_BUTTON_MIDDLE ::Heirloom::Mouse::ButtonMiddle
+
+
+#endif //HEIRLOOM_MOUSECODES_H

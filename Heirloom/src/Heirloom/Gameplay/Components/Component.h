@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_COMPONENT_H
+#define HEIRLOOM_COMPONENT_H
+
 #include "Heirloom/Core/Timestep.h"
 
 namespace Heirloom
@@ -16,3 +18,6 @@ namespace Heirloom
 		virtual void Render() const = 0;
 	};
 }
+
+
+#endif //HEIRLOOM_COMPONENT_H

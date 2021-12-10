@@ -1,14 +1,17 @@
-﻿#pragma once
-#include "Heirloom/Profiler/Instrumentation.h"
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#ifdef HL_PLATFORM_WINDOWS
+#ifndef HEIRLOOM_ENTRYPOINT_H
+#define HEIRLOOM_ENTRYPOINT_H
+
+#include "hlpch.h"
 
 extern Heirloom::Application* Heirloom::CreateApplication();
 
-// ReSharper disable once CppNonInlineFunctionDefinitionInHeaderFile
 int main()
 {
 	Heirloom::Log::Init();
+	HL_CORE_INFO("Starting application...");
 
 	HL_PROFILE_BEGIN_SESSION("Initialization", "HeirloomProfiling-Initialization.json");
 	Heirloom::Application* app = Heirloom::CreateApplication();
@@ -32,4 +35,5 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-#endif
+
+#endif //HEIRLOOM_ENTRYPOINT_H
