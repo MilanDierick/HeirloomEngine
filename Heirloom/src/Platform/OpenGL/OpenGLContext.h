@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_OPENGLCONTEXT_H
+#define HEIRLOOM_OPENGLCONTEXT_H
+
 #include "Heirloom/Renderer/GraphicsContext.h"
 
 struct GLFWwindow;
@@ -21,3 +23,5 @@ namespace Heirloom
 		GLFWwindow* m_WindowHandle;
 	};
 }
+
+#endif //HEIRLOOM_OPENGLCONTEXT_H

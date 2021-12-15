@@ -1,10 +1,12 @@
 // Author: Milan Dierick
-// Created: 02/03/2021 8:27 PM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_EVENT_H
+#define HEIRLOOM_EVENT_H
+
 #include <array>
 #include <functional>
+#include "Heirloom/Core/Core.h"
 
 #define HL_MAX_EVENT_LISTENERS 32
 
@@ -29,11 +31,11 @@ namespace Heirloom
 
 	template <typename EventArgsType, typename EventCallbackFunc>
 	Event<EventArgsType, EventCallbackFunc>& Event<EventArgsType, EventCallbackFunc>::operator+=(
-		EventCallbackFunc eventCallbackFunc)
+			EventCallbackFunc eventCallbackFunc)
 	{
 		HL_CORE_ASSERT(m_EventListenerCount + 1 < HL_MAX_EVENT_LISTENERS,
-					   "Failed registering an event listener, only {0} listeners per event are supported!",
-					   HL_MAX_EVENT_LISTENERS);
+				"Failed registering an event listener, only {0} listeners per event are supported!",
+				HL_MAX_EVENT_LISTENERS);
 
 		m_EventListeners[m_EventListenerCount] = eventCallbackFunc;
 		++m_EventListenerCount;
@@ -50,3 +52,5 @@ namespace Heirloom
 		}
 	}
 }
+
+#endif //HEIRLOOM_EVENT_H

@@ -20,13 +20,9 @@ namespace Heirloom
 			PushLayer(new EditorLayer());
 			HL_INFO("Initialized Sandbox application");
 		}
-
-		~EditorApplication() override
-		{
-		}
 	};
 
-	Application* Heirloom::CreateApplication()
+	Application* CreateApplication()
 	{
 		HL_PROFILE_FUNCTION()
 

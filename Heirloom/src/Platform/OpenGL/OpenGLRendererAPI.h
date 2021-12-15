@@ -1,8 +1,13 @@
 // Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+//
+// Created by developer on 09/12/2021.
+//
+
+#ifndef HEIRLOOM_OPENGLRENDERERAPI_H
+#define HEIRLOOM_OPENGLRENDERERAPI_H
+
 #include "Heirloom/Renderer/RendererAPI.h"
 
 namespace Heirloom
@@ -18,3 +23,5 @@ namespace Heirloom
 		void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) override;
 	};
 }
+
+#endif //HEIRLOOM_OPENGLRENDERERAPI_H

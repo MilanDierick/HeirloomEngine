@@ -1,8 +1,8 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_LOG_H
+#define HEIRLOOM_LOG_H
 
 #include <spdlog/spdlog.h>
 
@@ -22,6 +22,12 @@ namespace Heirloom
 	};
 }
 
+template <typename ... Params>
+constexpr static void CoreTrace(Params... parameters)
+{
+	Heirloom::Log::GetCoreLogger()->trace(parameters...);
+}
+
 // Core log macros
 #define HL_CORE_TRACE(...) 	::Heirloom::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define HL_CORE_INFO(...) 	::Heirloom::Log::GetCoreLogger()->info(__VA_ARGS__)
@@ -36,16 +42,4 @@ namespace Heirloom
 #define HL_ERROR(...) 		::Heirloom::Log::GetClientLogger()->error(__VA_ARGS__)
 #define HL_FATAL(...) 		::Heirloom::Log::GetClientLogger()->critical(__VA_ARGS__)
 
-// // Core log macros
-// #define HL_CORE_TRACE(...)
-// #define HL_CORE_INFO(...) 
-// #define HL_CORE_WARN(...) 
-// #define HL_CORE_ERROR(...)
-// #define HL_CORE_FATAL(...)
-//
-// // Client log macros
-// #define HL_TRACE(...) 
-// #define HL_INFO(...) 
-// #define HL_WARN(...) 
-// #define HL_ERROR(...) 
-// #define HL_FATAL(...) 
+#endif //HEIRLOOM_LOG_H

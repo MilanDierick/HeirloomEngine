@@ -34,10 +34,10 @@ namespace Heirloom
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& name,
-							   const std::string& vertexSource,
-							   const std::string& fragmentSource)
-		: m_RendererID(0),
-		  m_Name(name)
+			const std::string& vertexSource,
+			const std::string& fragmentSource)
+			: m_RendererID(0),
+			  m_Name(name)
 	{
 		HL_PROFILE_FUNCTION()
 
@@ -158,9 +158,7 @@ namespace Heirloom
 		if (in)
 		{
 			in.seekg(0, std::ios::end);
-			#pragma warning(disable : 4244)
 			result.resize(in.tellg());
-			#pragma warning(default : 4244)
 			in.seekg(0, std::ios::beg);
 			in.read(&result[0], result.size());
 			in.close();
@@ -194,9 +192,9 @@ namespace Heirloom
 			const size_t nextLinePos                  = source.find_first_not_of("\r\n", eol);
 			pos                                       = source.find(typeToken, nextLinePos);
 			shaderSources[ShaderTypeFromString(type)] = source.substr(nextLinePos,
-																	  pos - (nextLinePos == std::string::npos
-																				 ? source.size() - 1
-																				 : nextLinePos));
+					pos - (nextLinePos == std::string::npos
+						   ? source.size() - 1
+						   : nextLinePos));
 		}
 
 		return shaderSources;

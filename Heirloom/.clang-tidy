@@ -1,0 +1,23 @@
+Checks: '*,
+        -modernize-use-trailing-return-type,
+        -llvmlibc-implementation-in-namespace,
+        -llvmlibc-callee-namespace,
+        -fuchsia-default-arguments-calls,
+        -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+        -hicpp-no-array-decay,
+        -google-readability-namespace-comments,
+        -llvm-namespace-comment,
+        -llvm-header-guard,
+        -altera-unroll-loops,
+        -altera-id-dependent-backward-branch,
+        -cppcoreguidelines-avoid-non-const-global-variables,
+        -hicpp-explicit-conversions,
+        -hicpp-special-member-functions,
+        -altera-struct-pack-align,
+        -readability-identifier-length,
+        -google-readability-todo,
+        -fuchsia-default-arguments-declarations'
+
+CheckOptions:
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: 1

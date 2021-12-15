@@ -1,10 +1,12 @@
-﻿#include "hlpch.h"
+// Author: Milan Dierick
+// Solution: Heirloom
+
+#include "hlpch.h"
 #include "ImGuiLayer.h"
 
 #include "imgui.h"
-
-#include "examples/imgui_impl_glfw.h"
-#include "examples/imgui_impl_opengl3.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 #include "Heirloom/Core/Application.h"
 
@@ -14,7 +16,7 @@
 namespace Heirloom
 {
 	ImGuiLayer::ImGuiLayer()
-		: Layer("ImGuiLayer")
+			: Layer("ImGuiLayer")
 	{
 	}
 
@@ -108,7 +110,7 @@ namespace Heirloom
 		ImGuiIO& io      = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize   = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
-								  static_cast<float>(app.GetWindow().GetHeight()));
+				static_cast<float>(app.GetWindow().GetHeight()));
 
 		{
 			HL_PROFILE_SCOPE("ImGui::End Rendering")

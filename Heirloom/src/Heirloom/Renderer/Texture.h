@@ -1,8 +1,14 @@
 // Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+//
+// Created by developer on 09/12/2021.
+//
+
+#ifndef HEIRLOOM_TEXTURE_H
+#define HEIRLOOM_TEXTURE_H
+
+#include "Heirloom/Core/Core.h"
 #include "glm/fwd.hpp"
 
 namespace Heirloom
@@ -36,3 +42,5 @@ namespace Heirloom
 		static Ref<Texture2D> Create(const std::string& path);
 	};
 }
+
+#endif //HEIRLOOM_TEXTURE_H

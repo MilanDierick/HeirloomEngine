@@ -1,8 +1,10 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_OPENGLSHADER_H
+#define HEIRLOOM_OPENGLSHADER_H
+
 #include <glm/glm.hpp>
 #include "Heirloom/Renderer/Shader.h"
 
@@ -54,3 +56,5 @@ namespace Heirloom
 		std::string m_Name;
 	};
 }
+
+#endif //HEIRLOOM_OPENGLSHADER_H

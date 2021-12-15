@@ -1,8 +1,11 @@
-#pragma once
+// Author: Milan Dierick
+// Solution: Heirloom
+
+#ifndef HEIRLOOM_INSTRUMENTATION_H
+#define HEIRLOOM_INSTRUMENTATION_H
 
 #include <chrono>
 #include <fstream>
-// ReSharper disable once CppUnusedIncludeDirective
 #include <iomanip>
 #include <string>
 #include <thread>
@@ -43,7 +46,7 @@ namespace Heirloom
 		std::mutex m_Mutex;
 		InstrumentationSession* m_CurrentSession;
 		std::ofstream m_OutputStream;
-		int m_ProfileCount;
+//		[[maybe_unused]] int m_ProfileCount;
 	};
 
 	class InstrumentationTimer
@@ -60,11 +63,10 @@ namespace Heirloom
 		bool m_Stopped;
 	};
 
-	#define TOKENPASTE(x, y) x ## y
-	#define TOKENPASTE2(x, y) TOKENPASTE(x, y)
+#define TOKENPASTE(x, y) x ## y
+#define TOKENPASTE2(x, y) TOKENPASTE(x, y)
 
-	#undef HL_PROFILE
-	#if HL_PROFILE
+#if HL_PROFILE
 	// Resolve which function signature macro will be used. Note that this only
 	// is resolved when the (pre)compiler starts, so the syntax highlighting
 	// could mark the wrong one in your editor!
@@ -89,10 +91,12 @@ namespace Heirloom
 	#define HL_PROFILE_END_SESSION() ::Heirloom::Instrumentation::Get().EndSession()
 	#define HL_PROFILE_SCOPE(name) ::Heirloom::InstrumentationTimer TOKENPASTE2(timer, __LINE__)(name);
 	#define HL_PROFILE_FUNCTION() HL_PROFILE_SCOPE(HL_FUNC_SIG)
-	#else
-	#define HL_PROFILE_BEGIN_SESSION(name, filepath);
-	#define HL_PROFILE_END_SESSION();
-	#define HL_PROFILE_SCOPE(name);
-	#define HL_PROFILE_FUNCTION();
-	#endif
+#else
+#define HL_PROFILE_BEGIN_SESSION(name, filepath);
+#define HL_PROFILE_END_SESSION();
+#define HL_PROFILE_SCOPE(name);
+#define HL_PROFILE_FUNCTION();
+#endif
 }
+
+#endif //HEIRLOOM_INSTRUMENTATION_H

@@ -1,8 +1,9 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_WINDOW_H
+#define HEIRLOOM_WINDOW_H
+
 #include "Heirloom/Events/ApplicationEventArgs.h"
 
 namespace Heirloom
@@ -14,11 +15,11 @@ namespace Heirloom
 		unsigned int Height;
 
 		explicit WindowProps(const std::string& title  = "Heirloom Engine",
-							 const unsigned int width  = 1280,
-							 const unsigned int height = 960)
-			: Title(title),
-			  Width(width),
-			  Height(height)
+				const unsigned int width  = 2560,
+				const unsigned int height = 1440)
+				: Title(title),
+				  Width(width),
+				  Height(height)
 		{
 		}
 	};
@@ -49,3 +50,6 @@ namespace Heirloom
 		static Window* Create(const WindowProps& props = WindowProps());
 	};
 }
+
+
+#endif //HEIRLOOM_WINDOW_H

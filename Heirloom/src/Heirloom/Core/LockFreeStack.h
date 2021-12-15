@@ -1,10 +1,10 @@
-﻿// Author: Milan Dierick
-// Created: 28/03/2021 8:15 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_LOCKFREESTACK_H
+#define HEIRLOOM_LOCKFREESTACK_H
 
-#pragma once
 #include <atomic>
 
 namespace Heirloom
@@ -20,8 +20,8 @@ namespace Heirloom
 		Node() = default;
 
 		Node(T value, Node* nextNode)
-			: pNext(nextNode),
-			  Value(value)
+				: pNext(nextNode),
+				  Value(value)
 		{
 		}
 	};
@@ -105,3 +105,5 @@ namespace Heirloom
 		return size;
 	}
 }
+
+#endif //HEIRLOOM_LOCKFREESTACK_H

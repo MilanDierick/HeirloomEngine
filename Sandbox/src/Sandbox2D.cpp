@@ -1,21 +1,14 @@
 #include "Sandbox2D.h"
 
-#include "Heirloom/Audio/SoundService.h"
-
 Sandbox2D::Sandbox2D()
 	: Layer("Sandbox2D"),
-	  m_CameraController(1280.0f / 960.0f, false),
-	  m_BackgroundMusic(Heirloom::CreateRef<Heirloom::Sound>("assets/sounds/breakout.mp3", 1.0f, false))
+	  m_CameraController(1280.0f / 960.0f, false)
 {
 }
 
 void Sandbox2D::OnAttach()
 {
 	HL_PROFILE_FUNCTION()
-
-	Heirloom::SoundService::Provide(new Heirloom::SimpleSoundEngine());
-
-	Heirloom::SoundService::GetSoundEngine()->Play("assets/sounds/breakout.mp3");
 
 	m_BackgroundTexture = Heirloom::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_Logo              = Heirloom::Texture2D::Create("assets/textures/logo.png");
@@ -29,12 +22,12 @@ void Sandbox2D::OnUpdate(const Heirloom::Timestep)
 {
 	HL_PROFILE_FUNCTION()
 
-	if (Heirloom::Input::IsKeyPressed(Heirloom::KeyCode::Space))
-	{
-		Heirloom::SoundService::GetSoundEngine()->Stop(m_BackgroundMusic);
-	}
-
 	m_CameraController.Update(Heirloom::Timestep{0.016f});
+
+	if (Heirloom::Input::IsKeyPressed(Heirloom::KeyCode::Escape))
+	{
+		Heirloom::Application::Get().Close();
+	}
 }
 
 void Sandbox2D::OnRender()

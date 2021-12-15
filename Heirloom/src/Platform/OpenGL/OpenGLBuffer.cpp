@@ -54,7 +54,7 @@ namespace Heirloom
 	// =================================================================================================================
 
 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, const uint32_t count)
-		: m_Count(count)
+			: m_Count(count)
 	{
 		HL_PROFILE_FUNCTION()
 

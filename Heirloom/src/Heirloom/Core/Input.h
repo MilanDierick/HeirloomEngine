@@ -1,9 +1,10 @@
 // Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
-#include "KeyCodes.h"
+#ifndef HEIRLOOM_INPUT_H
+#define HEIRLOOM_INPUT_H
+
+#include "Heirloom/Core/KeyCodes.h"
 #include "Heirloom/Events/Event.h"
 #include "Heirloom/Events/KeyEventArgs.h"
 #include "Heirloom/Events/MouseEventArgs.h"
@@ -29,3 +30,5 @@ namespace Heirloom
 		static float GetMouseY();
 	};
 }
+
+#endif //HEIRLOOM_INPUT_H

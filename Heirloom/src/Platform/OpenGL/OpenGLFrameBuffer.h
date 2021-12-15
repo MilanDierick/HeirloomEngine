@@ -1,10 +1,11 @@
-// Author: Milan Dierick
-// Created: 28/06/2021 2:54 AM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_OPENGLFRAMEBUFFER_H
+#define HEIRLOOM_OPENGLFRAMEBUFFER_H
 
-#include "Heirloom/Renderer/Framebuffer.h"
+#include "Heirloom/Renderer/FrameBuffer.h"
 
 namespace Heirloom
 {
@@ -30,3 +31,5 @@ namespace Heirloom
 		FramebufferSpecification m_Specification;
 	};
 }
+
+#endif //HEIRLOOM_OPENGLFRAMEBUFFER_H

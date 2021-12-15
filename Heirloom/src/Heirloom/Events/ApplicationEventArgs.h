@@ -1,8 +1,9 @@
 // Author: Milan Dierick
-// Created: 03/03/2021 2:47 AM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_APPLICATIONEVENTARGS_H
+#define HEIRLOOM_APPLICATIONEVENTARGS_H
+
 #include "Event.h"
 
 namespace Heirloom
@@ -10,8 +11,8 @@ namespace Heirloom
 	struct WindowResizedEventArgs : EventArgs
 	{
 		[[nodiscard]] WindowResizedEventArgs(const unsigned width, const unsigned height)
-			: Width(width),
-			  Height(height)
+				: Width(width),
+				  Height(height)
 		{
 		}
 
@@ -34,3 +35,5 @@ namespace Heirloom
 	{
 	};
 }
+
+#endif //HEIRLOOM_APPLICATIONEVENTARGS_H

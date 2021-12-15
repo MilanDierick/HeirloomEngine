@@ -1,8 +1,10 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_WINDOWSWINDOW_H
+#define HEIRLOOM_WINDOWSWINDOW_H
+
 #include "GLFW/glfw3.h"
 
 #include "Heirloom/Core/Window.h"
@@ -53,3 +55,5 @@ namespace Heirloom
 		WindowData m_Data;
 	};
 }
+
+#endif //HEIRLOOM_WINDOWSWINDOW_H

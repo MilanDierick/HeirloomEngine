@@ -1,13 +1,13 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_IMGUILAYER_H
+#define HEIRLOOM_IMGUILAYER_H
+
 #include "Heirloom/Core/Layer.h"
 
 namespace Heirloom
 {
-	// TODO: Start providing custom implementations for some of these ImGui example functions, they are slow!
 	class ImGuiLayer final : public Layer
 	{
 	public:
@@ -29,8 +29,7 @@ namespace Heirloom
 
 		void Begin();
 		void End();
-
-	private:
-		float m_Time = 0.0f;
 	};
 }
+
+#endif //HEIRLOOM_IMGUILAYER_H

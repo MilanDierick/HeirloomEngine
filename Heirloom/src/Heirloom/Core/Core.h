@@ -1,8 +1,8 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_CORE_H
+#define HEIRLOOM_CORE_H
 
 #include <memory>
 
@@ -14,7 +14,7 @@
 		#define HL_PLATFORM_WINDOWS
 #endif
 #elif defined(__APPLE__) || defined(__MACH__)
-	#include <TargetConditionals.h>
+#include <TargetConditionals.h>
 #if TARGET_IPHONE_SIMULATOR == 1
 		#error "IOS simulator is not supported!"
 #elif TARGET_OS_IPHONE == 1
@@ -27,44 +27,45 @@
 		#error "Unknown Apple platform!"
 #endif
 #elif defined(__ANDROID__)
-	#define HL_PLATFORM_ANDROID
+#define HL_PLATFORM_ANDROID
 	#error "Android is not supported!"
 #elif defined(__linux__)
-	#define HL_PLATFORM_LINUX
-	#error "Linux is not supported!"
+#define HL_PLATFORM_LINUX
 #else
-	#error "Unknown platform!"
+#error "Unknown platform!"
 #endif
 
 #ifdef HL_DEBUG
 #if defined(HL_PLATFORM_WINDOWS)
 #define HL_DEBUGBREAK() __debugbreak()
 #elif defined(HL_PLATFORM_LINUX)
-		#include <signal.h>
-		#define HL_DEBUGBREAK() raise(SIGTRAP)
+#include <csignal>
+#define HL_DEBUGBREAK() raise(SIGTRAP)
 #else
-		#error "Platform doesn't support debugbreak yet!"
+#error "Platform doesn't support debugbreak yet!"
 #endif
 #define HL_ENABLE_ASSERTS
 #else
-	#define HL_DEBUGBREAK()
+#define HL_DEBUGBREAK()
 #endif
 
 #include "Log.h"
 
 #include "Heirloom/Profiler/Instrumentation.h"
 
-#ifdef HL_ENABLE_ASSERTS
+#ifdef HL_ENABLE_ASSERTS // false -> break
 #define HL_ASSERT(x, ...) { if(!(x)) { HL_ERROR("Assertion Failed: {0}", __VA_ARGS__); HL_DEBUGBREAK(); } }
 #define HL_CORE_ASSERT(x, ...) { if(!(x)) { HL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); HL_DEBUGBREAK(); } }
 #else
-	#define HL_ASSERT(x, ...)
+#define HL_ASSERT(x, ...)
 	#define HL_CORE_ASSERT(x, ...)
 #endif
 
 #define BIT(x) (1 << x)
 
 #define HL_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+#define ALIGNED(x) __attribute__((aligned(x))) // NOLINT
 
 namespace Heirloom
 {
@@ -85,4 +86,9 @@ namespace Heirloom
 	{
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
+
+	template <typename T>
+	using WeakRef = std::weak_ptr<T>;
 }
+
+#endif //HEIRLOOM_CORE_H

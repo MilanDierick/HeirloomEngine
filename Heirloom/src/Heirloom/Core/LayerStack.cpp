@@ -1,8 +1,11 @@
-﻿#include "hlpch.h"
+// Author: Milan Dierick
+// Solution: Heirloom
+
+#include "hlpch.h"
 #include "LayerStack.h"
 
 Heirloom::LayerStack::LayerStack()
-	: m_LayerInsertIndex(0)
+		: m_LayerInsertIndex(0)
 {
 }
 

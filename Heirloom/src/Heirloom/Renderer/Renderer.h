@@ -1,8 +1,9 @@
-// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+//
+// Created by developer on 09/12/2021.
+//
 
-#pragma once
+#ifndef HEIRLOOM_RENDERER_H
+#define HEIRLOOM_RENDERER_H
 
 #include "OrthographicCamera.h"
 #include "RenderCommand.h"
@@ -19,8 +20,8 @@ namespace Heirloom
 		static void EndScene();
 
 		static void Submit(const Ref<Shader>& shader,
-						   const Ref<VertexArray>& vertexArray,
-						   const glm::mat4& transform = glm::mat4(1.0f));
+				const Ref<VertexArray>& vertexArray,
+				const glm::mat4& transform = glm::mat4(1.0f));
 
 		static RendererAPI::API GetAPI()
 		{
@@ -36,3 +37,5 @@ namespace Heirloom
 		static Scope<SceneData> s_SceneData;
 	};
 }
+
+#endif //HEIRLOOM_RENDERER_H

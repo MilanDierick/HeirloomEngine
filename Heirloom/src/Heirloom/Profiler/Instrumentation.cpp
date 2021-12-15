@@ -1,11 +1,13 @@
+// Author: Milan Dierick
+// Solution: Heirloom
+
 #include "hlpch.h"
 #include "Instrumentation.h"
 
 namespace Heirloom
 {
 	Instrumentation::Instrumentation()
-		: m_CurrentSession(nullptr),
-		  m_ProfileCount(0)
+			: m_CurrentSession(nullptr)
 	{
 	}
 
@@ -22,8 +24,8 @@ namespace Heirloom
 			{
 				// Edge case: BeginSession() might be before Log::Init()
 				HL_CORE_ERROR("Instrumentor::BeginSession('{0}') when session '{1}' already open.",
-							  name.c_str(),
-							  m_CurrentSession->Name.c_str());
+						name.c_str(),
+						m_CurrentSession->Name.c_str());
 			}
 
 			InternalEndSession();
@@ -109,8 +111,8 @@ namespace Heirloom
 	}
 
 	InstrumentationTimer::InstrumentationTimer(const char* name)
-		: m_Name(name),
-		  m_Stopped(false)
+			: m_Name(name),
+			  m_Stopped(false)
 	{
 		m_StartTimePoint = std::chrono::steady_clock::now();
 	}
@@ -129,8 +131,8 @@ namespace Heirloom
 
 		const auto highResStart = FloatingPointMicroseconds{m_StartTimePoint.time_since_epoch()};
 		const auto elapsedTime  = std::chrono::time_point_cast<std::chrono::microseconds>(endTimePoint).
-			time_since_epoch() - std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimePoint).
-			time_since_epoch();
+				time_since_epoch() - std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimePoint).
+				time_since_epoch();
 
 		Instrumentation::Get().WriteProfile({m_Name, highResStart, elapsedTime, std::this_thread::get_id()});
 

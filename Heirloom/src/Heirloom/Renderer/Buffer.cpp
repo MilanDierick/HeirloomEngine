@@ -1,4 +1,7 @@
-#include "hlpch.h"
+//
+// Created by developer on 09/12/2021.
+//
+
 #include "Buffer.h"
 
 #include "Renderer.h"
@@ -23,9 +26,9 @@ namespace Heirloom
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-				return nullptr;
-			case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(size);
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(size);
 		}
 
 		HL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -37,9 +40,9 @@ namespace Heirloom
 		HL_PROFILE_FUNCTION()
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-				return nullptr;
-			case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(vertices, size);
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(vertices, size);
 		}
 
 		HL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -51,9 +54,9 @@ namespace Heirloom
 		HL_PROFILE_FUNCTION()
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-				return nullptr;
-			case RendererAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, count);
+		case RendererAPI::API::None: HL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, count);
 		}
 
 		HL_CORE_ASSERT(false, "Unknown RendererAPI!");

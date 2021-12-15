@@ -1,8 +1,8 @@
 // Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_TIMESTEP_H
+#define HEIRLOOM_TIMESTEP_H
 
 namespace Heirloom
 {
@@ -36,3 +36,5 @@ namespace Heirloom
 		float m_Time;
 	};
 }
+
+#endif //HEIRLOOM_TIMESTEP_H

@@ -1,8 +1,9 @@
-﻿// Author: Milan Dierick
-// Created: 02/03/2021 7:24 PM
-// Solution: HeirloomEngine
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#pragma once
+#ifndef HEIRLOOM_LAYERSTACK_H
+#define HEIRLOOM_LAYERSTACK_H
+
 #include "Layer.h"
 
 namespace Heirloom
@@ -38,3 +39,5 @@ namespace Heirloom
 		unsigned int m_LayerInsertIndex;
 	};
 }
+
+#endif //HEIRLOOM_LAYERSTACK_H

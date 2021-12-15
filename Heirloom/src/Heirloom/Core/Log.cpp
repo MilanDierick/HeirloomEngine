@@ -1,8 +1,9 @@
-﻿#include "hlpch.h"
-#include "Log.h"
+// Author: Milan Dierick
+// Solution: Heirloom
 
-#include "spdlog/sinks/basic_file_sink.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+#include "Log.h"
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Heirloom
 {
@@ -11,7 +12,7 @@ namespace Heirloom
 
 	void Log::Init()
 	{
-		HL_PROFILE_FUNCTION()
+//		HL_PROFILE_FUNCTION()
 
 		std::vector<spdlog::sink_ptr> logSinks;
 		logSinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());

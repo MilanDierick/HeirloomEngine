@@ -1,3 +1,7 @@
+//
+// Created by developer on 09/12/2021.
+//
+
 #include "hlpch.h"
 #include "OrthographicCameraController.h"
 #include "Heirloom/Core/Application.h"
@@ -7,15 +11,15 @@
 namespace Heirloom
 {
 	OrthographicCameraController::OrthographicCameraController(const float aspectRatio, const bool rotation)
-		: m_AspectRatio(aspectRatio),
-		  m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel),
-		  m_Rotation(rotation)
+			: m_AspectRatio(aspectRatio),
+			  m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel),
+			  m_Rotation(rotation)
 	{
 		HL_PROFILE_FUNCTION()
 
 		Input::MouseScrolledEvent += HL_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolledEvent);
 		Application::Get().GetWindow().WindowResizedEvent += HL_BIND_EVENT_FN(
-			OrthographicCameraController::OnWindowResizedEvent);
+				OrthographicCameraController::OnWindowResizedEvent);
 	}
 
 	void OrthographicCameraController::Update(const Timestep ts)
@@ -108,3 +112,4 @@ namespace Heirloom
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 	}
 }
+
