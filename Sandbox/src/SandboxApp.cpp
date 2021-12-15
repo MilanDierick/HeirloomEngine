@@ -18,10 +18,6 @@ public:
 		PushLayer(new Sandbox2D);
 		HL_INFO("Initialized Sandbox application");
 	}
-
-	~SandboxApplication() override
-	{
-	}
 };
 
 Heirloom::Application* Heirloom::CreateApplication()

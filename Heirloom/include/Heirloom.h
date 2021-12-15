@@ -17,10 +17,9 @@
 #include "Heirloom/ImGui/ImGuiLayer.h"
 // =================================================================
 
-// ==== Gameplay ===================================================
-#include "Heirloom/Gameplay/GameObject.h"
-#include "Heirloom/Gameplay/Components/SpriteRenderer.h"
-// =================================================================
+#include "Heirloom/Scene/Scene.h"
+#include "Heirloom/Scene/Entity.h"
+#include "Heirloom/Scene/Components.h"
 
 // ==== Renderer ===================================================
 #include "Heirloom/Renderer/FrameBuffer.h"

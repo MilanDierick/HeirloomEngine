@@ -1,6 +1,19 @@
 cmake_minimum_required(VERSION 3.21)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
+set(CMAKE_C_FLAGS "-Wall -std=c99 -m64")
+set(CMAKE_C_FLAGS_DEBUG "-g")
+set(CMAKE_C_FLAGS_MINSIZEREL "-Os -DNDEBUG")
+set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g")
+
+set(CMAKE_CXX_FLAGS "-Wall -std=c++20 -m64")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 
 add_subdirectory(Heirloom)
 
@@ -14,6 +27,7 @@ target_include_directories(Sandbox PRIVATE
         Heirloom/thirdparty/spdlog/include
         Heirloom/thirdparty/imgui
         Heirloom/thirdparty/glm
+        Heirloom/thirdparty/entt/src
         )
 
 target_link_libraries(Sandbox PRIVATE
@@ -41,6 +55,7 @@ target_include_directories(Editor PRIVATE
         Heirloom/thirdparty/spdlog/include
         Heirloom/thirdparty/imgui
         Heirloom/thirdparty/glm
+        Heirloom/thirdparty/entt/src
         )
 
 target_link_libraries(Editor PRIVATE
@@ -60,3 +75,23 @@ add_custom_command(
         ${CMAKE_SOURCE_DIR}/HeirloomEditor/imgui.ini
         ${CMAKE_CURRENT_BINARY_DIR}/
 )
+
+if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
+    target_compile_definitions(Sandbox PRIVATE HL_DEBUG HL_PROFILE)
+    target_compile_definitions(Editor PRIVATE HL_DEBUG HL_PROFILE)
+endif ()
+
+if (${CMAKE_BUILD_TYPE} STREQUAL Release)
+    target_compile_definitions(Sandbox PRIVATE)
+    target_compile_definitions(Editor PRIVATE)
+endif ()
+
+if (${CMAKE_BUILD_TYPE} STREQUAL RelWithDebInfo)
+    target_compile_definitions(Sandbox PRIVATE HL_DEBUG HL_PROFILE)
+    target_compile_definitions(Editor PRIVATE HL_DEBUG HL_PROFILE)
+endif ()
+
+if (${CMAKE_BUILD_TYPE} STREQUAL MinSizeRel)
+    target_compile_definitions(Sandbox PRIVATE)
+    target_compile_definitions(Editor PRIVATE)
+endif ()

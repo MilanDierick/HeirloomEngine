@@ -23,6 +23,11 @@ void Sandbox2D::OnUpdate(const Heirloom::Timestep)
 	HL_PROFILE_FUNCTION()
 
 	m_CameraController.Update(Heirloom::Timestep{0.016f});
+
+	if (Heirloom::Input::IsKeyPressed(Heirloom::KeyCode::Escape))
+	{
+		Heirloom::Application::Get().Close();
+	}
 }
 
 void Sandbox2D::OnRender()

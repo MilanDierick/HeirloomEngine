@@ -10,3 +10,6 @@
 [submodule "Heirloom/thirdparty/glfw"]
 	path = Heirloom/thirdparty/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "Heirloom/thirdparty/entt"]
+	path = Heirloom/thirdparty/entt
+	url = https://github.com/skypjack/entt.git

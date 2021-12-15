@@ -4,7 +4,7 @@
 #ifndef HEIRLOOM_INPUT_H
 #define HEIRLOOM_INPUT_H
 
-#include "KeyCodes.h"
+#include "Heirloom/Core/KeyCodes.h"
 #include "Heirloom/Events/Event.h"
 #include "Heirloom/Events/KeyEventArgs.h"
 #include "Heirloom/Events/MouseEventArgs.h"

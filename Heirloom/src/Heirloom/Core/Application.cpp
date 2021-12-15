@@ -3,48 +3,42 @@
 
 #include "hlpch.h"
 #include "Application.h"
-#include "GLFW/glfw3.h"
-
 #include "Heirloom/Renderer/Renderer.h"
 
 // TODO: No magic numbers, this should probably be in a settings object
-#define MS_PER_TICK 1000 / 144
+#define MS_PER_TICK 1000.0F / 144.0F
 
 namespace Heirloom
 {
-#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
-
-	Application* Application::s_Instance = nullptr;
+	Application* Application::m_pInstance = nullptr; //NOLINT
 
 	Application::Application()
 	{
 		HL_PROFILE_FUNCTION()
 
-		HL_CORE_ASSERT(!s_Instance, "Application already exists!");
-		s_Instance = this;
+		HL_CORE_ASSERT(!m_pInstance, "There can only be one application instance!")
+		m_pInstance = this;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 
-		m_Window->WindowResizedEvent += HL_BIND_EVENT_FN(Application::OnWindowResizedEvent);
-		m_Window->WindowClosedEvent += HL_BIND_EVENT_FN(Application::OnWindowClosedEvent);
+		m_Window->WindowResizedEvent += [this](auto&& args)
+		{ OnWindowResizedEvent(std::forward<decltype(args)>(args)); };
+		m_Window->WindowClosedEvent += [this](auto&& args)
+		{ OnWindowClosedEvent(std::forward<decltype(args)>(args)); };
 
 		Renderer::Init();
 
-		m_ImGuiLayer = new ImGuiLayer();
-		PushOverlay(m_ImGuiLayer);
+		m_ImGuiLayer = new ImGuiLayer(); //NOLINT
+		PushOverlay(m_ImGuiLayer); // TODO: Pass the shared pointer here
 	}
 
-	Application::~Application()
-	{
-	}
-
-	// TODO: A cheap solution is to walk the list backwards when you update. That way removing an object only shifts items that were already updated.
+// TODO: A cheap solution is to walk the list backwards when you update. That way removing an object only shifts items that were already updated.
 	void Application::Run()
 	{
 		HL_PROFILE_FUNCTION()
 
 		std::chrono::steady_clock::time_point previousTimePoint = std::chrono::steady_clock::now();
-		double lag                                              = 0.0;
+		double lag = 0.0;
 
 		while (m_IsRunning)
 		{
@@ -73,9 +67,9 @@ namespace Heirloom
 				{
 					HL_PROFILE_SCOPE("LayerStack OnUpdate")
 
-					for (Layer* layer : m_LayerStack)
+					for (Layer* layer: m_LayerStack)
 					{
-						layer->OnUpdate(Timestep{1000 / MS_PER_TICK});
+						layer->OnUpdate(Timestep{ 1000 / MS_PER_TICK });
 					}
 				}
 
@@ -85,7 +79,7 @@ namespace Heirloom
 			{
 				HL_PROFILE_SCOPE("LayerStack OnRender")
 
-				for (Layer* layer : m_LayerStack)
+				for (Layer* layer: m_LayerStack)
 				{
 					layer->OnRender();
 				}
@@ -96,7 +90,7 @@ namespace Heirloom
 			{
 				HL_PROFILE_SCOPE("LayerStack OnImGuiRender")
 
-				for (Layer* layer : m_LayerStack)
+				for (Layer* layer: m_LayerStack)
 				{
 					layer->OnImGuiRender();
 				}
@@ -127,14 +121,14 @@ namespace Heirloom
 		m_IsRunning = false;
 	}
 
-	ImGuiLayer* Application::GetImGuiLayer() const
+	[[maybe_unused]] ImGuiLayer* Application::GetImGuiLayer() const
 	{
 		return m_ImGuiLayer;
 	}
 
 	Application& Application::Get()
 	{
-		return *s_Instance;
+		return *m_pInstance;
 	}
 
 	Window& Application::GetWindow() const
@@ -142,7 +136,7 @@ namespace Heirloom
 		return *m_Window;
 	}
 
-	bool Application::OnWindowClosedEvent(const WindowClosedEventArgs)
+	bool Application::OnWindowClosedEvent([[maybe_unused]] const WindowClosedEventArgs eventArgs)
 	{
 		HL_PROFILE_FUNCTION()
 

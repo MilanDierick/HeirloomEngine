@@ -1,33 +1,21 @@
 cmake_minimum_required(VERSION 3.21)
 project(Heirloom)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
-
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(CMAKE_C_FLAGS "-Wall -std=c99")
-set(CMAKE_C_FLAGS_DEBUG "-g")
-set(CMAKE_C_FLAGS_MINSIZEREL "-Os -DNDEBUG")
-set(CMAKE_C_FLAGS_RELEASE "-O4 -DNDEBUG")
-set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g")
-
-set(CMAKE_CXX_FLAGS "-Wall -std=c++20")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "-O4 -DNDEBUG")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+add_subdirectory(thirdparty/spdlog)
+add_subdirectory(thirdparty/glfw)
+add_subdirectory(thirdparty/glm)
+#add_subdirectory(thirdparty/entt)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
-add_subdirectory(thirdparty/spdlog)
-add_subdirectory(thirdparty/glfw)
-add_subdirectory(thirdparty/glm)
+#set(ENTT_INCLUDE_HEADERS ON CACHE BOOL "" FORCE)
 
 add_library(Heirloom
         include/Heirloom.h
@@ -50,6 +38,7 @@ add_library(Heirloom
         thirdparty/imgui/backends/imgui_impl_glfw.cpp
         thirdparty/imgui/backends/imgui_impl_opengl3.cpp
         thirdparty/glad/src/glad.c
+        thirdparty/entt/src/entt/entt.hpp
         src/Heirloom/Core/Log.cpp
         src/Heirloom/Core/Log.h
         src/Heirloom/Profiler/Instrumentation.cpp
@@ -74,13 +63,6 @@ add_library(Heirloom
         src/Heirloom/Core/KeyCodes.h
         src/Heirloom/Core/LockFreeStack.h
         src/Heirloom/Core/MouseCodes.h
-        src/Heirloom/Gameplay/Components/Component.h
-        src/Heirloom/Gameplay/Components/SpriteRenderer.cpp
-        src/Heirloom/Gameplay/Components/SpriteRenderer.h
-        src/Heirloom/Gameplay/GameObject.cpp
-        src/Heirloom/Gameplay/GameObject.h
-        src/Heirloom/Gameplay/Transform.cpp
-        src/Heirloom/Gameplay/Transform.h
         src/Heirloom/ImGui/ImGuiBuild.cpp
         src/Heirloom/Renderer/Buffer.cpp
         src/Heirloom/Renderer/Buffer.h
@@ -123,13 +105,37 @@ add_library(Heirloom
         src/Platform/Windows/WindowsInput.cpp
         src/Platform/Windows/WindowsWindow.cpp
         src/Platform/Windows/WindowsWindow.h
-        )
+        src/Heirloom/Scene/Scene.cpp
+        src/Heirloom/Scene/Scene.h
+        src/Heirloom/Scene/Components.h src/Heirloom/Scene/Entity.h)
 
-target_compile_definitions(Heirloom PRIVATE
-        HL_DEBUG
-        HL_PROFILE
-        IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
-        )
+if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
+    target_compile_definitions(Heirloom PRIVATE
+            HL_DEBUG
+            HL_PROFILE
+            IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
+            )
+endif ()
+
+if (${CMAKE_BUILD_TYPE} STREQUAL Release)
+    target_compile_definitions(Heirloom PRIVATE
+            IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
+            )
+endif ()
+
+if (${CMAKE_BUILD_TYPE} STREQUAL RelWithDebInfo)
+    target_compile_definitions(Heirloom PRIVATE
+            HL_DEBUG
+            HL_PROFILE
+            IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
+            )
+endif ()
+
+if (${CMAKE_BUILD_TYPE} STREQUAL MinSizeRel)
+    target_compile_definitions(Heirloom PRIVATE
+            IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
+            )
+endif ()
 
 target_include_directories(Heirloom PRIVATE
         src
@@ -139,6 +145,7 @@ target_include_directories(Heirloom PRIVATE
         thirdparty/imgui
         thirdparty/imgui/backends
         thirdparty/imgui/examples
+        thirdparty/entt/src
         )
 
 #target_precompile_headers(Heirloom PRIVATE
@@ -150,5 +157,6 @@ target_link_libraries(Heirloom PRIVATE
         spdlog_header_only
         glfw
         glm
+#        EnTT::EnTT
         ${CMAKE_DL_LIBS}
         )

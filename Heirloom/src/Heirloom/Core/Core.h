@@ -53,7 +53,7 @@
 
 #include "Heirloom/Profiler/Instrumentation.h"
 
-#ifdef HL_ENABLE_ASSERTS
+#ifdef HL_ENABLE_ASSERTS // false -> break
 #define HL_ASSERT(x, ...) { if(!(x)) { HL_ERROR("Assertion Failed: {0}", __VA_ARGS__); HL_DEBUGBREAK(); } }
 #define HL_CORE_ASSERT(x, ...) { if(!(x)) { HL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); HL_DEBUGBREAK(); } }
 #else
@@ -64,6 +64,8 @@
 #define BIT(x) (1 << x)
 
 #define HL_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+#define ALIGNED(x) __attribute__((aligned(x))) // NOLINT
 
 namespace Heirloom
 {
@@ -84,6 +86,9 @@ namespace Heirloom
 	{
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
+
+	template <typename T>
+	using WeakRef = std::weak_ptr<T>;
 }
 
 #endif //HEIRLOOM_CORE_H

@@ -6,8 +6,6 @@
 
 #include "hlpch.h"
 
-extern Heirloom::Application* Heirloom::CreateApplication();
-
 int main()
 {
 	Heirloom::Log::Init();

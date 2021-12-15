@@ -274,6 +274,97 @@ namespace Heirloom
 		++s_Data.Stats.QuadCount;
 	}
 
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
+	{
+		HL_PROFILE_FUNCTION()
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
+
+		const float textureIndex = 0.0f; // White Texture
+		const float tilingFactor = 1.0f;
+
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[0],
+				color,
+				{0.0f, 0.0f},
+				textureIndex,
+				tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[1],
+				color,
+				{1.0f, 0.0f},
+				textureIndex,
+				tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[2],
+				color,
+				{1.0f, 1.0f},
+				textureIndex,
+				tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[3],
+				color,
+				{0.0f, 1.0f},
+				textureIndex,
+				tilingFactor);
+
+		s_Data.QuadIndexCount += 6;
+
+		++s_Data.Stats.QuadCount;
+	}
+
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor,
+			const glm::vec4& tintColor)
+	{
+		HL_PROFILE_FUNCTION()
+
+		float texIndex = 0.0f;
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		{
+			if (*s_Data.TextureSlots[i].get() == *texture.get())
+			{
+				texIndex = static_cast<float>(i);
+				break;
+			}
+		}
+
+		if (texIndex == 0.0f)
+		{
+			if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			{
+				FlushAndReset();
+			}
+
+			texIndex                                     = static_cast<float>(s_Data.TextureSlotIndex);
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			s_Data.TextureSlotIndex++;
+		}
+
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[0],
+				tintColor,
+				{0.0f, 0.0f},
+				texIndex,
+				tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[1],
+				tintColor,
+				{1.0f, 0.0f},
+				texIndex,
+				tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[2],
+				tintColor,
+				{1.0f, 1.0f},
+				texIndex,
+				tilingFactor);
+		ConfigureAndIncrementQuadVertexBufferPtr(transform * s_Data.QuadVertexPositions[3],
+				tintColor,
+				{0.0f, 1.0f},
+				texIndex,
+				tilingFactor);
+
+		s_Data.QuadIndexCount += 6;
+
+		++s_Data.Stats.QuadCount;
+	}
+
 	void Renderer2D::DrawQuad(Sprite& sprite)
 	{
 		DrawQuad(sprite.Position, sprite.Size, sprite.Texture, sprite.TilingFactor, sprite.TintColor);

@@ -5,6 +5,7 @@
 #ifndef HEIRLOOM_SHADER_H
 #define HEIRLOOM_SHADER_H
 
+#include "Heirloom/Core/Core.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/compatibility.hpp"
 
